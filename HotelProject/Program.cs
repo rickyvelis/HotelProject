@@ -17,11 +17,6 @@ namespace HotelProject
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-<<<<<<< HEAD
-            //kleine test Push
-=======
-            //hoi
->>>>>>> 62865fbcdcde8ad3224ee1028a895eba8a291cd9
         }
     }
 }
