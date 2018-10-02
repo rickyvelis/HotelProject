@@ -66,7 +66,12 @@ namespace HotelProject
 
             }
         }
-
+            
+        /// <summary>
+        /// sets the neighbours for each room.
+        /// </summary>
+        /// <param name="iRoom">a list of all the rooms from the layout file</param>
+        /// <returns>updated list with the neighbours set</returns>
         private List<IRoom> SetNeighbours(List<IRoom> iRoom)
         {
             foreach (IRoom room in iRoom)
@@ -82,7 +87,6 @@ namespace HotelProject
                     }
                 }
             }
-
             return iRoom;
         }
     }
