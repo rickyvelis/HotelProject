@@ -17,5 +17,10 @@ namespace HotelProject.Rooms
         public Point Dimension { get; set; }
         public string Classification { get; set; }
         public int Capacity { get; set; }
+
+        public IRoom()
+        {
+            Neighbours = new Dictionary<IRoom, int>();
+        }
     }
 }
