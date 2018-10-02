@@ -9,14 +9,6 @@ namespace HotelProject.Rooms
 {
     class Restaurant : IRoom
     {
-        public string AreaType { get; set; }
-        public Dictionary<IRoom, int> Neighbours { get; set; }
-        public IRoom Previous { get; set; }
-        public int Distance { get; set; }
-        public Point Position { get; set; }
-        public Point Dimention { get; set; }
-        public int Capacity { get; set; }
-
         public Restaurant()
         {
             AreaType = "Restaurant";

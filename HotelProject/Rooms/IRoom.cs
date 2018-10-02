@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace HotelProject.Rooms
 {
-    interface IRoom
+    abstract class IRoom
     {
-        string AreaType { get; set; }
-        Dictionary<IRoom, int> Neighbours { get; set; }
-        IRoom Previous { get; set; }
-        int Distance { get; set; }
-        Point Position { get; set; }
-        Point Dimention { get; set; }
+        public string AreaType { get; set; }
+        public Dictionary<IRoom, int> Neighbours { get; set; }
+        public IRoom Previous { get; set; }
+        public int Distance { get; set; }
+        public Point Position { get; set; }
+        public Point Dimention { get; set; }
+        public int Classification { get; set; }
+        public int Capacity { get; set; }
     }
 }
