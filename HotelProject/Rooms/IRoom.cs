@@ -14,7 +14,7 @@ namespace HotelProject.Rooms
         public IRoom Previous { get; set; }
         public int Distance { get; set; }
         public Point Position { get; set; }
-        public Point Dimention { get; set; }
+        public Point Dimension { get; set; }
         public string Classification { get; set; }
         public int Capacity { get; set; }
     }
