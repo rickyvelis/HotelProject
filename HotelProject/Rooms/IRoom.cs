@@ -12,12 +12,5 @@ namespace HotelProject.Rooms
         Dictionary<IRoom, int> Neighbours { get; set; }
         IRoom Previous { get; set; }
         int Distance { get; set; }
-
-        private IRoom()
-        {
-            Previous = null;
-            Distance = Int32.MaxValue / 2;
-            Neighbours = new Dictionary<IRoom, int>();
-        }
     }
 }

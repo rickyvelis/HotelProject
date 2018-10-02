@@ -12,8 +12,7 @@ namespace HotelProject.Rooms
         public Dictionary<IRoom, int> Neighbours { get; set; }
         public IRoom Previous { get; set; }
         public int Distance { get; set; }
-
-        //TODO check if everything is needed
+        
         public Cinema()
         {
             AreaType = "Cinema";
