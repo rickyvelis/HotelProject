@@ -15,7 +15,7 @@ namespace HotelProject.Rooms
             Previous = null;
             Distance = Int32.MaxValue / 2;
             Neighbours = new Dictionary<IRoom, int>();
-            Classification = 0;
+            Classification = "";
         }
     }
 }

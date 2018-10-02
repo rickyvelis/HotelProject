@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HotelProject.Rooms
 {
-    abstract class IRoom
+    class IRoom
     {
         public string AreaType { get; set; }
         public Dictionary<IRoom, int> Neighbours { get; set; }
@@ -15,7 +15,7 @@ namespace HotelProject.Rooms
         public int Distance { get; set; }
         public Point Position { get; set; }
         public Point Dimention { get; set; }
-        public int Classification { get; set; }
+        public string Classification { get; set; }
         public int Capacity { get; set; }
     }
 }

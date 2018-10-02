@@ -14,8 +14,9 @@ namespace HotelProject
     {
         public Form1 Form { get; set; }
 
-        public Hotel(Form1 Form)
+        public Hotel(Form1 form)
         {
+            Form = form;
             List<IRoom> iRoom = JSONreader();
         }
 
@@ -23,19 +24,19 @@ namespace HotelProject
         {
             List<IRoom> iRoom;
 
-            try
-            {
-                using(StreamReader r = new StreamReader("Hotel.layout"))
+            //try
+            //{
+                using(StreamReader r = new StreamReader("Resources\\Hotel.layout"))
                 {
                     string json = r.ReadToEnd();
                     iRoom = JsonConvert.DeserializeObject<List<IRoom>>(json);
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return null;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    return null;
+            //}
             return iRoom;
         }
     }
