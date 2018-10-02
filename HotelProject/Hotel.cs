@@ -37,7 +37,7 @@ namespace HotelProject
                 Console.WriteLine(e);
                 return null;
             }
-            return iRoom;
+            return SetNeighbours(iRoom);
         }
 
         /// <summary>
@@ -65,6 +65,25 @@ namespace HotelProject
             {
 
             }
+        }
+
+        private List<IRoom> SetNeighbours(List<IRoom> iRoom)
+        {
+            foreach (IRoom room in iRoom)
+            {
+                foreach (IRoom room2 in iRoom)
+                {
+                    if (room.Position.X + room.Dimension.X == room2.Position.X && room.Position.Y == room2.Position.Y)
+                    {
+                        //TODO checks op hoogtes of er wel plek is om te lopen (bijv als y 2 is kan je er wel nog lopen).
+                        room.Neighbours.Add(room2, room.Dimension.X);
+                        room2.Neighbours.Add(room, room.Dimension.X);
+                        break;
+                    }
+                }
+            }
+
+            return iRoom;
         }
     }
 }
