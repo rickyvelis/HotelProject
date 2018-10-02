@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
+using HotelProject.Rooms;
 
 namespace HotelProject
 {
@@ -15,19 +16,19 @@ namespace HotelProject
 
         public Hotel(Form1 Form)
         {
-            List<Unit> units = JSONreader();
+            List<IRoom> iRoom = JSONreader();
         }
 
-        public List<Unit> JSONreader()
+        public List<IRoom> JSONreader()
         {
-            List<Unit> units;
+            List<IRoom> iRoom;
 
             try
             {
                 using(StreamReader r = new StreamReader("Hotel.layout"))
                 {
                     string json = r.ReadToEnd();
-                    units = JsonConvert.DeserializeObject<List<Unit>>(json);
+                    iRoom = JsonConvert.DeserializeObject<List<IRoom>>(json);
                 }
             }
             catch (Exception e)
@@ -35,7 +36,7 @@ namespace HotelProject
                 Console.WriteLine(e);
                 return null;
             }
-            return units;
+            return iRoom;
         }
     }
 }
