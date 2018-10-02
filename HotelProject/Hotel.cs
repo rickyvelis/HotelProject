@@ -37,6 +37,23 @@ namespace HotelProject
             //    Console.WriteLine(e);
             //    return null;
             //}
+            return SetNeighbours(iRoom);
+        }
+
+        private List<IRoom> SetNeighbours(List<IRoom> iRoom)
+        {
+            foreach (IRoom room in iRoom)
+            {
+                foreach (IRoom room2 in iRoom)
+                {
+                    if (room.Position.X + room.Dimention.X == room2.Position.X && room.Position.Y == room2.Position.Y)
+                    {
+                        room.Neighbours.Add(room2, room.Dimention.X);
+                        room2.Neighbours.Add(room, room.Dimention.X);
+                        break;
+                    }
+                }
+            }
             return iRoom;
         }
     }
