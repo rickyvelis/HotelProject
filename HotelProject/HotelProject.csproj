@@ -62,10 +62,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rooms\Cinema.cs" />
     <Compile Include="Rooms\IRoom.cs" />
-    <Compile Include="RoomFactory.cs" />
     <Compile Include="Rooms\Restaurant.cs" />
     <Compile Include="Rooms\Room.cs" />
-    <Compile Include="Unit.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
