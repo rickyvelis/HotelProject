@@ -43,32 +43,6 @@ namespace HotelProject
             return iRoom;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="rooms"></param>
-        /// <returns></returns>
-        public IRoom[,] MakeHotel(List<IRoom> rooms)
-        {
-            int maxX = 0;
-            int maxY = 0;
-
-            //Determine the size of the array by looking at the furthermost room at both the x- and y-axis
-            foreach (IRoom r in rooms)
-            {
-                if (r.Position.X + r.Dimension.X - 1 > maxX)
-                    maxX = r.Position.X + r.Dimension.X - 1;
-                if (r.Position.Y + r.Dimension.Y - 1 > maxY)
-                    maxY = r.Position.Y + r.Dimension.Y - 1;
-            }
-
-            IRoom[,] layout = new IRoom[maxX, maxY];
-
-            foreach (IRoom r in rooms)
-            {
-
-            }
-        }
 
         /// <summary>
         /// Get the width of the hotel
