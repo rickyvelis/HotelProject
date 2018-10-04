@@ -126,23 +126,38 @@ namespace HotelProject
 
                     if (room.Position.X + room.Dimension.X == room2.Position.X && room.Position.Y == room2.Position.Y)
                     {
-                        //TODO checks op hoogtes of er wel plek is om te lopen (bijv als y 2 is kan je er wel nog lopen).
                         room.Neighbours.Add(room2, room.Dimension.X);
                         room2.Neighbours.Add(room, room.Dimension.X);
                         break;
                     }
+                }
 
-                    for (int i = room.Position.Y - 1; i > 0; i--)
+                CheckBelow(1, iRoom, room);
+            }
+            return iRoom;
+        }
+        private void CheckBelow(int offset, List<IRoom> rooms, IRoom room)
+        {
+            for (int i = room.Position.Y - 1; i > 0; i--)
+            {
+                foreach (IRoom room2 in rooms)
+                {
+                    if (room.Position.X + offset == room2.Position.X && i == room2.Position.Y && room.Position.Y - room2.Position.Y < room2.Dimension.Y)
                     {
-                        if (room.Position.X + room.Dimension.X == room2.Position.X && i == room2.Position.Y &&
-                            room.Position.Y - room2.Position.Y + 1 < room2.Dimension.Y)
+                        offset += room2.Dimension.X;
+                        foreach (IRoom room3 in rooms)
                         {
-
+                            if (room.Position.X + offset == room3.Position.X && room.Position.Y == room3.Position.Y)
+                            {
+                                room.Neighbours.Add(room3, offset);
+                                room3.Neighbours.Add(room, offset);
+                                return;
+                            }
                         }
+                        CheckBelow(offset, rooms, room);
                     }
                 }
             }
-            return iRoom;
         }
     }
 
