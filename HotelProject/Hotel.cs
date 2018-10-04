@@ -116,6 +116,14 @@ namespace HotelProject
             {
                 foreach (IRoom room2 in iRoom)
                 {
+                    //TODO distance van trap en lift instelbaar maken
+                    if (((room.AreaType == "Elevator" && room2.AreaType == "Elevator") ||
+                         (room.AreaType == "Stairs" && room2.AreaType == "Stairs")) &&
+                        (room.Position.Y - room2.Position.Y == 1 || room2.Position.Y - room.Position.Y == 1))
+                    {
+                        room.Neighbours.Add(room2, 1);
+                    }
+
                     if (room.Position.X + room.Dimension.X == room2.Position.X && room.Position.Y == room2.Position.Y)
                     {
                         //TODO checks op hoogtes of er wel plek is om te lopen (bijv als y 2 is kan je er wel nog lopen).
@@ -123,9 +131,20 @@ namespace HotelProject
                         room2.Neighbours.Add(room, room.Dimension.X);
                         break;
                     }
+
+                    for (int i = room.Position.Y - 1; i > 0; i--)
+                    {
+                        if (room.Position.X + room.Dimension.X == room2.Position.X && i == room2.Position.Y &&
+                            room.Position.Y - room2.Position.Y + 1 < room2.Dimension.Y)
+                        {
+
+                        }
+                    }
                 }
             }
             return iRoom;
         }
     }
+
+
 }
