@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace HotelProject
         {
             Form = form;
             List<IRoom> iRoom = JSONreader();
+            AddLiftAndStairs(iRoom);
+            SetNeighbours(iRoom);
         }
 
         public List<IRoom> JSONreader()
@@ -37,7 +40,7 @@ namespace HotelProject
                 Console.WriteLine(e);
                 return null;
             }
-            return SetNeighbours(iRoom);
+            return iRoom;
         }
 
         /// <summary>
@@ -65,6 +68,67 @@ namespace HotelProject
             {
 
             }
+        }
+
+        /// <summary>
+        /// Get the width of the hotel
+        /// </summary>
+        /// <param name="rooms">the list of all the rooms in the hotel</param>
+        /// <returns>Width of the hotel</returns>
+        private int GetMaxX(List<IRoom> rooms)
+        {
+            int x = 0;
+            foreach (IRoom room in rooms)
+            {
+                if (room.Position.X + room.Dimension.X - 1 > x)
+                    x = room.Position.X + room.Dimension.X - 1;
+            }
+
+            return x;
+        }
+
+        /// <summary>
+        /// get the amount of floors of the hotel
+        /// </summary>
+        /// <param name="rooms">list of rooms in the hotel</param>
+        /// <returns>amount of floors of the hotel</returns>
+        private int GetMaxY(List<IRoom> rooms)
+        {
+            int y = 0;
+            foreach (IRoom room in rooms)
+            {
+                if (room.Position.Y + room.Dimension.Y - 1 > y)
+                    y = room.Position.Y;
+            }
+
+            return y;
+        }
+
+        /// <summary>
+        /// Adds the elevators and stairs to the rooms list
+        /// </summary>
+        /// <param name="rooms">list of all the rooms in the hotel</param>
+        /// <returns>updated list of rooms with the elevators and stairs now included</returns>
+        private List<IRoom> AddLiftAndStairs(List<IRoom> rooms)
+        {
+            int x = GetMaxX(rooms);
+            int y = GetMaxY(rooms);
+
+            for (int i = 0; i < y; i++)
+            {
+                IRoom elevator = new IRoom();
+                elevator.Position = new Point {X = 0, Y = i};
+                elevator.Dimension = new Point{X = 1, Y = 1};
+                elevator.AreaType = "Elevator";
+                rooms.Add(elevator);
+
+                IRoom stairs = new IRoom();
+                stairs.Position = new Point{X = x + 1, Y = i};
+                stairs.Dimension = new Point{X = 1, Y = 1};
+                stairs.AreaType = "Stairs";
+                rooms.Add(stairs);
+            }
+            return rooms;
         }
             
         /// <summary>
