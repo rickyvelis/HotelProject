@@ -25,14 +25,14 @@ namespace HotelProject
 
         public List<IRoom> JSONreader()
         {
-            List<IRoom> iRoom;
+            List<IRoom> rooms;
 
             try
             {
                 using (StreamReader r = new StreamReader("Resources\\Hotel.layout"))
                 {
                     string json = r.ReadToEnd();
-                    iRoom = JsonConvert.DeserializeObject<List<IRoom>>(json);
+                    rooms = JsonConvert.DeserializeObject<List<IRoom>>(json);
                 }
             }
             catch (Exception e)
@@ -40,7 +40,51 @@ namespace HotelProject
                 Console.WriteLine(e);
                 return null;
             }
-            return iRoom;
+
+            foreach (IRoom r in rooms)
+            {
+                if (r.AreaType == "Cinema")
+                {
+                    rooms.Add(new Cinema() {
+                        AreaType = r.AreaType,
+                        Position = r.Position,
+                        Dimension = r.Dimension,
+                        Capacity = r.Capacity
+                    });
+                }
+                else if (r.AreaType == "Restaurant")
+                {
+                    rooms.Add(new Restaurant()
+                    {
+                        AreaType = r.AreaType,
+                        Position = r.Position,
+                        Dimension = r.Dimension,
+                        Capacity = r.Capacity
+                    });
+                }
+                else if (r.AreaType == "Fitness")
+                {
+                    rooms.Add(new Fitness()
+                    {
+                        AreaType = r.AreaType,
+                        Position = r.Position,
+                        Dimension = r.Dimension,
+                        Capacity = r.Capacity
+                    });
+                }
+                else if (r.AreaType == "Room")
+                {
+                    rooms.Add(new Room(r.Classification)
+                    {
+                        AreaType = r.AreaType,
+                        Position = r.Position,
+                        Dimension = r.Dimension,
+                        Capacity = r.Capacity
+                    });
+                }
+                rooms.Remove(r);
+            }
+            return rooms;
         }
 
 

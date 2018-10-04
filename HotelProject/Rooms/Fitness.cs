@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HotelProject.Rooms
 {
-    class Cinema : IRoom
+    class Fitness : IRoom
     {
-        public Cinema()
+        public Fitness()
         {
             AreaType = "Cinema";
             Previous = null;
