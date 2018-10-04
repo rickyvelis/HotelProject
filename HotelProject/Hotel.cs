@@ -41,49 +41,49 @@ namespace HotelProject
                 return null;
             }
 
-            foreach (IRoom r in rooms)
-            {
-                if (r.AreaType == "Cinema")
-                {
-                    rooms.Add(new Cinema() {
-                        AreaType = r.AreaType,
-                        Position = r.Position,
-                        Dimension = r.Dimension,
-                        Capacity = r.Capacity
-                    });
-                }
-                else if (r.AreaType == "Restaurant")
-                {
-                    rooms.Add(new Restaurant()
-                    {
-                        AreaType = r.AreaType,
-                        Position = r.Position,
-                        Dimension = r.Dimension,
-                        Capacity = r.Capacity
-                    });
-                }
-                else if (r.AreaType == "Fitness")
-                {
-                    rooms.Add(new Fitness()
-                    {
-                        AreaType = r.AreaType,
-                        Position = r.Position,
-                        Dimension = r.Dimension,
-                        Capacity = r.Capacity
-                    });
-                }
-                else if (r.AreaType == "Room")
-                {
-                    rooms.Add(new Room(r.Classification)
-                    {
-                        AreaType = r.AreaType,
-                        Position = r.Position,
-                        Dimension = r.Dimension,
-                        Capacity = r.Capacity
-                    });
-                }
-                rooms.Remove(r);
-            }
+            //foreach (IRoom r in rooms)
+            //{
+            //    if (r.AreaType == "Cinema")
+            //    {
+            //        rooms.Add(new Cinema() {
+            //            AreaType = r.AreaType,
+            //            Position = r.Position,
+            //            Dimension = r.Dimension,
+            //            Capacity = r.Capacity
+            //        });
+            //    }
+            //    else if (r.AreaType == "Restaurant")
+            //    {
+            //        rooms.Add(new Restaurant()
+            //        {
+            //            AreaType = r.AreaType,
+            //            Position = r.Position,
+            //            Dimension = r.Dimension,
+            //            Capacity = r.Capacity
+            //        });
+            //    }
+            //    else if (r.AreaType == "Fitness")
+            //    {
+            //        rooms.Add(new Fitness()
+            //        {
+            //            AreaType = r.AreaType,
+            //            Position = r.Position,
+            //            Dimension = r.Dimension,
+            //            Capacity = r.Capacity
+            //        });
+            //    }
+            //    else if (r.AreaType == "Room")
+            //    {
+            //        rooms.Add(new Room(r.Classification)
+            //        {
+            //            AreaType = r.AreaType,
+            //            Position = r.Position,
+            //            Dimension = r.Dimension,
+            //            Capacity = r.Capacity
+            //        });
+            //    }
+            //    rooms.Remove(r);
+            //}
             return rooms;
         }
 

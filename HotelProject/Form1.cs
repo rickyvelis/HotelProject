@@ -21,5 +21,10 @@ namespace HotelProject
             Hotel hotel = new Hotel(this);
             _Hotel = hotel;
         }
+
+        public void Render()
+        {
+
+        }
     }
 }

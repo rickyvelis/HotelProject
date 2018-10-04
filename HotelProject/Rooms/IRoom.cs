@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using HotelProject.Properties;
 
 namespace HotelProject.Rooms
 {
@@ -23,6 +24,43 @@ namespace HotelProject.Rooms
         public IRoom()
         {
             Neighbours = new Dictionary<IRoom, int>();
+            SetImage(AreaType);
+        }
+
+        private void SetImage(string areatype)
+        {
+            switch (areatype)
+            {
+                case "Fitness":
+                    Img = Resources.Hallway;
+                    break;
+                case "Cinema":
+                    Img = Resources.Cinema1;
+                    break;
+                case "Restaurant":
+                    Img = Resources.Hallway2;
+                    break;
+                case "Room":
+                    switch (Classification)
+                    {
+                        case "1 star":
+                            Img = Resources.Room1;
+                            break;
+                        case "2 stars":
+                            Img = Resources.Room2;
+                            break;
+                        case "3 stars":
+                            Img = Resources.Room3;
+                            break;
+                        case "4 stars":
+                            Img = Resources.Room4;
+                            break;
+                        case "5 stars":
+                            Img = Resources.Room5;
+                            break;
+                    }
+                    break;
+            }
         }
     }
 }
