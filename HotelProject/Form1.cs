@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HotelProject.Rooms;
 
 namespace HotelProject
 {
@@ -18,13 +19,75 @@ namespace HotelProject
         {
             InitializeComponent();
 
-            Hotel hotel = new Hotel(this);
-            _Hotel = hotel;
+            _Hotel = new Hotel(this);
+            //_Hotel = hotel;
+
+           Paint += new PaintEventHandler(DrawHotel);
         }
 
-        public void Render()
-        {
+        //NOTE: X = 128 Y = 89
 
+        private void DrawHotel(object sender, PaintEventArgs e)
+        {
+            Render(_Hotel.iRoom, e);
+        }
+        private void Render(List<IRoom> rooms, PaintEventArgs e)
+        {
+            Bitmap bitmap;
+
+            foreach (IRoom room in rooms)
+            {
+                switch (room.AreaType)
+                {
+                    case "Room":
+                        switch (room.Classification)
+                        {
+                            case "1 Star":
+                                bitmap = new Bitmap(@"Resources\\Room1.png");
+                                break;
+                            case "2 stars":
+                                bitmap = new Bitmap(@"Resources\\Room2.png");
+                                break;
+                            case "3 stars":
+                                bitmap = new Bitmap(@"Resources\\Room3.png");
+                                break;
+                            case "4 stars":
+                                bitmap = new Bitmap(@"Resources\\Room4.png");
+                                break;
+                            case "5 stars":
+                                bitmap = new Bitmap(@"Resources\\Room5.png");
+                                break;
+                            default:
+                                bitmap = new Bitmap(@"Resources\\Cinema2.png");
+                                break;   
+                        }
+                        break;
+                    case "Fitness":
+                        //TODO fitness plaatje toevoegen
+                        bitmap = new Bitmap(@"Resources\\Cinema2.png");
+                        break;
+                    case "Cinema":
+                        bitmap = new Bitmap(@"Resources\\Cinema1.png");
+                        break;
+                    case "Restaurant":
+                        //TODO Restaurant plaatje toevoegen
+                        bitmap = new Bitmap(@"Resources\\Cinema2.png");
+                        break;
+                    case "Elevator":
+                        bitmap = new Bitmap(@"Resources\\Elevator.png");
+                        break;
+                    case "Stairs":
+                        bitmap = new Bitmap(@"Resources\\Stairs.png");
+                        break;
+                    default:
+                        bitmap = new Bitmap(@"Resources\\Cinema2.png");
+                        break;
+
+                }
+
+                e.Graphics.DrawImage(bitmap, room.Position.X * 128, (_Hotel.GetMaxHeight() - room.Position.Y) * 89);
+                //e.Graphics.DrawImage(bitmap, room.Position.X * 128, room.Position.Y * 89);
+            }
         }
     }
 }
