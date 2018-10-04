@@ -90,5 +90,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Bioscoop1.png" />
+    <Content Include="Resources\Bioscoop2.png" />
+    <Content Include="Resources\Entrance.png" />
+    <Content Include="Resources\Gang.png" />
+    <Content Include="Resources\Gang2.png" />
+    <Content Include="Resources\Kamer1.png" />
+    <Content Include="Resources\Kamer2.png" />
+    <Content Include="Resources\Kamer3.png" />
+    <Content Include="Resources\Kamer4.png" />
+    <Content Include="Resources\Kamer5.png" />
+    <Content Include="Resources\Lift.png" />
+    <Content Include="Resources\Naamloos.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
