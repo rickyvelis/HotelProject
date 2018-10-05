@@ -27,10 +27,7 @@ namespace HotelProject
             AddLiftAndStairs();
             SetNeighbours();
 
-            HEListener hel = new HEListener();
-            HotelEventManager.Register(hel);
-            HotelEventManager.HTE_Factor = 1.0f;
-            HotelEventManager.Start();
+
         }
 
         public static Hotel GetInstance()

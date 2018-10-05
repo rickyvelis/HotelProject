@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using HotelProject.Rooms;
 using HotelProject.Properties;
+using HotelEvents;
 
 namespace HotelProject
 {
@@ -19,12 +20,12 @@ namespace HotelProject
         public Form1()
         {
             InitializeComponent();
-            
             _Hotel = Hotel.GetInstance();
-
-
-
             Paint += new PaintEventHandler(DrawHotel);
+            HEListener hel = new HEListener();
+            HotelEventManager.Register(hel);
+            HotelEventManager.HTE_Factor = 1.0f;
+            HotelEventManager.Start();
         }
 
         private void DrawHotel(object sender, PaintEventArgs e)
