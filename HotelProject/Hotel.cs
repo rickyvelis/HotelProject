@@ -16,6 +16,7 @@ namespace HotelProject
     {
         public Form1 Form { get; set; }
         public List<IRoom> iRoom { get; set; }
+        public List<Guest> guests { get; set; }
 
         public Hotel(Form1 form)
         {
