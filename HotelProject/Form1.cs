@@ -21,20 +21,24 @@ namespace HotelProject
             InitializeComponent();
 
             _Hotel = new Hotel(this);
-            //_Hotel = hotel;
 
            Paint += new PaintEventHandler(DrawHotel);
         }
-
-        //NOTE: X = 128 Y = 89
 
         private void DrawHotel(object sender, PaintEventArgs e)
         {
             Render(_Hotel.iRoom, e);
         }
+
+        /// <summary>
+        /// Draws the rooms in the hotel
+        /// </summary>
+        /// <param name="rooms">list of rooms in the hotel</param>
+        /// <param name="e"></param>
         private void Render(List<IRoom> rooms, PaintEventArgs e)
         {
             Bitmap bitmap;
+            int height = _Hotel.GetMaxHeight();
 
             foreach (IRoom room in rooms)
             {
@@ -64,7 +68,7 @@ namespace HotelProject
                         }
                         break;
                     case "Fitness":
-                        //TODO fitness plaatje toevoegen
+                        //TODO Fitness plaatje toevoegen
                         bitmap = new Bitmap(Resources.Cinema2);
                         break;
                     case "Cinema":
@@ -81,13 +85,25 @@ namespace HotelProject
                         bitmap = new Bitmap(Resources.Stairs);
                         break;
                     default:
+                        //TODO Error plaatje toevoegen
                         bitmap = new Bitmap(Resources.Cinema2);
                         break;
-
                 }
 
-                e.Graphics.DrawImage(bitmap, room.Position.X * 128, (_Hotel.GetMaxHeight() - room.Position.Y) * 89);
-                //e.Graphics.DrawImage(bitmap, room.Position.X * 128, room.Position.Y * 89);
+                e.Graphics.DrawImage(bitmap, room.Position.X * 128, (height - room.Position.Y) * 89);
+                for (int i = room.Dimension.X; i > 0; i--)
+                {
+                    for (int j = room.Dimension.Y; j > 0; j--)
+                    {
+                        if(i == 1 && j == 1)
+                            break;
+                        else
+                        {
+                            bitmap = new Bitmap(Resources.Hallway);
+                            e.Graphics.DrawImage(bitmap, (room.Position.X + i - 1) * 128, (height - room.Position.Y - j + 1) * 89);
+                        }
+                    }
+                }
             }
         }
     }
