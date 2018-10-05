@@ -25,8 +25,9 @@ namespace HotelProject
             AddLiftAndStairs(iRoom);
             SetNeighbours(iRoom);
 
-            HEListener hel = new HEListener(this);
+            HEListener hel = new HEListener();
             HotelEventManager.Register(hel);
+            HotelEventManager.HTE_Factor = 1.0f;
             HotelEventManager.Start();
 
         }
