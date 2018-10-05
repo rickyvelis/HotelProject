@@ -42,8 +42,7 @@ namespace HotelProject
                     if (Event.Data != null)
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
-                        {
-                            Guest guest = new Guest(data.Key);                            
+                        {                           
                         }
                     }
 
