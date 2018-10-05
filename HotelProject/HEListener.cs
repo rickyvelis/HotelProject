@@ -18,7 +18,7 @@ namespace HotelProject
 
         public void Notify(HotelEvent Event)
         {
-
+            Console.WriteLine(Event.Message);
         }
     }
 }

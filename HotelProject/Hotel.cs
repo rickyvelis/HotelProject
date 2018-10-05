@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
 using HotelProject.Rooms;
+using HotelEvents;
 
 namespace HotelProject
 {
@@ -19,9 +20,15 @@ namespace HotelProject
         public Hotel(Form1 form)
         {
             Form = form;
+
             iRoom = JSONreader();
             AddLiftAndStairs(iRoom);
             SetNeighbours(iRoom);
+
+            HEListener hel = new HEListener(this);
+            HotelEventManager.Register(hel);
+            HotelEventManager.Start();
+
         }
 
         public List<IRoom> JSONreader()
