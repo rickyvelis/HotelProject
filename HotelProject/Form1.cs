@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HotelProject.Rooms;
+using HotelProject.Properties;
 
 namespace HotelProject
 {
@@ -43,44 +44,44 @@ namespace HotelProject
                         switch (room.Classification)
                         {
                             case "1 Star":
-                                bitmap = new Bitmap(@"Resources\\Room1.png");
+                                bitmap = new Bitmap(Resources.Room1);
                                 break;
                             case "2 stars":
-                                bitmap = new Bitmap(@"Resources\\Room2.png");
+                                bitmap = new Bitmap(Resources.Room2);
                                 break;
                             case "3 stars":
-                                bitmap = new Bitmap(@"Resources\\Room3.png");
+                                bitmap = new Bitmap(Resources.Room3);
                                 break;
                             case "4 stars":
-                                bitmap = new Bitmap(@"Resources\\Room4.png");
+                                bitmap = new Bitmap(Resources.Room4);
                                 break;
                             case "5 stars":
-                                bitmap = new Bitmap(@"Resources\\Room5.png");
+                                bitmap = new Bitmap(Resources.Room5);
                                 break;
                             default:
-                                bitmap = new Bitmap(@"Resources\\Cinema2.png");
+                                bitmap = new Bitmap(Resources.Room1);
                                 break;   
                         }
                         break;
                     case "Fitness":
                         //TODO fitness plaatje toevoegen
-                        bitmap = new Bitmap(@"Resources\\Cinema2.png");
+                        bitmap = new Bitmap(Resources.Cinema2);
                         break;
                     case "Cinema":
-                        bitmap = new Bitmap(@"Resources\\Cinema1.png");
+                        bitmap = new Bitmap(Resources.Cinema1);
                         break;
                     case "Restaurant":
                         //TODO Restaurant plaatje toevoegen
-                        bitmap = new Bitmap(@"Resources\\Cinema2.png");
+                        bitmap = new Bitmap(Resources.Cinema2);
                         break;
                     case "Elevator":
-                        bitmap = new Bitmap(@"Resources\\Elevator.png");
+                        bitmap = new Bitmap(Resources.Elevator);
                         break;
                     case "Stairs":
-                        bitmap = new Bitmap(@"Resources\\Stairs.png");
+                        bitmap = new Bitmap(Resources.Stairs);
                         break;
                     default:
-                        bitmap = new Bitmap(@"Resources\\Cinema2.png");
+                        bitmap = new Bitmap(Resources.Cinema2);
                         break;
 
                 }
