@@ -19,7 +19,7 @@ namespace HotelProject
         public Form1()
         {
             InitializeComponent();
-
+            
             _Hotel = new Hotel(this);
             //_Hotel = hotel;
 
