@@ -13,8 +13,13 @@ namespace HotelProject
         List<IRoom> Path { get; set; }
         string Name { get; set; }
         IRoom Room { get; set; }
-        Point Position { get; set; }
+        IRoom Position { get; set; }
+        Point SpritePosition { get; set; }
         private Image Img { get; set; }
 
+        public Guest(Point startPos)
+        {
+            SpritePosition = startPos;
+        }
     }
 }

@@ -31,6 +31,8 @@ namespace HotelProject
             HotelEventManager.HTE_Factor = 1.0f;
             HotelEventManager.Start();
 
+            Guest guest1 = new Guest(new Point(200, 200));
+
         }
 
         public List<IRoom> JSONreader()
