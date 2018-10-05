@@ -14,11 +14,12 @@ namespace HotelProject
     class Hotel
     {
         public Form1 Form { get; set; }
+        public List<IRoom> iRoom { get; set; }
 
         public Hotel(Form1 form)
         {
             Form = form;
-            List<IRoom> iRoom = JSONreader();
+            iRoom = JSONreader();
             AddLiftAndStairs(iRoom);
             SetNeighbours(iRoom);
         }
@@ -40,6 +41,50 @@ namespace HotelProject
                 Console.WriteLine(e);
                 return null;
             }
+
+            //foreach (IRoom r in rooms)
+            //{
+            //    if (r.AreaType == "Cinema")
+            //    {
+            //        rooms.Add(new Cinema() {
+            //            AreaType = r.AreaType,
+            //            Position = r.Position,
+            //            Dimension = r.Dimension,
+            //            Capacity = r.Capacity
+            //        });
+            //    }
+            //    else if (r.AreaType == "Restaurant")
+            //    {
+            //        rooms.Add(new Restaurant()
+            //        {
+            //            AreaType = r.AreaType,
+            //            Position = r.Position,
+            //            Dimension = r.Dimension,
+            //            Capacity = r.Capacity
+            //        });
+            //    }
+            //    else if (r.AreaType == "Fitness")
+            //    {
+            //        rooms.Add(new Fitness()
+            //        {
+            //            AreaType = r.AreaType,
+            //            Position = r.Position,
+            //            Dimension = r.Dimension,
+            //            Capacity = r.Capacity
+            //        });
+            //    }
+            //    else if (r.AreaType == "Room")
+            //    {
+            //        rooms.Add(new Room(r.Classification)
+            //        {
+            //            AreaType = r.AreaType,
+            //            Position = r.Position,
+            //            Dimension = r.Dimension,
+            //            Capacity = r.Capacity
+            //        });
+            //    }
+            //    rooms.Remove(r);
+            //}
             return rooms;
         }
 
@@ -73,6 +118,18 @@ namespace HotelProject
             {
                 if (room.Position.Y + room.Dimension.Y - 1 > y)
                     y = room.Position.Y;
+            }
+
+            return y + 1;
+        }
+
+        public int GetMaxHeight()
+        {
+            int y = 0;
+            foreach (IRoom room in iRoom)
+            {
+                if (room.Position.Y + room.Dimension.Y - 1 > y)
+                    y = room.Position.Y + room.Dimension.Y - 1;
             }
 
             return y;
@@ -116,7 +173,8 @@ namespace HotelProject
             {
                 foreach (IRoom room2 in iRoom)
                 {
-                    //TODO distance van trap en lift instelbaar maken
+                    //TODO distance van trap en lift instelbaar maken.
+                    //TODO trap 2 keer zo langzaam maken als de lift
                     if (((room.AreaType == "Elevator" && room2.AreaType == "Elevator") ||
                          (room.AreaType == "Stairs" && room2.AreaType == "Stairs")) &&
                         (room.Position.Y - room2.Position.Y == 1 || room2.Position.Y - room.Position.Y == 1))
@@ -137,6 +195,7 @@ namespace HotelProject
             return iRoom;
         }
 
+        //TODO nagaan van logica hier. lijkt iets mis te gaan
         private void CheckBelow(int offset, List<IRoom> rooms, IRoom room)
         {
             for (int i = room.Position.Y - 1; i > 0; i--)
@@ -148,7 +207,7 @@ namespace HotelProject
                         offset += room2.Dimension.X;
                         foreach (IRoom room3 in rooms)
                         {
-                            if (room.Position.X + offset == room3.Position.X && room.Position.Y == room3.Position.Y)
+                            if (room.Position.X + offset == room3.Position.X && room.Position.Y == room3.Position.Y && !room.Neighbours.ContainsKey(room3))
                             {
                                 room.Neighbours.Add(room3, offset);
                                 room3.Neighbours.Add(room, offset);
