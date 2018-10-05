@@ -10,7 +10,7 @@ namespace HotelProject.Rooms
     {
         public Fitness()
         {
-            AreaType = "Cinema";
+            AreaType = "Fitness";
             Previous = null;
             Distance = Int32.MaxValue / 2;
             Neighbours = new Dictionary<IRoom, int>();
