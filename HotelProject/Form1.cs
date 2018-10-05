@@ -20,9 +20,11 @@ namespace HotelProject
         {
             InitializeComponent();
             
-            _Hotel = new Hotel(this);
+            _Hotel = Hotel.GetInstance();
 
-           Paint += new PaintEventHandler(DrawHotel);
+
+
+            Paint += new PaintEventHandler(DrawHotel);
         }
 
         private void DrawHotel(object sender, PaintEventArgs e)
@@ -83,6 +85,9 @@ namespace HotelProject
                         break;
                     case "Stairs":
                         bitmap = new Bitmap(Resources.Stairs);
+                        break;
+                    case "Lobby":
+                        bitmap = new Bitmap(Resources.Entrance);
                         break;
                     default:
                         //TODO Error plaatje toevoegen

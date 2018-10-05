@@ -14,28 +14,35 @@ namespace HotelProject
 
     class Hotel
     {
-        public Form1 Form { get; set; }
+        //public Form1 Form { get; set; }
         public List<IRoom> iRoom { get; set; }
         public List<Guest> guests { get; set; }
+        private static Hotel Instance { get; set; }
 
-        public Hotel(Form1 form)
+        private Hotel()
         {
-            Form = form;
-
+            //Form = form;
             iRoom = JSONreader();
-            AddLiftAndStairs(iRoom);
-            SetNeighbours(iRoom);
+            guests = new List<Guest>();
+            AddLiftAndStairs();
+            SetNeighbours();
 
             HEListener hel = new HEListener();
             HotelEventManager.Register(hel);
             HotelEventManager.HTE_Factor = 1.0f;
             HotelEventManager.Start();
-
-            Guest guest1 = new Guest(new Point(200, 200));
-
         }
 
-        public List<IRoom> JSONreader()
+        public static Hotel GetInstance()
+        {
+            if (Instance == null)
+            {
+                Instance = new Hotel();
+            }
+            return Instance;
+        }
+
+        private List<IRoom> JSONreader()
         {
             List<IRoom> rooms;
 
@@ -134,6 +141,11 @@ namespace HotelProject
             return y + 1;
         }
 
+        //TODO kijken of deze methode op een andere plek moet in Form1.
+        /// <summary>
+        /// gets the maximum height of the hotel (is different from amount of floors if there are rooms on the top floor that take up 2 floors)
+        /// </summary>
+        /// <returns>maximum height</returns>
         public int GetMaxHeight()
         {
             int y = 0;
@@ -147,38 +159,39 @@ namespace HotelProject
         }
 
         /// <summary>
-        /// Adds the elevators and stairs to the rooms list
+        /// adds the loby, Lift and Stairs to iRoom
         /// </summary>
-        /// <param name="rooms">list of all the rooms in the hotel</param>
-        /// <returns>updated list of rooms with the elevators and stairs now included</returns>
-        private List<IRoom> AddLiftAndStairs(List<IRoom> rooms)
+        private void AddLiftAndStairs()
         {
-            int x = GetMaxX(rooms);
-            int y = GetMaxY(rooms);
+            int x = GetMaxX(iRoom);
+            int y = GetMaxY(iRoom);
 
             for (int i = 0; i < y; i++)
             {
                 IRoom elevator = new IRoom();
-                elevator.Position = new Point {X = 0, Y = i};
-                elevator.Dimension = new Point{X = 1, Y = 1};
+                elevator.Position = new Point(0, i);
+                elevator.Dimension = new Point(1, 1);
                 elevator.AreaType = "Elevator";
-                rooms.Add(elevator);
+                iRoom.Add(elevator);
 
                 IRoom stairs = new IRoom();
-                stairs.Position = new Point{X = x + 1, Y = i};
-                stairs.Dimension = new Point{X = 1, Y = 1};
+                stairs.Position = new Point(x + 1, i);
+                stairs.Dimension = new Point(1,1);
                 stairs.AreaType = "Stairs";
-                rooms.Add(stairs);
+                iRoom.Add(stairs);
             }
-            return rooms;
+
+            IRoom lobby = new IRoom();
+            lobby.Position = new Point(1, 0);
+            lobby.Dimension = new Point(x, 1);
+            lobby.AreaType = "Lobby";
+            iRoom.Add(lobby);
         }
             
         /// <summary>
-        /// sets the neighbours for each room.
+        /// sets the neighbours of each room.
         /// </summary>
-        /// <param name="iRoom">a list of all the rooms from the layout file</param>
-        /// <returns>updated list with the neighbours set</returns>
-        private List<IRoom> SetNeighbours(List<IRoom> iRoom)
+        private void SetNeighbours()
         {
             foreach (IRoom room in iRoom)
             {
@@ -203,11 +216,10 @@ namespace HotelProject
 
                 CheckBelow(1, iRoom, room);
             }
-            return iRoom;
         }
 
         //TODO nagaan van logica hier. lijkt iets mis te gaan
-        private void CheckBelow(int offset, List<IRoom> rooms, IRoom room)
+        private static void CheckBelow(int offset, List<IRoom> rooms, IRoom room)
         {
             for (int i = room.Position.Y - 1; i > 0; i--)
             {

@@ -19,11 +19,13 @@ namespace HotelProject.Rooms
         public string Classification { get; set; }
         public int Capacity { get; set; }
         public Image Img { get; set; }
+        public bool Availabe { get; set; }
 
         public IRoom()
         {
             Neighbours = new Dictionary<IRoom, int>();
-            SetImage(AreaType);
+            Availabe = true;
+            //SetImage(AreaType);
         }
 
         private void SetImage(string areatype)

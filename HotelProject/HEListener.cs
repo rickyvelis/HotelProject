@@ -22,12 +22,16 @@ namespace HotelProject
             switch (Event.EventType)
             {
                 case HotelEventType.CHECK_IN:
-                    //spawn guest
-                    //do things
+                    //check if guest exists if not:
+                    //spawn guest at lobby
+                    //go through list of rooms, check for asked star rating and if available.
+                    //check higher star rating and if available (repeat through 5 star) if no upgrade available let guest leave
+
                     break;
                 case HotelEventType.CHECK_OUT:
                     //guests goes to lobby and dies
                     //room becomes available
+                    //room becomes dirty
                     //more things?
                     break;
                 case HotelEventType.CLEANING_EMERGENCY:
