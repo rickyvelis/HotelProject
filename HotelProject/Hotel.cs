@@ -157,17 +157,23 @@ namespace HotelProject
             for (int i = 0; i < y; i++)
             {
                 IRoom elevator = new IRoom();
-                elevator.Position = new Point {X = 0, Y = i};
-                elevator.Dimension = new Point{X = 1, Y = 1};
+                elevator.Position = new Point(0, i);
+                elevator.Dimension = new Point(1, 1);
                 elevator.AreaType = "Elevator";
                 rooms.Add(elevator);
 
                 IRoom stairs = new IRoom();
-                stairs.Position = new Point{X = x + 1, Y = i};
-                stairs.Dimension = new Point{X = 1, Y = 1};
+                stairs.Position = new Point(x + 1, i);
+                stairs.Dimension = new Point(1,1);
                 stairs.AreaType = "Stairs";
                 rooms.Add(stairs);
             }
+
+            IRoom lobby = new IRoom();
+            lobby.Position = new Point(1, 0);
+            lobby.Dimension = new Point(x, 1);
+            lobby.AreaType = "Lobby";
+            rooms.Add(lobby);
             return rooms;
         }
             

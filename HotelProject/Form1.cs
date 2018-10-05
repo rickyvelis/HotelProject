@@ -84,6 +84,9 @@ namespace HotelProject
                     case "Stairs":
                         bitmap = new Bitmap(Resources.Stairs);
                         break;
+                    case "Lobby":
+                        bitmap = new Bitmap(Resources.Entrance);
+                        break;
                     default:
                         //TODO Error plaatje toevoegen
                         bitmap = new Bitmap(Resources.Cinema2);

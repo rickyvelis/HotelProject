@@ -28,6 +28,7 @@ namespace HotelProject
                 case HotelEventType.CHECK_OUT:
                     //guests goes to lobby and dies
                     //room becomes available
+                    //room becomes dirty
                     //more things?
                     break;
                 case HotelEventType.CLEANING_EMERGENCY:
