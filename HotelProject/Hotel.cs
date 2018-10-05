@@ -14,20 +14,16 @@ namespace HotelProject
 
     class Hotel
     {
-        //public Form1 Form { get; set; }
         public List<IRoom> iRoom { get; set; }
         public List<Guest> guests { get; set; }
         private static Hotel Instance { get; set; }
 
         private Hotel()
         {
-            //Form = form;
             iRoom = JSONreader();
             guests = new List<Guest>();
             AddLiftAndStairs();
             SetNeighbours();
-
-
 
             Guest guest1 = new Guest(new Point(200, 200));
             guest1.Position = iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0);
@@ -35,6 +31,7 @@ namespace HotelProject
             guest1.FindRoom(destination, iRoom);
         }
 
+        //TODO Summary schrijven
         public static Hotel GetInstance()
         {
             if (Instance == null)
@@ -44,6 +41,7 @@ namespace HotelProject
             return Instance;
         }
 
+        //TODO Summary schrijven
         private List<IRoom> JSONreader()
         {
             List<IRoom> rooms;
@@ -109,7 +107,6 @@ namespace HotelProject
             #endregion
             return rooms;
         }
-
 
         /// <summary>
         /// Get the width of the hotel
@@ -223,6 +220,7 @@ namespace HotelProject
         }
 
         //TODO nagaan van logica hier. lijkt iets mis te gaan
+        //TODO Summary schrijven
         private static void CheckBelow(int offset, List<IRoom> rooms, IRoom room)
         {
             for (int i = room.Position.Y - 1; i > 0; i--)

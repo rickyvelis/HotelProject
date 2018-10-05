@@ -8,11 +8,11 @@ using HotelProject.Rooms;
 
 namespace HotelProject
 {
-    public class Guest
+    class Guest
     {
-        public List<IRoom> Path { get; set; }
+        List<IRoom> Path { get; set; }
         public string Name { get; set; }
-        public IRoom Room { get; set; }
+        IRoom Room { get; set; }
         public IRoom Position { get; set; }
         public Point SpritePosition { get; set; }
         private Image Img { get; set; }

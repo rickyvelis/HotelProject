@@ -8,7 +8,7 @@ using HotelProject.Properties;
 
 namespace HotelProject.Rooms
 {
-    class IRoom
+    public class IRoom
     {
         public string AreaType { get; set; }
         public Dictionary<IRoom, int> Neighbours { get; set; }
