@@ -28,7 +28,7 @@ namespace HotelProject
             //HotelEventManager.Start();
 
             Guest guest1 = new Guest(new Point(200, 200));
-            guest1.Position = _Hotel.iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0);
+            guest1.SetPosition(1, 9);
             IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
             guest1.FindRoom(destination);
         }

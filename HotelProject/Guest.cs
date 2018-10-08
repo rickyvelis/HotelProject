@@ -25,6 +25,13 @@ namespace HotelProject
             _Hotel = Hotel.GetInstance();
         }
 
+        public void SetPosition(int X, int Y)
+        {
+            Position = _Hotel.iRoom.Single(r => r.Position.X == X && r.Position.Y == Y);
+        }
+
+        #region Pathfinding code
+
         /// <summary>
         /// Uses the Dijkstra-algorithm to give a list of rooms which a Guest needs to traverse in order to reach the given destination
         /// </summary>
@@ -103,5 +110,7 @@ namespace HotelProject
 
             return Path;
         }
+
+        #endregion
     }
 }
