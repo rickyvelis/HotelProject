@@ -92,7 +92,11 @@ namespace HotelProject
             while (previous != null)
             {
                 Path.Add(previous);
-                path = "" + previous.AreaType + " " + end.Position.ToString() + " -> " + path;
+                path = "" + previous.AreaType + " " + previous.Position.ToString() + " -> " + path;
+
+                if (previous == Position)
+                    break;
+
                 previous = previous.Previous;
             }
             Console.WriteLine("\n" + path + "\nDistance: " + end.Distance);
