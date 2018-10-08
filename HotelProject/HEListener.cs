@@ -36,7 +36,6 @@ namespace HotelProject
             {
                 case HotelEventType.CHECK_IN:
                     //TODO gast hotel laten verlaten/gast verwijderen als er geen kamer beschikbaar is
-                    //TODO gast in de lobby laten spawnen/naar binnen laten lopen naar lobby.
                     if (Event.Data != null)
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
@@ -45,6 +44,7 @@ namespace HotelProject
                             {
                                 bool roomFound = false;
                                 Guest guest = new Guest(new Point(200, 200));
+                                guest.Position = _Hotel.iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0);
                                 guest.Name = data.Key;
                                 _Hotel.guests.Add(guest);
 
@@ -58,6 +58,7 @@ namespace HotelProject
                                                 guest.Room = room;
                                                 room.Available = false;
                                                 roomFound = true;
+                                                guest.FindRoom(room);
                                                 break;
                                             }                                            
                                         }
@@ -66,11 +67,12 @@ namespace HotelProject
                                         {
                                             foreach (IRoom room in _Hotel.iRoom)
                                             {
-                                                if (room.Available && room.Classification == "2 Stars")
+                                                if (room.Available && room.Classification == "2 stars")
                                                 {
                                                     guest.Room = room;
                                                     room.Available = false;
                                                     roomFound = true;
+                                                    guest.FindRoom(room);
                                                     break;
                                                 }
                                             }
@@ -80,11 +82,12 @@ namespace HotelProject
                                         {
                                             foreach (IRoom room in _Hotel.iRoom)
                                             {
-                                                if (room.Available && room.Classification == "3 Stars")
+                                                if (room.Available && room.Classification == "3 stars")
                                                 {
                                                     guest.Room = room;
                                                     room.Available = false;
                                                     roomFound = true;
+                                                    guest.FindRoom(room);
                                                     break;
                                                 }
                                             }
@@ -94,11 +97,12 @@ namespace HotelProject
                                         {
                                             foreach (IRoom room in _Hotel.iRoom)
                                             {
-                                                if (room.Available && room.Classification == "4 Stars")
+                                                if (room.Available && room.Classification == "4 stars")
                                                 {
                                                     guest.Room = room;
                                                     room.Available = false;
                                                     roomFound = true;
+                                                    guest.FindRoom(room);
                                                     break;
                                                 }
                                             }
@@ -108,11 +112,12 @@ namespace HotelProject
                                         {
                                             foreach (IRoom room in _Hotel.iRoom)
                                             {
-                                                if (room.Available && room.Classification == "5 Stars")
+                                                if (room.Available && room.Classification == "5 stars")
                                                 {
                                                     guest.Room = room;
                                                     room.Available = false;
                                                     roomFound = true;
+                                                    guest.FindRoom(room);
                                                     break;
                                                 }
                                             }
@@ -123,11 +128,12 @@ namespace HotelProject
                                     case ("Checkin 2stars"):
                                         foreach (IRoom room in _Hotel.iRoom)
                                         {
-                                            if (room.Available && room.Classification == "2 Stars")
+                                            if (room.Available && room.Classification == "2 stars")
                                             {
                                                 guest.Room = room;
                                                 room.Available = false;
                                                 roomFound = true;
+                                                guest.FindRoom(room);
                                                 break;
                                             }
                                         }
@@ -136,11 +142,12 @@ namespace HotelProject
                                         {
                                             foreach (IRoom room in _Hotel.iRoom)
                                             {
-                                                if (room.Available && room.Classification == "3 Stars")
+                                                if (room.Available && room.Classification == "3 stars")
                                                 {
                                                     guest.Room = room;
                                                     room.Available = false;
                                                     roomFound = true;
+                                                    guest.FindRoom(room);
                                                     break;
                                                 }
                                             }
@@ -150,11 +157,12 @@ namespace HotelProject
                                         {
                                             foreach (IRoom room in _Hotel.iRoom)
                                             {
-                                                if (room.Available && room.Classification == "4 Stars")
+                                                if (room.Available && room.Classification == "4 stars")
                                                 {
                                                     guest.Room = room;
                                                     room.Available = false;
                                                     roomFound = true;
+                                                    guest.FindRoom(room);
                                                     break;
                                                 }
                                             }
@@ -164,11 +172,12 @@ namespace HotelProject
                                         {
                                             foreach (IRoom room in _Hotel.iRoom)
                                             {
-                                                if (room.Available && room.Classification == "5 Stars")
+                                                if (room.Available && room.Classification == "5 stars")
                                                 {
                                                     guest.Room = room;
                                                     room.Available = false;
                                                     roomFound = true;
+                                                    guest.FindRoom(room);
                                                     break;
                                                 }
                                             }
@@ -179,11 +188,12 @@ namespace HotelProject
                                     case ("Checkin 3stars"):
                                         foreach (IRoom room in _Hotel.iRoom)
                                         {
-                                            if (room.Available && room.Classification == "3 Stars")
+                                            if (room.Available && room.Classification == "3 stars")
                                             {
                                                 guest.Room = room;
                                                 room.Available = false;
                                                 roomFound = true;
+                                                guest.FindRoom(room);
                                                 break;
                                             }
                                         }
@@ -192,11 +202,12 @@ namespace HotelProject
                                         {
                                             foreach (IRoom room in _Hotel.iRoom)
                                             {
-                                                if (room.Available && room.Classification == "4 Stars")
+                                                if (room.Available && room.Classification == "4 stars")
                                                 {
                                                     guest.Room = room;
                                                     room.Available = false;
                                                     roomFound = true;
+                                                    guest.FindRoom(room);
                                                     break;
                                                 }
                                             }
@@ -206,11 +217,12 @@ namespace HotelProject
                                         {
                                             foreach (IRoom room in _Hotel.iRoom)
                                             {
-                                                if (room.Available && room.Classification == "5 Stars")
+                                                if (room.Available && room.Classification == "5 stars")
                                                 {
                                                     guest.Room = room;
                                                     room.Available = false;
                                                     roomFound = true;
+                                                    guest.FindRoom(room);
                                                     break;
                                                 }
                                             }
@@ -221,11 +233,12 @@ namespace HotelProject
                                     case ("Checkin 4stars"):
                                         foreach (IRoom room in _Hotel.iRoom)
                                         {
-                                            if (room.Available && room.Classification == "4 Stars")
+                                            if (room.Available && room.Classification == "4 stars")
                                             {
                                                 guest.Room = room;
                                                 room.Available = false;
                                                 roomFound = true;
+                                                guest.FindRoom(room);
                                                 break;
                                             }
                                         }
@@ -234,11 +247,12 @@ namespace HotelProject
                                         {
                                             foreach (IRoom room in _Hotel.iRoom)
                                             {
-                                                if (room.Available && room.Classification == "5 Stars")
+                                                if (room.Available && room.Classification == "5 stars")
                                                 {
                                                     guest.Room = room;
                                                     room.Available = false;
                                                     roomFound = true;
+                                                    guest.FindRoom(room);
                                                     break;
                                                 }
                                             }
@@ -249,11 +263,12 @@ namespace HotelProject
                                     case ("Checkin 5stars"):
                                         foreach (IRoom room in _Hotel.iRoom)
                                         {
-                                            if (room.Available && room.Classification == "5 Stars")
+                                            if (room.Available && room.Classification == "5 stars")
                                             {
                                                 guest.Room = room;
                                                 room.Available = false;
                                                 roomFound = true;
+                                                guest.FindRoom(room);
                                                 break;
                                             }
                                         }
