@@ -13,7 +13,7 @@ namespace HotelProject
     {
         List<IRoom> Path { get; set; }
         public string Name { get; set; }
-        IRoom Room { get; set; }
+        public IRoom Room { get; set; }
         public IRoom Position { get; set; }
         public Point SpritePosition { get; set; }
         private Image Img { get; set; }

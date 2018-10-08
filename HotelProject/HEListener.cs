@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HotelEvents;
+using HotelProject.Rooms;
 
 namespace HotelProject
 {
@@ -33,16 +35,234 @@ namespace HotelProject
             switch (Event.EventType)
             {
                 case HotelEventType.CHECK_IN:
-
-                    //check if guest exists if not:
-
-                    //spawn guest at lobby
-                    //go through list of rooms, check for asked star rating and if available.
-                    //check higher star rating and if available (repeat through 5 star) if no upgrade available let guest leave
+                    //TODO gast hotel laten verlaten/gast verwijderen als er geen kamer beschikbaar is
+                    //TODO gast in de lobby laten spawnen/naar binnen laten lopen naar lobby.
                     if (Event.Data != null)
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
-                        {                           
+                        {
+                            if (!_Hotel.guests.Exists(r => r.Name == data.Key))
+                            {
+                                bool roomFound = false;
+                                Guest guest = new Guest(new Point(200, 200));
+                                guest.Name = data.Key;
+                                _Hotel.guests.Add(guest);
+
+                                switch (data.Value)
+                                {
+                                    case ("Checkin 1stars"):
+                                        foreach (IRoom room in _Hotel.iRoom)
+                                        {
+                                            if (room.Availabe && room.Classification == "1 Star")
+                                            {
+                                                guest.Room = room;
+                                                room.Availabe = false;
+                                                roomFound = true;
+                                                break;
+                                            }                                            
+                                        }
+
+                                        if (!roomFound)
+                                        {
+                                            foreach (IRoom room in _Hotel.iRoom)
+                                            {
+                                                if (room.Availabe && room.Classification == "2 Stars")
+                                                {
+                                                    guest.Room = room;
+                                                    room.Availabe = false;
+                                                    roomFound = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (!roomFound)
+                                        {
+                                            foreach (IRoom room in _Hotel.iRoom)
+                                            {
+                                                if (room.Availabe && room.Classification == "3 Stars")
+                                                {
+                                                    guest.Room = room;
+                                                    room.Availabe = false;
+                                                    roomFound = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (!roomFound)
+                                        {
+                                            foreach (IRoom room in _Hotel.iRoom)
+                                            {
+                                                if (room.Availabe && room.Classification == "4 Stars")
+                                                {
+                                                    guest.Room = room;
+                                                    room.Availabe = false;
+                                                    roomFound = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (!roomFound)
+                                        {
+                                            foreach (IRoom room in _Hotel.iRoom)
+                                            {
+                                                if (room.Availabe && room.Classification == "5 Stars")
+                                                {
+                                                    guest.Room = room;
+                                                    room.Availabe = false;
+                                                    roomFound = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        break;
+
+                                    case ("Checkin 2stars"):
+                                        foreach (IRoom room in _Hotel.iRoom)
+                                        {
+                                            if (room.Availabe && room.Classification == "2 Stars")
+                                            {
+                                                guest.Room = room;
+                                                room.Availabe = false;
+                                                roomFound = true;
+                                                break;
+                                            }
+                                        }
+
+                                        if (!roomFound)
+                                        {
+                                            foreach (IRoom room in _Hotel.iRoom)
+                                            {
+                                                if (room.Availabe && room.Classification == "3 Stars")
+                                                {
+                                                    guest.Room = room;
+                                                    room.Availabe = false;
+                                                    roomFound = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (!roomFound)
+                                        {
+                                            foreach (IRoom room in _Hotel.iRoom)
+                                            {
+                                                if (room.Availabe && room.Classification == "4 Stars")
+                                                {
+                                                    guest.Room = room;
+                                                    room.Availabe = false;
+                                                    roomFound = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (!roomFound)
+                                        {
+                                            foreach (IRoom room in _Hotel.iRoom)
+                                            {
+                                                if (room.Availabe && room.Classification == "5 Stars")
+                                                {
+                                                    guest.Room = room;
+                                                    room.Availabe = false;
+                                                    roomFound = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        break;
+
+                                    case ("Checkin 3stars"):
+                                        foreach (IRoom room in _Hotel.iRoom)
+                                        {
+                                            if (room.Availabe && room.Classification == "3 Stars")
+                                            {
+                                                guest.Room = room;
+                                                room.Availabe = false;
+                                                roomFound = true;
+                                                break;
+                                            }
+                                        }
+
+                                        if (!roomFound)
+                                        {
+                                            foreach (IRoom room in _Hotel.iRoom)
+                                            {
+                                                if (room.Availabe && room.Classification == "4 Stars")
+                                                {
+                                                    guest.Room = room;
+                                                    room.Availabe = false;
+                                                    roomFound = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (!roomFound)
+                                        {
+                                            foreach (IRoom room in _Hotel.iRoom)
+                                            {
+                                                if (room.Availabe && room.Classification == "5 Stars")
+                                                {
+                                                    guest.Room = room;
+                                                    room.Availabe = false;
+                                                    roomFound = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        break;
+
+                                    case ("Checkin 4stars"):
+                                        foreach (IRoom room in _Hotel.iRoom)
+                                        {
+                                            if (room.Availabe && room.Classification == "4 Stars")
+                                            {
+                                                guest.Room = room;
+                                                room.Availabe = false;
+                                                roomFound = true;
+                                                break;
+                                            }
+                                        }
+
+                                        if (!roomFound)
+                                        {
+                                            foreach (IRoom room in _Hotel.iRoom)
+                                            {
+                                                if (room.Availabe && room.Classification == "5 Stars")
+                                                {
+                                                    guest.Room = room;
+                                                    room.Availabe = false;
+                                                    roomFound = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        break;
+
+                                    case ("Checkin 5stars"):
+                                        foreach (IRoom room in _Hotel.iRoom)
+                                        {
+                                            if (room.Availabe && room.Classification == "5 Stars")
+                                            {
+                                                guest.Room = room;
+                                                room.Availabe = false;
+                                                roomFound = true;
+                                                break;
+                                            }
+                                        }
+                                        break;
+
+                                    default:
+                                        break;
+                                }                                
+                            }
                         }
                     }
 
