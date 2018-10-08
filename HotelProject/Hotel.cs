@@ -25,10 +25,7 @@ namespace HotelProject
             AddLiftAndStairs();
             SetNeighbours();
 
-            Guest guest1 = new Guest(new Point(200, 200));
-            guest1.Position = iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0);
-            IRoom destination = iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
-            guest1.FindRoom(destination, iRoom);
+
         }
 
         //TODO Summary schrijven
