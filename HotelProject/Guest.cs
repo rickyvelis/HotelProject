@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 using HotelProject.Rooms;
 
 namespace HotelProject
@@ -16,19 +17,23 @@ namespace HotelProject
         public IRoom Position { get; set; }
         public Point SpritePosition { get; set; }
         private Image Img { get; set; }
+        private Hotel _Hotel { get; }
 
         public Guest(Point startPos)
         {
             SpritePosition = startPos;
+            _Hotel = Hotel.GetInstance();
         }
 
-        public string FindRoom(IRoom destination, List<IRoom> roomsToSearch)
+        public string FindRoom(IRoom destination)
         {
+            List<IRoom> test = new List<IRoom>(_Hotel.iRoom);
             IRoom current = Position;
-            while (!Visit(current, destination, roomsToSearch)) //Voer dit uit totdat de end node is bezocht
+            while (!Visit(current, destination, test)) //Voer dit uit totdat de end node is bezocht
             {
-                current = roomsToSearch.Aggregate((l, r) => l.Distance < r.Distance ? l : r); //if(l.Distance < r.Distance) { return l; } else { return r; }
+                current = test.Aggregate((l, r) => l.Distance < r.Distance ? l : r); //if(l.Distance < r.Distance) { return l; } else { return r; }
             }
+
             return MakePath(destination);
         }
 
