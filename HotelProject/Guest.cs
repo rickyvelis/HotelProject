@@ -63,7 +63,11 @@ namespace HotelProject
             }
             foreach (KeyValuePair<IRoom, int> x in current.Neighbours) //This checks every neighbouring room
             {
-                int newDistance = current.Distance + x.Value;
+                int newDistance = x.Value;
+                if (current != Position)
+                {
+                    newDistance = current.Distance + x.Value;
+                }
                 if (newDistance < x.Key.Distance) //If the new distance of the neighbour is shorter than the distance it already had, the neighbour gets assigned the new distance
                 {
                     x.Key.Distance = newDistance; //THe current neighbour gets a distance, which is the already traversed distance + the distance of the current room to the neighbour
@@ -81,7 +85,7 @@ namespace HotelProject
         private List<IRoom> MakePath(IRoom end)
         {
             IRoom previous = end.Previous;
-
+            Path = new List<IRoom>();
             Path.Add(end);
             string path = "" + end.AreaType + " " + end.Position.ToString();
 
