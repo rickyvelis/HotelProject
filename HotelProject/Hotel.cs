@@ -23,9 +23,7 @@ namespace HotelProject
             iRoom = JSONreader();
             guests = new List<Guest>();
             AddLiftAndStairs();
-            SetNeighbours();
-
-
+            SetNeighbours();            
         }
 
         //TODO Summary schrijven
@@ -224,12 +222,12 @@ namespace HotelProject
             {
                 foreach (IRoom room2 in rooms)
                 {
-                    if (room.Position.X + offset == room2.Position.X && i == room2.Position.Y && room.Position.Y - room2.Position.Y < room2.Dimension.Y)
+                    if (room.Position.X + room.Dimension.X - 1 + offset == room2.Position.X && i == room2.Position.Y && room.Position.Y - room2.Position.Y < room2.Dimension.Y)
                     {
                         offset += room2.Dimension.X;
                         foreach (IRoom room3 in rooms)
                         {
-                            if (room.Position.X + offset == room3.Position.X && room.Position.Y == room3.Position.Y && !room.Neighbours.ContainsKey(room3))
+                            if (room.Position.X + room.Dimension.X - 1 + offset == room3.Position.X && room.Position.Y == room3.Position.Y && !room.Neighbours.ContainsKey(room3))
                             {
                                 room.Neighbours.Add(room3, offset);
                                 room3.Neighbours.Add(room, offset);
