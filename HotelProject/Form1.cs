@@ -25,7 +25,7 @@ namespace HotelProject
             HEListener hel = new HEListener();
             HotelEventManager.Register(hel);
             HotelEventManager.HTE_Factor = 1.0f;
-            //HotelEventManager.Start();
+            HotelEventManager.Start();
 
             Guest guest1 = new Guest(new Point(200, 200));
             guest1.SetPosition(1, 9);
