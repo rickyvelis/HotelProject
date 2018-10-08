@@ -22,7 +22,13 @@ namespace HotelProject
             SpritePosition = startPos;
         }
 
-        public string FindRoom(IRoom destination, List<IRoom> roomsToSearch)
+        /// <summary>
+        /// Uses the Dijkstra-algorithm to give a list of rooms which a Guest needs to traverse in order to reach the given destination
+        /// </summary>
+        /// <param name="destination">Destination</param>
+        /// <param name="roomsToSearch">List of all the rooms of the hotel</param>
+        /// <returns></returns>
+        public List<IRoom> FindRoom(IRoom destination, List<IRoom> roomsToSearch)
         {
             IRoom current = Position;
             while (!Visit(current, destination, roomsToSearch)) //Voer dit uit totdat de end node is bezocht
@@ -32,39 +38,57 @@ namespace HotelProject
             return MakePath(destination);
         }
 
+        /// <summary>
+        /// Method that visits a room for the Dijkstra-algorithm
+        /// </summary>
+        /// <param name="current">The room to be visited</param>
+        /// <param name="end">Destination</param>
+        /// <param name="roomsToSearch">List of all the rooms in the hotel</param>
+        /// <returns></returns>
         private bool Visit(IRoom current, IRoom end, List<IRoom> roomsToSearch)
         {
             Console.WriteLine("Visiting " + current.AreaType + " at " + current.Position.ToString());
-            if (current == end) //Kijkt of de laatste Node wordt bezocht.
+            if (current == end) //Checks if the destination is visited
             {
                 return true;
             }
             if (roomsToSearch.Contains(current))
             {
-                roomsToSearch.Remove(current); //Elke bezochte Room wordt uit de lijst van Rooms gehaald.
+                roomsToSearch.Remove(current); //Every visited room will be removed from the list of all the rooms
             }
-            foreach (KeyValuePair<IRoom, int> x in current.Neighbours) //Alle buren van de bezochte Room worden nagegaan.
+            foreach (KeyValuePair<IRoom, int> x in current.Neighbours) //This checks every neighbouring room
             {
                 int newDistance = current.Distance + x.Value;
-                if (newDistance < x.Key.Distance) //Als de nieuwe afstand van de buur kleiner is dan de afstand die de buur al had, wordt de nieuwe afstand toegewezen aan de buur.
+                if (newDistance < x.Key.Distance) //If the new distance of the neighbour is shorter than the distance it already had, the neighbour gets assigned the new distance
                 {
-                    x.Key.Distance = newDistance; //De huidige buur krijgt een Distance. Dat is dus de al afgelegde afstand + de afstand van huidige Node naar de buur.
-                    x.Key.Previous = current; //De huidige buur krijgt de huidige bezochte Node als Previous.
+                    x.Key.Distance = newDistance; //THe current neighbour gets a distance, which is the already traversed distance + the distance of the current room to the neighbour
+                    x.Key.Previous = current; //The current neighbour get the current room assigned ass Previous
                 }
             }
             return false;
         }
 
-        private string MakePath(IRoom end)
+        /// <summary>
+        /// Gives the path a guest needs to take in order to reach the given room
+        /// </summary>
+        /// <param name="end">Destination</param>
+        /// <returns></returns>
+        private List<IRoom> MakePath(IRoom end)
         {
             IRoom previous = end.Previous;
+
+            Path.Add(end);
             string path = "" + end.AreaType + " " + end.Position.ToString();
+
             while (previous != null)
             {
+                Path.Add(previous);
                 path = "" + previous.AreaType + " " + end.Position.ToString() + " -> " + path;
                 previous = previous.Previous;
             }
-            return "\n" + path + "\nDistance: " + end.Distance;
+            Console.WriteLine("\n" + path + "\nDistance: " + end.Distance);
+
+            return Path;
         }
     }
 }

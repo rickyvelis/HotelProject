@@ -160,7 +160,7 @@ namespace HotelProject
         }
 
         /// <summary>
-        /// adds the loby, Lift and Stairs to iRoom
+        /// adds the lobby, Lift and Stairs to iRoom
         /// </summary>
         private void AddLiftAndStairs()
         {
