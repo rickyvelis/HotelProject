@@ -123,6 +123,9 @@ namespace HotelProject
                                             }
                                         }
 
+                                        if(!roomFound)
+                                            _Hotel.guests.Remove(guest);
+
                                         break;
 
                                     case ("Checkin 2stars"):
@@ -182,6 +185,8 @@ namespace HotelProject
                                                 }
                                             }
                                         }
+                                        if(!roomFound)
+                                            _Hotel.guests.Remove(guest);
 
                                         break;
 
@@ -227,6 +232,9 @@ namespace HotelProject
                                                 }
                                             }
                                         }
+                                        
+                                        if(!roomFound)
+                                            _Hotel.guests.Remove(guest);
 
                                         break;
 
@@ -257,6 +265,9 @@ namespace HotelProject
                                                 }
                                             }
                                         }
+                                        
+                                        if(!roomFound)
+                                            _Hotel.guests.Remove(guest);
 
                                         break;
 
@@ -272,6 +283,10 @@ namespace HotelProject
                                                 break;
                                             }
                                         }
+
+                                        if(!roomFound)
+                                            _Hotel.guests.Remove(guest);
+
                                         break;
 
                                     default:
