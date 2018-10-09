@@ -9,7 +9,7 @@ using HotelProject.Rooms;
 
 namespace HotelProject
 {
-    class Guest
+    public class Guest
     {
         List<IRoom> Path { get; set; }
         public string Name { get; set; }

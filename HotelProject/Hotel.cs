@@ -12,7 +12,7 @@ using HotelEvents;
 namespace HotelProject
 {
 
-    class Hotel
+    public class Hotel
     {
         public List<IRoom> iRoom { get; set; }
         public List<Guest> guests { get; set; }

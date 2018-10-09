@@ -9,7 +9,7 @@ using HotelProject.Rooms;
 
 namespace HotelProject
 {
-    class HEListener : HotelEventListener
+    public class HEListener : HotelEventListener
     {
         private Hotel _Hotel { get; set; }
 

@@ -27,10 +27,10 @@ namespace HotelProject
             HotelEventManager.HTE_Factor = 1.0f;
             HotelEventManager.Start();
 
-            Guest guest1 = new Guest(new Point(200, 200));
-            guest1.SetPosition(1, 9);
-            IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
-            guest1.FindRoom(destination);
+            //Guest guest1 = new Guest(new Point(200, 200));
+            //guest1.SetPosition(1, 9);
+            //IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
+            //guest1.FindRoom(destination);
         }
 
         private void DrawHotel(object sender, PaintEventArgs e)
