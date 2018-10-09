@@ -19,15 +19,17 @@ namespace HotelProject
         private Image Img { get; set; }
         private Hotel _Hotel { get; }
 
-        public Guest(Point startPos)
+        public Guest(IRoom Pos)
         {
-            SpritePosition = startPos;
+            Position = Pos;
             _Hotel = Hotel.GetInstance();
+            SpritePosition = new Point(Position.Position.X, Position.Position.Y);
         }
 
         public void SetPosition(int X, int Y)
         {
             Position = _Hotel.iRoom.Single(r => r.Position.X == X && r.Position.Y == Y);
+            SpritePosition = new Point(Position.Position.X * 128, (_Hotel.GetMaxHeight() - Position.Position.Y + 1) * 89 - 25);
         }
 
         #region Pathfinding code
@@ -35,16 +37,15 @@ namespace HotelProject
         /// <summary>
         /// Uses the Dijkstra-algorithm to give a list of rooms which a Guest needs to traverse in order to reach the given destination
         /// </summary>
-        /// <param name="destination">Destination</param>
-        /// <param name="roomsToSearch">List of all the rooms of the hotel</param>
+        /// <param name="destination">Destination</param>        
         /// <returns></returns>
         public List<IRoom> FindRoom(IRoom destination)
         {
-            List<IRoom> test = new List<IRoom>(_Hotel.iRoom);
+            List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
             IRoom current = Position;
-            while (!Visit(current, destination, test)) //Voer dit uit totdat de end node is bezocht
+            while (!Visit(current, destination, roomsToSearch)) //Voer dit uit totdat de end node is bezocht
             {
-                current = test.Aggregate((l, r) => l.Distance < r.Distance ? l : r); //if(l.Distance < r.Distance) { return l; } else { return r; }
+                current = roomsToSearch.Aggregate((l, r) => l.Distance < r.Distance ? l : r); //if(l.Distance < r.Distance) { return l; } else { return r; }
             }
 
             return MakePath(destination);
@@ -112,5 +113,16 @@ namespace HotelProject
         }
 
         #endregion
+
+        public void Step()
+        {
+            //TODO 
+            if (Path.Count > 0)
+            {
+                Position = Path[Path.Count - 1];
+                SpritePosition = new Point(Position.Position.X, Position.Position.Y);
+                Path.Remove(Path[Path.Count - 1]);
+            }
+        }
     }
 }
