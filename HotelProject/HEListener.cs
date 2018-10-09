@@ -22,6 +22,7 @@ namespace HotelProject
         {
             Console.WriteLine("TYPE: " + Event.EventType);
             Console.WriteLine("MESSAGE: " + Event.Message);
+            Console.WriteLine("TIME: " + Event.Time);
             if (Event.Data != null)
             {
                 foreach (KeyValuePair<string, string> data in Event.Data)
@@ -35,7 +36,6 @@ namespace HotelProject
             switch (Event.EventType)
             {
                 case HotelEventType.CHECK_IN:
-                    //TODO gast hotel laten verlaten/gast verwijderen als er geen kamer beschikbaar is
                     if (Event.Data != null)
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
@@ -43,8 +43,9 @@ namespace HotelProject
                             if (!_Hotel.guests.Exists(r => r.Name == data.Key))
                             {
                                 bool roomFound = false;
-                                Guest guest = new Guest(new Point(200, 200));
-                                guest.Position = _Hotel.iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0);
+                                //Guest guest = new Guest(new Point(200, 200));
+                                Guest guest = new Guest(_Hotel.iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0));
+                                //guest.Position = _Hotel.iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0);
                                 guest.Name = data.Key;
                                 _Hotel.guests.Add(guest);
 

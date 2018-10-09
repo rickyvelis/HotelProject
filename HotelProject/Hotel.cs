@@ -11,7 +11,7 @@ using HotelEvents;
 
 namespace HotelProject
 {
-
+    //TODO Code maken zodat er hallen worden toegevoegd!
     class Hotel
     {
         public List<IRoom> iRoom { get; set; }
@@ -183,7 +183,8 @@ namespace HotelProject
             lobby.AreaType = "Lobby";
             iRoom.Add(lobby);
         }
-            
+        
+        //TODO Wordt herschreven want hallen zullen worden toegevoegd als rooms voor betere pathfinding
         /// <summary>
         /// sets the neighbours of each room.
         /// </summary>

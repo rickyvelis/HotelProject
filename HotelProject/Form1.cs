@@ -17,6 +17,8 @@ namespace HotelProject
     {
         private Hotel _Hotel { get; set; }
 
+        delegate void Form1Callback();
+
         public Form1()
         {
             InitializeComponent();
@@ -25,17 +27,23 @@ namespace HotelProject
             HEListener hel = new HEListener();
             HotelEventManager.Register(hel);
             HotelEventManager.HTE_Factor = 1.0f;
-            HotelEventManager.Start();
+            System.Timers.Timer timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor);
+            timer.Enabled = true;
+            timer.Elapsed += Timer;
 
-            Guest guest1 = new Guest(new Point(200, 200));
-            guest1.SetPosition(1, 9);
+
+            //HotelEventManager.Start();
+
+            Guest guest1 = new Guest(_Hotel.iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0));
+            //guest1.SetPosition(1, 0);
+            _Hotel.guests.Add(guest1);
             IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
             guest1.FindRoom(destination);
         }
 
         private void DrawHotel(object sender, PaintEventArgs e)
         {
-            Render(_Hotel.iRoom, e);
+            Render(e);
         }
 
         /// <summary>
@@ -43,12 +51,12 @@ namespace HotelProject
         /// </summary>
         /// <param name="rooms">list of rooms in the hotel</param>
         /// <param name="e"></param>
-        private void Render(List<IRoom> rooms, PaintEventArgs e)
+        private void Render(PaintEventArgs e)
         {
             Bitmap bitmap;
             int height = _Hotel.GetMaxHeight();
 
-            foreach (IRoom room in rooms)
+            foreach (IRoom room in _Hotel.iRoom)
             {
                 switch (room.AreaType)
                 {
@@ -72,8 +80,9 @@ namespace HotelProject
                                 break;
                             default:
                                 bitmap = new Bitmap(Resources.Room1);
-                                break;   
+                                break;
                         }
+
                         break;
                     case "Fitness":
                         //TODO Fitness plaatje toevoegen
@@ -100,22 +109,57 @@ namespace HotelProject
                         bitmap = new Bitmap(Resources.Cinema2);
                         break;
                 }
-
+                
                 e.Graphics.DrawImage(bitmap, room.Position.X * 128, (height - room.Position.Y) * 89);
                 for (int i = room.Dimension.X; i > 0; i--)
                 {
                     for (int j = room.Dimension.Y; j > 0; j--)
                     {
-                        if(i == 1 && j == 1)
+                        if (i == 1 && j == 1)
                             break;
                         else
                         {
                             bitmap = new Bitmap(Resources.Hallway);
-                            e.Graphics.DrawImage(bitmap, (room.Position.X + i - 1) * 128, (height - room.Position.Y - j + 1) * 89);
+                            e.Graphics.DrawImage(bitmap, (room.Position.X + i - 1) * 128,
+                                (height - room.Position.Y - j + 1) * 89);
                         }
                     }
                 }
             }
+
+            foreach (Guest guest in _Hotel.guests)
+            {
+                bitmap = new Bitmap(Resources.Guest1);
+                e.Graphics.DrawImage(bitmap, guest.SpritePosition.X * 128,
+                    (_Hotel.GetMaxHeight() - guest.SpritePosition.Y + 1) * 89 - 25);
+            }
+        }
+
+        private void Timer(object source, System.Timers.ElapsedEventArgs e)
+        {
+            foreach (Guest guest in _Hotel.guests)
+            {
+                guest.Step();
+            }
+            UpdateForm();
+        }
+
+        //TODO nog goed kijken naar werking code.
+        //TODO zorgen dat het hotel niet continue knippert
+        public void UpdateForm()
+        {
+            if (this.InvokeRequired)
+            {
+                Form1Callback d = new Form1Callback(UpdateForm);
+                this.Invoke(d);
+            }
+            else
+            {
+
+                Refresh();
+            }
+
+
         }
     }
 }
