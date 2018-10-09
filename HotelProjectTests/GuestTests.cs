@@ -28,7 +28,7 @@ namespace HotelProjectTests
             
             hel.Notify(hotelEvent);
             
-            Assert.IsNotNull(_Hotel.guests.Single(g => g.Name == "Gast").Room);
+            Assert.IsNotNull(_Hotel.Guests.Single(g => g.Name == "Gast").Room);
         }
 
         [TestMethod]
@@ -47,14 +47,14 @@ namespace HotelProjectTests
             
             hel.Notify(hotelEvent);
 
-            string actualResult = _Hotel.guests.Single(g => g.Name == "Gast1").Room.Classification;
+            string actualResult = _Hotel.Guests.Single(g => g.Name == "Gast1").Room.Classification;
             string expectedResult = "3 stars";
             
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [TestMethod]
-        public void Guests_When_Unable_To_Upgrade_Room()
+        public void New_Guests_When_Unable_To_Upgrade_Room()
         {
             foreach (IRoom r in _Hotel.iRoom.Where(
                 r => r.Available == true 
@@ -78,7 +78,7 @@ namespace HotelProjectTests
 
             hel.Notify(hotelEvent);
 
-            bool actualResult = _Hotel.guests.Exists(g => g.Name == "Gast2");
+            bool actualResult = _Hotel.Guests.Exists(g => g.Name == "Gast2");
             bool expectedResult = false;
 
             Assert.AreEqual(expectedResult, actualResult);
@@ -87,8 +87,7 @@ namespace HotelProjectTests
         [TestMethod]
         public void Guests_Take_Quickest_Path_To_Destination()
         {
-            Guest guest = new Guest(new Point(200, 200));
-            guest.SetPosition(1, 0);
+            Guest guest = new Guest(1, 0);
             IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
 
             List<Point> path = new List<Point>();

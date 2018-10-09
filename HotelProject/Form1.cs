@@ -34,9 +34,8 @@ namespace HotelProject
 
             //HotelEventManager.Start();
 
-            Guest guest1 = new Guest(_Hotel.iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0));
-            //guest1.SetPosition(1, 0);
-            _Hotel.guests.Add(guest1);
+            Guest guest1 = new Guest(1, 0);
+            _Hotel.Guests.Add(guest1);
             IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
             guest1.FindRoom(destination);
         }
@@ -127,7 +126,7 @@ namespace HotelProject
                 }
             }
 
-            foreach (Guest guest in _Hotel.guests)
+            foreach (Guest guest in _Hotel.Guests)
             {
                 bitmap = new Bitmap(Resources.Guest1);
                 e.Graphics.DrawImage(bitmap, guest.SpritePosition.X * 128,
@@ -137,7 +136,7 @@ namespace HotelProject
 
         private void Timer(object source, System.Timers.ElapsedEventArgs e)
         {
-            foreach (Guest guest in _Hotel.guests)
+            foreach (Guest guest in _Hotel.Guests)
             {
                 guest.Step();
             }

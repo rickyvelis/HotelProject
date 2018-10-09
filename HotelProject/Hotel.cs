@@ -15,13 +15,14 @@ namespace HotelProject
     public class Hotel
     {
         public List<IRoom> iRoom { get; set; }
-        public List<Guest> guests { get; set; }
+        public List<Guest> Guests { get; set; }
+        public List<Cleaner> Cleaners { get; set; }
         private static Hotel Instance { get; set; }
 
         private Hotel()
         {
             iRoom = JSONreader();
-            guests = new List<Guest>();
+            Guests = new List<Guest>();
             AddLiftAndStairs();
             SetNeighbours();            
         }

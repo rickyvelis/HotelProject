@@ -20,6 +20,7 @@ namespace HotelProject.Rooms
         public int Capacity { get; set; }
         public Image Img { get; set; }
         public bool Available { get; set; }
+        public bool Dirty { get; set; }
 
         public IRoom()
         {

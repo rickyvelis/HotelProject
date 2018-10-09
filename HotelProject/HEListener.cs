@@ -40,14 +40,14 @@ namespace HotelProject
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
                         {
-                            if (!_Hotel.guests.Exists(r => r.Name == data.Key))
+                            if (!_Hotel.Guests.Exists(r => r.Name == data.Key))
                             {
                                 bool roomFound = false;
                                 //Guest guest = new Guest(new Point(200, 200));
-                                Guest guest = new Guest(_Hotel.iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0));
+                                Guest guest = new Guest(1, 0);
                                 //guest.Position = _Hotel.iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0);
                                 guest.Name = data.Key;
-                                _Hotel.guests.Add(guest);
+                                _Hotel.Guests.Add(guest);
 
                                 switch (data.Value)
                                 {
@@ -125,7 +125,7 @@ namespace HotelProject
                                         }
 
                                         if(!roomFound)
-                                            _Hotel.guests.Remove(guest);
+                                            _Hotel.Guests.Remove(guest);
 
                                         break;
 
@@ -187,7 +187,7 @@ namespace HotelProject
                                             }
                                         }
                                         if(!roomFound)
-                                            _Hotel.guests.Remove(guest);
+                                            _Hotel.Guests.Remove(guest);
 
                                         break;
 
@@ -235,7 +235,7 @@ namespace HotelProject
                                         }
                                         
                                         if(!roomFound)
-                                            _Hotel.guests.Remove(guest);
+                                            _Hotel.Guests.Remove(guest);
 
                                         break;
 
@@ -268,7 +268,7 @@ namespace HotelProject
                                         }
                                         
                                         if(!roomFound)
-                                            _Hotel.guests.Remove(guest);
+                                            _Hotel.Guests.Remove(guest);
 
                                         break;
 
@@ -286,7 +286,7 @@ namespace HotelProject
                                         }
 
                                         if(!roomFound)
-                                            _Hotel.guests.Remove(guest);
+                                            _Hotel.Guests.Remove(guest);
 
                                         break;
 
@@ -299,13 +299,35 @@ namespace HotelProject
 
                     break;
                 case HotelEventType.CHECK_OUT:
-                    //guests goes to lobby and dies
-                    //room becomes available
-                    //room becomes dirty
-                    //more things?
-                    break;
+                    if (Event.Data != null)
+                    {
+                        foreach (KeyValuePair<string, string> data in Event.Data)
+                        {
+                            if (!_Hotel.Guests.Exists(g => g.Name == data.Key))
+                            {
+                                _Hotel.Guests.Single(g => g.Name == data.Key).CheckOut();
+
+                                if (_Hotel.Cleaners != null)
+                                {
+                                    foreach (Cleaner c in _Hotel.Cleaners)
+                                    {
+                                        if (!c.Cleaning)
+                                        {
+                                            c.CleanRoom(_Hotel.Guests.Single(g => g.Name == data.Key).Room);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                        break;
                 case HotelEventType.CLEANING_EMERGENCY:
-                    //clean things
+                    foreach (IRoom room in _Hotel.iRoom)
+                    {
+                        room.Dirty = true;
+                    }
+                    //TODO: Send all guests to Lobby
                     break;
                 case HotelEventType.EVACUATE:
                     //evacuate uhhhhh
