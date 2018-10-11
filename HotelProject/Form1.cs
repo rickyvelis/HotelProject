@@ -32,12 +32,12 @@ namespace HotelProject
             timer.Elapsed += Timer;
 
 
-            //HotelEventManager.Start();
+            HotelEventManager.Start();
 
-            Guest guest1 = new Guest(1, 0);
-            _Hotel.Guests.Add(guest1);
-            IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
-            guest1.FindRoom(destination);
+            //Guest guest1 = new Guest(1, 0);
+            //_Hotel.Guests.Add(guest1);
+            //IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
+            //guest1.FindRoom(destination);
         }
 
         private void DrawHotel(object sender, PaintEventArgs e)
@@ -59,7 +59,7 @@ namespace HotelProject
             {
                 switch (room.AreaType)
                 {
-                    case "Room":
+                    /*case "Room":
                         switch (room.Classification)
                         {
                             case "1 Star":
@@ -82,7 +82,7 @@ namespace HotelProject
                                 break;
                         }
 
-                        break;
+                        break;*/
                     case "Fitness":
                         //TODO Fitness plaatje toevoegen
                         bitmap = new Bitmap(Resources.Cinema2);
@@ -103,6 +103,9 @@ namespace HotelProject
                     case "Lobby":
                         bitmap = new Bitmap(Resources.Entrance);
                         break;
+                    //case "Hall":
+                    //    bitmap = new Bitmap(Resources.Hallway);
+                    //    break;
                     default:
                         //TODO Error plaatje toevoegen
                         bitmap = new Bitmap(Resources.Cinema2);
@@ -157,8 +160,6 @@ namespace HotelProject
 
                 Refresh();
             }
-
-
         }
     }
 }

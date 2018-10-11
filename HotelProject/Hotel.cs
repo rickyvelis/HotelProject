@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
+using System.Runtime.CompilerServices;
 using HotelProject.Rooms;
 using HotelEvents;
 
@@ -15,15 +17,19 @@ namespace HotelProject
     public class Hotel
     {
         public List<IRoom> iRoom { get; set; }
+        private List<IRoom> iRoom2 { get; set; }
         public List<Guest> Guests { get; set; }
         public List<Cleaner> Cleaners { get; set; }
         private static Hotel Instance { get; set; }
+        private RoomFactory RFactory { get; set; }
 
         private Hotel()
         {
-            iRoom = JSONreader();
+            iRoom = new List<IRoom>();
+            JSONreader();
             Guests = new List<Guest>();
             AddLiftAndStairs();
+            //CreateHalls();
             SetNeighbours();            
         }
 
@@ -38,70 +44,25 @@ namespace HotelProject
         }
 
         //TODO Summary schrijven
-        private List<IRoom> JSONreader()
+        private void JSONreader()
         {
-            List<IRoom> rooms;
-
             try
             {
                 using (StreamReader r = new StreamReader("Resources\\Hotel.layout"))
                 {
                     string json = r.ReadToEnd();
-                    rooms = JsonConvert.DeserializeObject<List<IRoom>>(json);
+                    RFactory = new RoomFactory();
+                    foreach (dynamic room in JsonConvert.DeserializeObject<List<dynamic>>(json))
+                    {
+                        IRoom room2 = RFactory.CreateRoom(room);
+                        iRoom.Add(room2);
+                    }
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return null;
-            }
-
-            #region asdf
-            //foreach (IRoom r in rooms)
-            //{
-            //    if (r.AreaType == "Cinema")
-            //    {
-            //        rooms.Add(new Cinema() {
-            //            AreaType = r.AreaType,
-            //            Position = r.Position,
-            //            Dimension = r.Dimension,
-            //            Capacity = r.Capacity
-            //        });
-            //    }
-            //    else if (r.AreaType == "Restaurant")
-            //    {
-            //        rooms.Add(new Restaurant()
-            //        {
-            //            AreaType = r.AreaType,
-            //            Position = r.Position,
-            //            Dimension = r.Dimension,
-            //            Capacity = r.Capacity
-            //        });
-            //    }
-            //    else if (r.AreaType == "Fitness")
-            //    {
-            //        rooms.Add(new Fitness()
-            //        {
-            //            AreaType = r.AreaType,
-            //            Position = r.Position,
-            //            Dimension = r.Dimension,
-            //            Capacity = r.Capacity
-            //        });
-            //    }
-            //    else if (r.AreaType == "Room")
-            //    {
-            //        rooms.Add(new Room(r.Classification)
-            //        {
-            //            AreaType = r.AreaType,
-            //            Position = r.Position,
-            //            Dimension = r.Dimension,
-            //            Capacity = r.Capacity
-            //        });
-            //    }
-            //    rooms.Remove(r);
-            //}
-            #endregion
-            return rooms;
+            }            
         }
 
         /// <summary>
@@ -162,26 +123,26 @@ namespace HotelProject
         {
             int x = GetMaxX(iRoom);
             int y = GetMaxY(iRoom);
+            dynamic room = new ExpandoObject();
 
             for (int i = 0; i < y; i++)
             {
-                IRoom elevator = new IRoom();
-                elevator.Position = new Point(0, i);
-                elevator.Dimension = new Point(1, 1);
-                elevator.AreaType = "Elevator";
+                room.AreaType = "Elevator";
+                room.Position = i;
+                IRoom elevator = RFactory.CreateRoom(room);
                 iRoom.Add(elevator);
 
-                IRoom stairs = new IRoom();
-                stairs.Position = new Point(x + 1, i);
-                stairs.Dimension = new Point(1,1);
-                stairs.AreaType = "Stairs";
+                room.AreaType = "Stairs";
+                room.Position = (x + ", " + i);
+                IRoom stairs = RFactory.CreateRoom(room);
                 iRoom.Add(stairs);
             }
 
-            IRoom lobby = new IRoom();
-            lobby.Position = new Point(1, 0);
-            lobby.Dimension = new Point(x, 1);
-            lobby.AreaType = "Lobby";
+            //IRoom lobby = new IRoom();
+
+            room.AreaType = "Lobby";
+            room.Dimension = x;
+            IRoom lobby = RFactory.CreateRoom(room);
             iRoom.Add(lobby);
         }
         
@@ -241,5 +202,36 @@ namespace HotelProject
                 }
             }
         }
+
+
+        //TODO code mogelijk verbeteren.
+        private void CreateHalls()
+        {
+            iRoom2 = new List<IRoom>();
+            foreach (IRoom room in iRoom)
+            {
+                for (int i = room.Dimension.X; i > 0; i--)
+                {
+                    for (int j = room.Dimension.Y; j > 0; j--)
+                    {
+                        if (room.Dimension.X != 1 && room.Dimension.Y != 1)
+                        {
+                            //IRoom hall = new Room();
+                            //hall.AreaType = "Hall";
+                            //hall.Dimension = new Point(1, 1);
+                            //hall.Position = new Point(i + room.Position.X - 1, j + room.Position.Y - 1);
+                            //iRoom2.Add(hall);
+                        }
+                    }
+                }
+            }
+
+            foreach (IRoom room in iRoom2)
+            {
+                iRoom.Add(room);
+            }
+        }
     }
+
+
 }
