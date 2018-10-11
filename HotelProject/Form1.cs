@@ -57,76 +57,8 @@ namespace HotelProject
 
             foreach (IRoom room in _Hotel.iRoom)
             {
-                switch (room.AreaType)
-                {
-                    /*case "Room":
-                        switch (room.Classification)
-                        {
-                            case "1 Star":
-                                bitmap = new Bitmap(Resources.Room1);
-                                break;
-                            case "2 stars":
-                                bitmap = new Bitmap(Resources.Room2);
-                                break;
-                            case "3 stars":
-                                bitmap = new Bitmap(Resources.Room3);
-                                break;
-                            case "4 stars":
-                                bitmap = new Bitmap(Resources.Room4);
-                                break;
-                            case "5 stars":
-                                bitmap = new Bitmap(Resources.Room5);
-                                break;
-                            default:
-                                bitmap = new Bitmap(Resources.Room1);
-                                break;
-                        }
-
-                        break;*/
-                    case "Fitness":
-                        //TODO Fitness plaatje toevoegen
-                        bitmap = new Bitmap(Resources.Cinema2);
-                        break;
-                    case "Cinema":
-                        bitmap = new Bitmap(Resources.Cinema1);
-                        break;
-                    case "Restaurant":
-                        //TODO Restaurant plaatje toevoegen
-                        bitmap = new Bitmap(Resources.Cinema2);
-                        break;
-                    case "Elevator":
-                        bitmap = new Bitmap(Resources.Elevator);
-                        break;
-                    case "Stairs":
-                        bitmap = new Bitmap(Resources.Stairs);
-                        break;
-                    case "Lobby":
-                        bitmap = new Bitmap(Resources.Entrance);
-                        break;
-                    //case "Hall":
-                    //    bitmap = new Bitmap(Resources.Hallway);
-                    //    break;
-                    default:
-                        //TODO Error plaatje toevoegen
-                        bitmap = new Bitmap(Resources.Cinema2);
-                        break;
-                }
-                
+                bitmap = new Bitmap(room.Img);
                 e.Graphics.DrawImage(bitmap, room.Position.X * 128, (height - room.Position.Y) * 89);
-                for (int i = room.Dimension.X; i > 0; i--)
-                {
-                    for (int j = room.Dimension.Y; j > 0; j--)
-                    {
-                        if (i == 1 && j == 1)
-                            break;
-                        else
-                        {
-                            bitmap = new Bitmap(Resources.Hallway);
-                            e.Graphics.DrawImage(bitmap, (room.Position.X + i - 1) * 128,
-                                (height - room.Position.Y - j + 1) * 89);
-                        }
-                    }
-                }
             }
 
             foreach (Guest guest in _Hotel.Guests)

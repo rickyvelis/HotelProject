@@ -137,9 +137,6 @@ namespace HotelProject
                 IRoom stairs = RFactory.CreateRoom(room);
                 iRoom.Add(stairs);
             }
-
-            //IRoom lobby = new IRoom();
-
             room.AreaType = "Lobby";
             room.Dimension = x;
             IRoom lobby = RFactory.CreateRoom(room);

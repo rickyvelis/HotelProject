@@ -111,7 +111,7 @@ namespace HotelProject
         public void Step()
         {
             //TODO 
-            if (Path.Count > 0)
+            if (Path != null && Path.Count > 0)
             {
                 Position = Path[Path.Count - 1];
                 SpritePosition = new Point(Position.Position.X, Position.Position.Y);

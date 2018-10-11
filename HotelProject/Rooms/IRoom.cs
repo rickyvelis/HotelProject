@@ -16,11 +16,7 @@ namespace HotelProject.Rooms
         public abstract int Distance { get; set; }
         public abstract Point Position { get; set; }
         public abstract Point Dimension { get; set; }
-        //public string Classification { get; set; }
-        //public int Capacity { get; set; }
-        //public Image Img { get; set; }
-        //public bool Available { get; set; }
-        //public bool Dirty { get; set; }
+        public abstract Image Img { get; set; }
 
         protected IRoom()
         {
