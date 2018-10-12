@@ -34,8 +34,8 @@ namespace HotelProjectTests
         [TestMethod]
         public void New_Guest_Gets_Upgraded_Room_When_Pref_Room_Unavailable()
         {
-            foreach (IRoom r in _Hotel.iRoom.Where(r => r.Available == true && r.AreaType == "Room" && r.Classification == "2 stars"))
-                r.Available = false;
+            foreach (Room r in _Hotel.iRoom.OfType<Room>().Where(r => r.Classification == "2 stars"))
+                    r.Available = false;
 
             hotelEvent = new HotelEvent()
             {
@@ -54,19 +54,11 @@ namespace HotelProjectTests
         }
 
         [TestMethod]
-        public void New_Guests_When_Unable_To_Upgrade_Room()
+        public void New_Guests_Get_Refused_When_Unable_To_Upgrade_Room()
         {
-            foreach (IRoom r in _Hotel.iRoom.Where(
-                r => r.Available == true 
-                && r.AreaType == "Room" 
-                && r.Classification == "2 stars" 
-                || r.Classification == "3 stars"
-                || r.Classification == "4 stars"
-                || r.Classification == "5 stars"
-                ))
-            {
-                r.Available = false;
-            }
+            foreach (Room r in _Hotel.iRoom.OfType<Room>())
+                if(r.Available == true && r.Classification == "2 stars" || r.Classification == "3 stars" || r.Classification == "4 stars" || r.Classification == "5 stars")
+                    r.Available = false;
 
             hotelEvent = new HotelEvent()
             {
@@ -88,7 +80,7 @@ namespace HotelProjectTests
         public void Guests_Take_Quickest_Path_To_Destination()
         {
             Guest guest = new Guest(1, 0);
-            IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
+            IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 8 && r.Position.Y == 5);
 
             List<Point> path = new List<Point>();
             foreach (IRoom r in guest.FindRoom(destination))
@@ -98,12 +90,12 @@ namespace HotelProjectTests
             List<Point> expectedResult = new List<Point>()
             {
                 new Point(1, 0),
-                new Point(9, 0),
-                new Point(9, 1),
-                new Point(9, 2),
-                new Point(9, 3),
-                new Point(9, 4),
-                new Point(9, 5),
+                new Point(8, 0),
+                new Point(8, 1),
+                new Point(8, 2),
+                new Point(8, 3),
+                new Point(8, 4),
+                new Point(8, 5),
             };
             expectedResult.Reverse();
 
