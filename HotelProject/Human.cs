@@ -22,9 +22,9 @@ namespace HotelProject
             _Hotel = Hotel.GetInstance();
         }
 
-        public void SetPosition(int X, int Y)
+        public void SetPosition(int x, int y)
         {
-            Position = _Hotel.iRoom.Single(r => r.Position.X == X && r.Position.Y == Y);
+            Position = _Hotel.iRoom.Single(r => r.Position.X == x && r.Position.Y == y);
             SpritePosition = new Point(Position.Position.X * 128, (_Hotel.GetMaxHeight() - Position.Position.Y + 1) * 89 - 25);
         }
 
@@ -37,8 +37,8 @@ namespace HotelProject
         /// <returns></returns>
         public List<IRoom> FindRoom(IRoom destination)
         {
-            //Console.WriteLine("----------------------");
-            //Console.WriteLine(Name + " GOES TO " + destination.AreaType + " " + destination.Position.ToString());
+            Console.WriteLine("----------------------");
+            Console.WriteLine(Name + " GOES TO " + destination.AreaType + " " + destination.Position.ToString());
 
             List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
 
@@ -65,7 +65,7 @@ namespace HotelProject
         /// <returns></returns>
         private bool Visit(IRoom current, IRoom end, List<IRoom> roomsToSearch)
         {
-            //Console.WriteLine("Visiting " + current.AreaType + " at " + current.Position.ToString());
+            Console.WriteLine("Visiting " + current.AreaType + " at " + current.Position.ToString());
             if (current == end) //Checks if the destination is visited
             {
                 return true;
@@ -112,7 +112,7 @@ namespace HotelProject
 
                 previous = previous.Previous;
             }
-            //Console.WriteLine("\n" + path + "\nDistance: " + end.Distance);
+            Console.WriteLine("\n" + path + "\nDistance: " + end.Distance);
 
             return Path;
         }

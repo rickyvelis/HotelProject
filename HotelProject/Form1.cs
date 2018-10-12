@@ -21,7 +21,7 @@ namespace HotelProject
         private HEListener hel;
         private int Test { get; set; }
         public System.Timers.Timer timer { get; set; }
-        private Stopwatch stopwatch { get; set; }
+        private Stopwatch stopwatch { get; }
 
         delegate void Form1Callback();
 
@@ -30,20 +30,21 @@ namespace HotelProject
             InitializeComponent();
             _Hotel = Hotel.GetInstance();
             hel = new HEListener();
-            Paint += new PaintEventHandler(DrawHotel);            
+            Paint += DrawHotel;            
             HotelEventManager.Register(hel);
             HotelEventManager.HTE_Factor = hte;
             _Hotel.SetCleanerAmount(cleaners, cleaningTime);
             //_Hotel.SetElevatorCapacity(elevatorCapacity);
-            timer = new System.Timers.Timer(1000 * HotelEventManager.HTE_Factor);
-            timer.Enabled = true;
+            timer = new System.Timers.Timer(1000 * HotelEventManager.HTE_Factor) {Enabled = true};
             timer.Start();
+            stopwatch = new Stopwatch();
             stopwatch.Start();
             HotelEventManager.Start();
             timer.Elapsed += TimerHandler;
             Console.WriteLine(timer.Interval);
             KeyUp += Pause;
 
+            #region TestCode
             HotelEvent hotelEvent = new HotelEvent()
             {
                 Data = new Dictionary<string, string> { { "Gast", "Checkin 1stars" } },
@@ -51,8 +52,8 @@ namespace HotelProject
                 Message = "Checkin 1stars",
                 Time = 2000
             };
-
             hel.Notify(hotelEvent);
+            #endregion
         }
 
         private void DrawHotel(object sender, PaintEventArgs e)
@@ -63,7 +64,6 @@ namespace HotelProject
         /// <summary>
         /// Draws the rooms in the hotel
         /// </summary>
-        /// <param name="rooms">list of rooms in the hotel</param>
         /// <param name="e"></param>
         private void Render(PaintEventArgs e)
         {
@@ -97,10 +97,12 @@ namespace HotelProject
             }
         }
 
-        private void TimerHandler(object source, System.Timers.ElapsedEventArgs e)
+        private void TimerHandler(object source, ElapsedEventArgs e)
         {
             timer.Interval = 1000 / HotelEventManager.HTE_Factor;
             stopwatch.Restart();
+
+            #region TestCode
             Test++;
             if (Test == 10)
             {
@@ -114,6 +116,8 @@ namespace HotelProject
 
                 hel.Notify(hotelEvent);
             }
+            #endregion
+
 
             foreach (Guest guest in _Hotel.Guests)
             {
@@ -146,10 +150,10 @@ namespace HotelProject
         //TODO zorgen dat het hotel niet continue knippert
         public void UpdateForm()
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
-                Form1Callback d = new Form1Callback(UpdateForm);
-                this.Invoke(d);
+                Form1Callback d = UpdateForm;
+                Invoke(d);
             }
             else
             {
