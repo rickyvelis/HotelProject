@@ -22,6 +22,7 @@ namespace HotelProject.Rooms
         {
             Neighbours = new Dictionary<IRoom, int>();
             Distance = Int32.MaxValue / 2;
+            Img = Resources.Error;
         }
 
     }       

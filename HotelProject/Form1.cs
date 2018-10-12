@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using HotelProject.Rooms;
 using HotelProject.Properties;
 using HotelEvents;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace HotelProject
 {
@@ -18,6 +20,7 @@ namespace HotelProject
         private Hotel _Hotel { get; set; }
         private HEListener hel;
         private int Test { get; set; }
+        public Timer timer { get; set; }
 
         delegate void Form1Callback();
 
@@ -29,12 +32,16 @@ namespace HotelProject
             Paint += new PaintEventHandler(DrawHotel);
             HotelEventManager.Register(hel);
             HotelEventManager.HTE_Factor = 1.0f;
-            System.Timers.Timer timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor);
+
+            //TODO Timer naar hotel?? of Timer beschikbaar stellen als singleton?
+            timer = new Timer(1000 / HotelEventManager.HTE_Factor);
             timer.Enabled = true;
-            timer.Elapsed += Timer;
+            HotelEventManager.Start();
+            timer.Elapsed += TimerHandler;
+
+            KeyUp += new KeyEventHandler(Pause);
 
 
-            //HotelEventManager.Start();
 
             _Hotel.SetCleanerAmount(5);
 
@@ -92,7 +99,7 @@ namespace HotelProject
             }
         }
 
-        private void Timer(object source, System.Timers.ElapsedEventArgs e)
+        private void TimerHandler(object source, System.Timers.ElapsedEventArgs e)
         {
             Test++;
             if (Test == 10)
@@ -119,6 +126,15 @@ namespace HotelProject
             }
 
             UpdateForm();
+        }
+
+        private void Pause(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+            {
+                HotelEventManager.Pauze();
+                timer.Enabled = HotelEventManager.Running;
+            }
         }
 
         //TODO nog goed kijken naar werking code.

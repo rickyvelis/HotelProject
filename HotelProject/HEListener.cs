@@ -32,7 +32,7 @@ namespace HotelProject
                     Console.WriteLine("VALUE: " + data.Value);
                 }
             }
-
+            
             switch (Event.EventType)
             {
                 case HotelEventType.CHECK_IN:
@@ -47,6 +47,7 @@ namespace HotelProject
                                 guest.Name = data.Key;
                                 _Hotel.Guests.Add(guest);
 
+                                //TODO code verkorten.
                                 switch (data.Value)
                                 {
                                     case ("Checkin 1stars"):
@@ -335,7 +336,7 @@ namespace HotelProject
                 case HotelEventType.NEED_FOOD:
                     //guest hungry and goes to restaurant
                     break;
-                case HotelEventType.STAR_CINEMA:
+                case HotelEventType.START_CINEMA:
                     //??????
                     break;
                 default:

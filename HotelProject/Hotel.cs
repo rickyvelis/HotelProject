@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using HotelProject.Rooms;
 using HotelEvents;
+using HotelProject.Properties;
 
 namespace HotelProject
 {
@@ -182,8 +183,6 @@ namespace HotelProject
                         break;
                     }
                 }
-
-                //CheckBelow(1, iRoom, room);
             }
         }
 

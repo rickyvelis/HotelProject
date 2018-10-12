@@ -22,7 +22,7 @@ namespace HotelProject.Rooms
             AreaType = "Fitness";
             Dimension = new Point(dimX, dimY);
             Position = new Point(posX, posY);
-            Img = Resources.Cinema2;
+            Img = Resources.Fitness;
         }
     }
 }

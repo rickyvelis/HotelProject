@@ -24,7 +24,7 @@ namespace HotelProject.Rooms
             Capacity = capacity;
             Dimension = new Point(dimX, dimY);
             Position = new Point(posX, posY);
-            Img = Resources.Cinema2;
+            Img = Resources.Restaurant;
         }
 
     }
