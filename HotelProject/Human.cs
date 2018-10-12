@@ -122,6 +122,7 @@ namespace HotelProject
         public void Step()
         {
             //TODO code iets verbeteren zodat ze niet direct lopen bij een distance groter dan 1
+            //TODO If(Lift == vol && Path[Path.Count - 1].AreaType == "Lift"){ WACHTEN }
             if (Path != null && Path.Count > 0)
             {
                 Position = Path[Path.Count - 1];

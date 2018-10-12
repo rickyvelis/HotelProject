@@ -90,11 +90,19 @@ namespace HotelProjectTests
             List<Point> expectedResult = new List<Point>()
             {
                 new Point(1, 0),
+                new Point(2, 0),
+                new Point(3, 0),
+                new Point(4, 0),
+                new Point(5, 0),
+                new Point(6, 0),
+                new Point(7, 0),
                 new Point(8, 0),
-                new Point(8, 1),
-                new Point(8, 2),
-                new Point(8, 3),
-                new Point(8, 4),
+                new Point(9, 0),
+                new Point(9, 1),
+                new Point(9, 2),
+                new Point(9, 3),
+                new Point(9, 4),
+                new Point(9, 5),
                 new Point(8, 5),
             };
             expectedResult.Reverse();

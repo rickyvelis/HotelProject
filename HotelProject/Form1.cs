@@ -13,7 +13,6 @@ using HotelProject.Properties;
 using HotelEvents;
 using System.Timers;
 
-
 namespace HotelProject
 {
     public partial class Form1 : Form
@@ -26,18 +25,17 @@ namespace HotelProject
 
         delegate void Form1Callback();
 
-        public Form1()
+        public Form1(float hte, int cleaners, int cleaningTime, int elevatorCapacity)
         {
             InitializeComponent();
             _Hotel = Hotel.GetInstance();
             hel = new HEListener();
             Paint += new PaintEventHandler(DrawHotel);            
             HotelEventManager.Register(hel);
-            HotelEventManager.HTE_Factor = 1.0f;
-
-            //TODO Timer naar hotel?? of Timer beschikbaar stellen als singleton?;            
-            timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor);     
-            stopwatch = new Stopwatch();
+            HotelEventManager.HTE_Factor = hte;
+            _Hotel.SetCleanerAmount(cleaners, cleaningTime);
+            //_Hotel.SetElevatorCapacity(elevatorCapacity);
+            timer = new System.Timers.Timer(1000 * HotelEventManager.HTE_Factor);
             timer.Enabled = true;
             timer.Start();
             stopwatch.Start();
@@ -45,7 +43,6 @@ namespace HotelProject
             timer.Elapsed += TimerHandler;
             Console.WriteLine(timer.Interval);
             KeyUp += Pause;
-            _Hotel.SetCleanerAmount(5);
 
             HotelEvent hotelEvent = new HotelEvent()
             {
@@ -159,5 +156,6 @@ namespace HotelProject
                 Refresh();
             }
         }
+        
     }
 }
