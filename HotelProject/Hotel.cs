@@ -30,7 +30,10 @@ namespace HotelProject
             Guests = new List<Guest>();
             AddLiftAndStairs();
             CreateHalls();
-            SetNeighbours();            
+
+            SetNeighbours();
+
+
         }
 
         //TODO Summary schrijven
@@ -155,11 +158,25 @@ namespace HotelProject
                 {
                     //TODO distance van trap en lift instelbaar maken.
                     //TODO trap 2 keer zo langzaam maken als de lift
-                    if (((room.AreaType == "Elevator" && room2.AreaType == "Elevator") ||
-                         (room.AreaType == "Stairs" && room2.AreaType == "Stairs")) &&
-                        (room.Position.Y - room2.Position.Y == 1 || room2.Position.Y - room.Position.Y == 1))
+                    //if ((room.AreaType == "Elevator" && room2.AreaType == "Elevator" ||
+                    //     room.AreaType == "Stairs" && room2.AreaType == "Stairs") &&
+                    //    (room.Position.Y - room2.Position.Y == 1 || room2.Position.Y - room.Position.Y == 1))
+                    //{
+                    //    room.Neighbours.Add(room2, 1);
+                    //}
+
+                    if (room.AreaType == "Elevator" && room2.AreaType == "Elevator" &&
+                        room.Position.Y + 1 == room2.Position.Y)
                     {
                         room.Neighbours.Add(room2, 1);
+                        room2.Neighbours.Add(room, 1);
+                    }
+
+                    if (room.AreaType == "Stairs" && room2.AreaType == "Stairs" &&
+                        room.Position.Y + 1 == room2.Position.Y)
+                    {
+                        room.Neighbours.Add(room2, 2);
+                        room2.Neighbours.Add(room, 2);
                     }
 
                     if (room.Position.X + 1 == room2.Position.X && room.Position.Y == room2.Position.Y)
@@ -217,7 +234,7 @@ namespace HotelProject
                             dynamic hall = new ExpandoObject();                            
                             hall.AreaType = "Hall";
                             hall.Position = ((i + room.Position.X - 1) + ", " + (j + room.Position.Y - 1)); 
-                            Console.WriteLine(hall.Position);
+                            //Console.WriteLine(hall.Position);
                             //hall.Position = new Point(i + room.Position.X - 1, j + room.Position.Y - 1);
                             iRoom2.Add(RFactory.CreateRoom(hall));
                         }
