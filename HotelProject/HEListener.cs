@@ -30,7 +30,6 @@ namespace HotelProject
                 {
                     Console.WriteLine("KEY: " + data.Key);
                     Console.WriteLine("VALUE: " + data.Value);
-                    Console.WriteLine("----------------------");
                 }
             }
 

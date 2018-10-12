@@ -37,6 +37,8 @@ namespace HotelProject
         /// <returns></returns>
         public List<IRoom> FindRoom(IRoom destination)
         {
+            Console.WriteLine("----------------------");
+            Console.WriteLine(Name + " GOES TO " + destination.AreaType + " " + destination.Position.ToString());
             List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
 
             foreach (IRoom room in roomsToSearch)

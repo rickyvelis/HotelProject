@@ -13,7 +13,7 @@ namespace HotelProject
         private Hotel _Hotel { get; }
         public bool Cleaning { get; set; }
         public float CleaningSpeed { get; set; }
-        public List<IRoom> Queue { get; set; }
+        public List<Room> Queue { get; set; }
 
         public Cleaner()
         {
@@ -21,7 +21,7 @@ namespace HotelProject
             Visible = false;
             SetPosition(1, 0);
             SpritePosition = new Point(Position.Position.X, Position.Position.Y);
-            Queue = new List<IRoom>();
+            Queue = new List<Room>();
         }
         
         /// <summary>
@@ -40,7 +40,7 @@ namespace HotelProject
         /// Cleaner cleans the given room.
         /// </summary>
         /// <param name="room">Room to be cleaned.</param>
-        public void CleanRoom(IRoom room)
+        public void CleanRoom(Room room)
         {
             //TODO Implement amount of time it takes to clean a room
             Cleaning = true;
@@ -53,14 +53,15 @@ namespace HotelProject
                 
             }
 
-            room.Dirty = false;
-            room.Available = true;
-            Cleaning = false;
             Queue.Remove(room);
+
             if (Queue.Count == 0)
             {
                 FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
             }
+            room.Dirty = false;
+            room.Available = true;
+            Cleaning = false;
         }
     }
 }
