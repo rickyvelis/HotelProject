@@ -29,7 +29,7 @@ namespace HotelProject
             JSONreader();
             Guests = new List<Guest>();
             AddLiftAndStairs();
-            //CreateHalls();
+            CreateHalls();
             SetNeighbours();            
         }
 
@@ -133,7 +133,7 @@ namespace HotelProject
                 iRoom.Add(elevator);
 
                 room.AreaType = "Stairs";
-                room.Position = (x + ", " + i);
+                room.Position = ((x + 1) + ", " + i);
                 IRoom stairs = RFactory.CreateRoom(room);
                 iRoom.Add(stairs);
             }
@@ -162,20 +162,21 @@ namespace HotelProject
                         room.Neighbours.Add(room2, 1);
                     }
 
-                    if (room.Position.X + room.Dimension.X == room2.Position.X && room.Position.Y == room2.Position.Y)
+                    if (room.Position.X + 1 == room2.Position.X && room.Position.Y == room2.Position.Y)
                     {
-                        room.Neighbours.Add(room2, room.Dimension.X);
-                        room2.Neighbours.Add(room, room.Dimension.X);
+                        room.Neighbours.Add(room2, 1);
+                        room2.Neighbours.Add(room, 1);
                         break;
                     }
                 }
 
-                CheckBelow(1, iRoom, room);
+                //CheckBelow(1, iRoom, room);
             }
         }
 
         //TODO nagaan van logica hier. lijkt iets mis te gaan
         //TODO Summary schrijven
+        //TODO kan waarschijnlijk weg!!!
         private static void CheckBelow(int offset, List<IRoom> rooms, IRoom room)
         {
             for (int i = room.Position.Y - 1; i > 0; i--)
@@ -211,13 +212,14 @@ namespace HotelProject
                 {
                     for (int j = room.Dimension.Y; j > 0; j--)
                     {
-                        if (room.Dimension.X != 1 && room.Dimension.Y != 1)
-                        {
-                            //IRoom hall = new Room();
-                            //hall.AreaType = "Hall";
-                            //hall.Dimension = new Point(1, 1);
+                        if (i != 1 || j != 1)
+                        {                            
+                            dynamic hall = new ExpandoObject();                            
+                            hall.AreaType = "Hall";
+                            hall.Position = ((i + room.Position.X - 1) + ", " + (j + room.Position.Y - 1)); 
+                            Console.WriteLine(hall.Position);
                             //hall.Position = new Point(i + room.Position.X - 1, j + room.Position.Y - 1);
-                            //iRoom2.Add(hall);
+                            iRoom2.Add(RFactory.CreateRoom(hall));
                         }
                     }
                 }

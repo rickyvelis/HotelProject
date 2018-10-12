@@ -29,6 +29,7 @@ namespace HotelProject
                 case ("Hall"):
                     return new Hall(Int32.Parse(room.Position.ToString().Split(',')[0]),
                         Int32.Parse(room.Position.ToString().Split(',')[1]));
+                        //return new Hall(room.Position.X, room.Position.Y);
                 case ("Elevator"):
                     return new Elevator(room.Position);
                 case ("Stairs"):
