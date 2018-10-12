@@ -32,8 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HotelEvents, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="HotelEvents">
       <HintPath>Extensions\HotelEvents.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -120,10 +119,12 @@
     <Content Include="Resources\Cinema2.png" />
     <Content Include="Resources\Cleaner.png" />
     <Content Include="Resources\Entrance.png" />
-    <Content Include="Resources\Error.png" />
+    <None Include="Resources\Error.png" />
+    <None Include="Resources\Fitness.png" />
     <Content Include="Resources\Guest1.png" />
     <Content Include="Resources\Hallway.png" />
     <Content Include="Resources\Hallway2.png" />
+    <None Include="Resources\Restaurant.png" />
     <Content Include="Resources\Room1.png" />
     <Content Include="Resources\Room2.png" />
     <Content Include="Resources\Room3.png" />
