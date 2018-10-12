@@ -30,10 +30,7 @@ namespace HotelProject
             Guests = new List<Guest>();
             AddLiftAndStairs();
             CreateHalls();
-
             SetNeighbours();
-
-
         }
 
         //TODO Summary schrijven
@@ -158,8 +155,7 @@ namespace HotelProject
                 {
                     //TODO distance van trap en lift instelbaar maken.
                     //TODO trap 2 keer zo langzaam maken als de lift
-                    //if ((room.AreaType == "Elevator" && room2.AreaType == "Elevator" ||
-                    //     room.AreaType == "Stairs" && room2.AreaType == "Stairs") &&
+                    //if (((room.AreaType == "Elevator" && room2.AreaType == "Elevator") || (room.AreaType == "Stairs" && room2.AreaType == "Stairs")) &&
                     //    (room.Position.Y - room2.Position.Y == 1 || room2.Position.Y - room.Position.Y == 1))
                     //{
                     //    room.Neighbours.Add(room2, 1);
