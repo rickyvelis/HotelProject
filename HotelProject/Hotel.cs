@@ -24,7 +24,7 @@ namespace HotelProject
             iRoom = JSONreader();
             Guests = new List<Guest>();
             AddLiftAndStairs();
-            SetNeighbours();            
+            SetNeighbours();
         }
 
         //TODO Summary schrijven
@@ -240,6 +240,18 @@ namespace HotelProject
                     }
                 }
             }
+        }
+
+        public void SetCleanerAmount(int amount)
+        {
+            Cleaners = new List<Cleaner>();
+            for (int i = 1; i <= amount; i++)
+            {
+                Cleaner cleaner = new Cleaner();
+                cleaner.Name = "Cleaner" + i;
+                Cleaners.Add(cleaner);
+            }
+
         }
     }
 }

@@ -11,23 +11,26 @@ namespace HotelProject
 {
     public class Guest : Human
     {
-        public string Name { get; set; }
         public IRoom Room { get; set; }
         private Hotel _Hotel { get; }
 
         public Guest(int posX, int posY)
         {
             _Hotel = Hotel.GetInstance();
+            Visible = true;
             SetPosition(posX, posY);
             SpritePosition = new Point(Position.Position.X, Position.Position.Y);
         }
 
         public void CheckOut()
         {
-            Room.Available = false;
-            Room.Dirty = true;
             FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
-            //TODO: Die();
+            Room.Dirty = true;
+        }
+
+        public void Die()
+        {
+            Visible = false;
         }
     }
 }

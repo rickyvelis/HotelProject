@@ -12,20 +12,55 @@ namespace HotelProject
     {
         private Hotel _Hotel { get; }
         public bool Cleaning { get; set; }
+        public float CleaningSpeed { get; set; }
+        public List<IRoom> Queue { get; set; }
 
         public Cleaner()
         {
             _Hotel = Hotel.GetInstance();
+            Visible = false;
             SetPosition(1, 0);
             SpritePosition = new Point(Position.Position.X, Position.Position.Y);
+            Queue = new List<IRoom>();
+        }
+        
+        /// <summary>
+        /// Checks if there is a room to be cleaned and cleans the first room in the queue.
+        /// </summary>
+        public void CheckQueue()
+        {
+            if (Queue.Count != 0 && Cleaning == false)
+            {
+                //TODO Maybe compare the distances to all Queued rooms to determine what room to clean next
+                CleanRoom(Queue[0]);
+            }
         }
 
+        /// <summary>
+        /// Cleaner cleans the given room.
+        /// </summary>
+        /// <param name="room">Room to be cleaned.</param>
         public void CleanRoom(IRoom room)
         {
+            //TODO Implement amount of time it takes to clean a room
             Cleaning = true;
             FindRoom(room);
-            //TODO: If Cleaner.Position == room, then room.Dirty = false
-            //Then go to Lobby again (or other place where Cleaners stay
+            Visible = true;
+
+            //TODO find another solution for this 
+            while (Position != room)
+            {
+                
+            }
+
+            room.Dirty = false;
+            room.Available = true;
+            Cleaning = false;
+            Queue.Remove(room);
+            if (Queue.Count == 0)
+            {
+                FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
+            }
         }
     }
 }

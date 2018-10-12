@@ -10,6 +10,8 @@ namespace HotelProject
 {
     public class Human
     {
+        public string Name { get; set; }
+        public bool Visible { get; set; }
         public List<IRoom> Path { get; set; }
         public IRoom Position { get; set; }
         public Point SpritePosition { get; set; }
@@ -36,6 +38,12 @@ namespace HotelProject
         public List<IRoom> FindRoom(IRoom destination)
         {
             List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
+
+            foreach (IRoom room in roomsToSearch)
+            {
+                room.Distance = Int32.MaxValue / 2;
+            }
+
             IRoom current = Position;
             while (!Visit(current, destination, roomsToSearch)) //Voer dit uit totdat de end node is bezocht
             {
@@ -111,11 +119,14 @@ namespace HotelProject
         public void Step()
         {
             //TODO 
-            if (Path.Count > 0)
+            if (Path != null)
             {
-                Position = Path[Path.Count - 1];
-                SpritePosition = new Point(Position.Position.X, Position.Position.Y);
-                Path.Remove(Path[Path.Count - 1]);
+                if (Path.Count > 0)
+                {
+                    Position = Path[Path.Count - 1];
+                    SpritePosition = new Point(Position.Position.X, Position.Position.Y);
+                    Path.Remove(Path[Path.Count - 1]);
+                }
             }
         }
     }

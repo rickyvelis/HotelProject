@@ -16,6 +16,8 @@ namespace HotelProject
     public partial class Form1 : Form
     {
         private Hotel _Hotel { get; set; }
+        private HEListener hel;
+        private int test { get; set; }
 
         delegate void Form1Callback();
 
@@ -23,8 +25,8 @@ namespace HotelProject
         {
             InitializeComponent();
             _Hotel = Hotel.GetInstance();
+            hel = new HEListener();
             Paint += new PaintEventHandler(DrawHotel);
-            HEListener hel = new HEListener();
             HotelEventManager.Register(hel);
             HotelEventManager.HTE_Factor = 1.0f;
             System.Timers.Timer timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor);
@@ -34,10 +36,23 @@ namespace HotelProject
 
             //HotelEventManager.Start();
 
-            Guest guest1 = new Guest(1, 0);
-            _Hotel.Guests.Add(guest1);
-            IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
-            guest1.FindRoom(destination);
+            _Hotel.SetCleanerAmount(1);
+
+
+            HotelEvent hotelEvent = new HotelEvent()
+            {
+                Data = new Dictionary<string, string> { { "Gast", "Checkin 2stars" } },
+                EventType = HotelEventType.CHECK_IN,
+                Message = "Checkin 2stars",
+                Time = 2000
+            };
+
+            hel.Notify(hotelEvent);
+
+            //Guest guest1 = new Guest(1, 0);
+            //_Hotel.Guests.Add(guest1);
+            //IRoom destination = _Hotel.iRoom.Single(r => r.Position.X == 9 && r.Position.Y == 5);
+            //guest1.FindRoom(destination);
         }
 
         private void DrawHotel(object sender, PaintEventArgs e)
@@ -128,18 +143,51 @@ namespace HotelProject
 
             foreach (Guest guest in _Hotel.Guests)
             {
-                bitmap = new Bitmap(Resources.Guest1);
-                e.Graphics.DrawImage(bitmap, guest.SpritePosition.X * 128,
-                    (_Hotel.GetMaxHeight() - guest.SpritePosition.Y + 1) * 89 - 25);
+                if (guest.Visible)
+                {
+                    bitmap = new Bitmap(Resources.Guest1);
+                    e.Graphics.DrawImage(bitmap, guest.SpritePosition.X * 128,
+                        (_Hotel.GetMaxHeight() - guest.SpritePosition.Y + 1) * 89 - 25);
+                }
+            }
+
+            foreach (Cleaner cleaner in _Hotel.Cleaners)
+            {
+                if (cleaner.Visible)
+                {
+                    bitmap = new Bitmap(Resources.Cleaner);
+                    e.Graphics.DrawImage(bitmap, cleaner.SpritePosition.X * 128,
+                        (_Hotel.GetMaxHeight() - cleaner.SpritePosition.Y + 1) * 89 - 25);
+                }
             }
         }
 
         private void Timer(object source, System.Timers.ElapsedEventArgs e)
         {
+            test++;
+            if (test == 10)
+            {
+                HotelEvent hotelEvent = new HotelEvent()
+                {
+                    Data = new Dictionary<string, string> { { "Gast", "Check out" } },
+                    EventType = HotelEventType.CHECK_OUT,
+                    Message = "Check out",
+                    Time = 2000
+                };
+
+                hel.Notify(hotelEvent);
+            }
+
             foreach (Guest guest in _Hotel.Guests)
             {
                 guest.Step();
             }
+            foreach (Cleaner cleaner in _Hotel.Cleaners)
+            {
+                cleaner.Step();
+                cleaner.CheckQueue();
+            }
+
             UpdateForm();
         }
 
@@ -154,7 +202,6 @@ namespace HotelProject
             }
             else
             {
-
                 Refresh();
             }
 

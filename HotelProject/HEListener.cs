@@ -20,6 +20,7 @@ namespace HotelProject
 
         public void Notify(HotelEvent Event)
         {
+            Console.WriteLine("_____________________________________________________________");
             Console.WriteLine("TYPE: " + Event.EventType);
             Console.WriteLine("MESSAGE: " + Event.Message);
             Console.WriteLine("TIME: " + Event.Time);
@@ -29,7 +30,7 @@ namespace HotelProject
                 {
                     Console.WriteLine("KEY: " + data.Key);
                     Console.WriteLine("VALUE: " + data.Value);
-                    Console.WriteLine("_____________________________________________________________");
+                    Console.WriteLine("----------------------");
                 }
             }
 
@@ -43,9 +44,7 @@ namespace HotelProject
                             if (!_Hotel.Guests.Exists(r => r.Name == data.Key))
                             {
                                 bool roomFound = false;
-                                //Guest guest = new Guest(new Point(200, 200));
                                 Guest guest = new Guest(1, 0);
-                                //guest.Position = _Hotel.iRoom.Single(r => r.Position.X == 1 && r.Position.Y == 0);
                                 guest.Name = data.Key;
                                 _Hotel.Guests.Add(guest);
 
@@ -303,20 +302,15 @@ namespace HotelProject
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
                         {
-                            if (!_Hotel.Guests.Exists(g => g.Name == data.Key))
+                            if (_Hotel.Guests.Exists(g => g.Name == data.Key))
                             {
                                 _Hotel.Guests.Single(g => g.Name == data.Key).CheckOut();
 
                                 if (_Hotel.Cleaners != null)
                                 {
-                                    foreach (Cleaner c in _Hotel.Cleaners)
-                                    {
-                                        if (!c.Cleaning)
-                                        {
-                                            c.CleanRoom(_Hotel.Guests.Single(g => g.Name == data.Key).Room);
-                                            break;
-                                        }
-                                    }
+                                    //TODO maybe make this line shorter and more understandable
+                                    //gets cleaner with shortest queue and adds the to-be-cleaned room to its queue
+                                    _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r).Queue.Add(_Hotel.Guests.Single(g => g.Name == data.Key).Room);
                                 }
                             }
                         }
@@ -327,6 +321,7 @@ namespace HotelProject
                     {
                         room.Dirty = true;
                     }
+                    //TODO: Send out all the Cleaners to clean all the dirty rooms
                     //TODO: Send all guests to Lobby
                     break;
                 case HotelEventType.EVACUATE:
