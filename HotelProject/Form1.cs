@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ using HotelProject.Rooms;
 using HotelProject.Properties;
 using HotelEvents;
 using System.Timers;
-using Timer = System.Timers.Timer;
+
 
 namespace HotelProject
 {
@@ -20,7 +21,8 @@ namespace HotelProject
         private Hotel _Hotel { get; set; }
         private HEListener hel;
         private int Test { get; set; }
-        public Timer timer { get; set; }
+        public System.Timers.Timer timer { get; set; }
+        private Stopwatch stopwatch { get; set; }
 
         delegate void Form1Callback();
 
@@ -29,22 +31,21 @@ namespace HotelProject
             InitializeComponent();
             _Hotel = Hotel.GetInstance();
             hel = new HEListener();
-            Paint += new PaintEventHandler(DrawHotel);
+            Paint += new PaintEventHandler(DrawHotel);            
             HotelEventManager.Register(hel);
             HotelEventManager.HTE_Factor = 1.0f;
 
-            //TODO Timer naar hotel?? of Timer beschikbaar stellen als singleton?
-            timer = new Timer(1000 / HotelEventManager.HTE_Factor);
+            //TODO Timer naar hotel?? of Timer beschikbaar stellen als singleton?;            
+            timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor);     
+            stopwatch = new Stopwatch();
             timer.Enabled = true;
+            timer.Start();
+            stopwatch.Start();
             HotelEventManager.Start();
             timer.Elapsed += TimerHandler;
-
-            KeyUp += new KeyEventHandler(Pause);
-
-
-
+            Console.WriteLine(timer.Interval);
+            KeyUp += Pause;
             _Hotel.SetCleanerAmount(5);
-
 
             HotelEvent hotelEvent = new HotelEvent()
             {
@@ -101,6 +102,8 @@ namespace HotelProject
 
         private void TimerHandler(object source, System.Timers.ElapsedEventArgs e)
         {
+            timer.Interval = 1000 / HotelEventManager.HTE_Factor;
+            stopwatch.Restart();
             Test++;
             if (Test == 10)
             {
@@ -134,6 +137,11 @@ namespace HotelProject
             {
                 HotelEventManager.Pauze();
                 timer.Enabled = HotelEventManager.Running;
+                if (timer.Enabled)
+                {
+                    timer.Interval -= stopwatch.ElapsedMilliseconds;
+                    stopwatch.Restart();
+                }
             }
         }
 

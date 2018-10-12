@@ -20,16 +20,16 @@ namespace HotelProject
 
         public void Notify(HotelEvent Event)
         {
-            Console.WriteLine("_____________________________________________________________");
-            Console.WriteLine("TYPE: " + Event.EventType);
-            Console.WriteLine("MESSAGE: " + Event.Message);
-            Console.WriteLine("TIME: " + Event.Time);
+            //Console.WriteLine("_____________________________________________________________");
+            //Console.WriteLine("TYPE: " + Event.EventType);
+            //Console.WriteLine("MESSAGE: " + Event.Message);
+            //Console.WriteLine("TIME: " + Event.Time);
             if (Event.Data != null)
             {
                 foreach (KeyValuePair<string, string> data in Event.Data)
                 {
-                    Console.WriteLine("KEY: " + data.Key);
-                    Console.WriteLine("VALUE: " + data.Value);
+                    //Console.WriteLine("KEY: " + data.Key);
+                    //Console.WriteLine("VALUE: " + data.Value);
                 }
             }
             
