@@ -244,16 +244,15 @@ namespace HotelProject
             }
         }
 
-        public void SetCleanerAmount(int amount)
+        public void SetCleanerAmount(int amount, int cleaningTime)
         {
             Cleaners = new List<Cleaner>();
             for (int i = 1; i <= amount; i++)
             {
-                Cleaner cleaner = new Cleaner();
+                Cleaner cleaner = new Cleaner(cleaningTime);
                 cleaner.Name = "Cleaner" + i;
                 Cleaners.Add(cleaner);
             }
-
         }
     }
 }

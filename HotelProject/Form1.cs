@@ -21,22 +21,22 @@ namespace HotelProject
 
         delegate void Form1Callback();
 
-        public Form1()
+        public Form1(float hte, int cleaners, int cleaningTime, int elevatorCapacity)
         {
             InitializeComponent();
             _Hotel = Hotel.GetInstance();
             hel = new HEListener();
             Paint += new PaintEventHandler(DrawHotel);
             HotelEventManager.Register(hel);
-            HotelEventManager.HTE_Factor = 1.0f;
-            System.Timers.Timer timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor);
+            HotelEventManager.HTE_Factor = hte;
+            _Hotel.SetCleanerAmount(cleaners, cleaningTime);
+            //_Hotel.SetElevatorCapacity(elevatorCapacity);
+            System.Timers.Timer timer = new System.Timers.Timer(1000 * HotelEventManager.HTE_Factor);
             timer.Enabled = true;
             timer.Elapsed += Timer;
 
 
             //HotelEventManager.Start();
-
-            _Hotel.SetCleanerAmount(5);
 
 
             HotelEvent hotelEvent = new HotelEvent()
@@ -135,5 +135,6 @@ namespace HotelProject
                 Refresh();
             }
         }
+        
     }
 }

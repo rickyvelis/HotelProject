@@ -12,16 +12,19 @@ namespace HotelProject
     {
         private Hotel _Hotel { get; }
         public bool Cleaning { get; set; }
-        public float CleaningSpeed { get; set; }
+        public int CleaningTime { get; set; }
+        private int Timer { get; set; }
         public List<Room> Queue { get; set; }
 
-        public Cleaner()
+        public Cleaner(int cleaningTime)
         {
             _Hotel = Hotel.GetInstance();
             Visible = false;
             SetPosition(1, 0);
             SpritePosition = new Point(Position.Position.X, Position.Position.Y);
             Queue = new List<Room>();
+            Timer = 0;
+            CleaningTime = cleaningTime;
         }
         
         /// <summary>
@@ -32,36 +35,48 @@ namespace HotelProject
             if (Queue.Count != 0 && Cleaning == false)
             {
                 //TODO Maybe compare the distances to all Queued rooms to determine what room to clean next
-                CleanRoom(Queue[0]);
+                GoCleanRoom(Queue[0]);
+            }
+            if (Cleaning == true && Position == Queue[0])
+            {
+                Clean();
             }
         }
 
         /// <summary>
-        /// Cleaner cleans the given room.
+        /// Cleaner goes to given room and cleans it.
         /// </summary>
         /// <param name="room">Room to be cleaned.</param>
-        public void CleanRoom(Room room)
+        public void GoCleanRoom(Room room)
         {
             //TODO Implement amount of time it takes to clean a room
             Cleaning = true;
-            FindRoom(room);
             Visible = true;
+            FindRoom(room);
+        }
 
-            //TODO find another solution for this 
-            while (Position != room)
+        private void Clean()
+        {
+            if (Timer < CleaningTime)
             {
-                
+                if (Timer > 0)
+                    Visible = false;
+
+                Timer++;
             }
-
-            Queue.Remove(room);
-
-            if (Queue.Count == 0)
+            else
             {
-                FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
+                Timer = 0;
+                Queue[0].Dirty = false;
+                Queue[0].Available = true;
+                Queue.Remove(Queue[0]);
+                Cleaning = false;
+                Visible = true;
+                if (Queue.Count == 0)
+                {
+                    FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
+                }
             }
-            room.Dirty = false;
-            room.Available = true;
-            Cleaning = false;
         }
     }
 }
