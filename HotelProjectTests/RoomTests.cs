@@ -46,7 +46,7 @@ namespace HotelProjectTests
         [TestMethod]
         public void Do_Cleaners_Get_Created()
         {
-            _Hotel.SetCleanerAmount(5);
+            _Hotel.SetCleanerAmount(5, 5);
 
             int expectedResult = 5;
             int actualResult = _Hotel.Cleaners.Count();
