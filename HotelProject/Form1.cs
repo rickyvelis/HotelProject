@@ -17,7 +17,7 @@ namespace HotelProject
     {
         private Hotel _Hotel { get; set; }
         private HEListener hel;
-        private int test { get; set; }
+        private int Test { get; set; }
 
         delegate void Form1Callback();
 
@@ -36,14 +36,14 @@ namespace HotelProject
 
             //HotelEventManager.Start();
 
-            _Hotel.SetCleanerAmount(1);
+            _Hotel.SetCleanerAmount(5);
 
 
             HotelEvent hotelEvent = new HotelEvent()
             {
-                Data = new Dictionary<string, string> { { "Gast", "Checkin 2stars" } },
+                Data = new Dictionary<string, string> { { "Gast", "Checkin 1stars" } },
                 EventType = HotelEventType.CHECK_IN,
-                Message = "Checkin 2stars",
+                Message = "Checkin 1stars",
                 Time = 2000
             };
 
@@ -94,8 +94,8 @@ namespace HotelProject
 
         private void Timer(object source, System.Timers.ElapsedEventArgs e)
         {
-            test++;
-            if (test == 10)
+            Test++;
+            if (Test == 10)
             {
                 HotelEvent hotelEvent = new HotelEvent()
                 {

@@ -312,10 +312,10 @@ namespace HotelProject
                     }
                         break;
                 case HotelEventType.CLEANING_EMERGENCY:
-                    foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                    {
-                        room.Dirty = true;
-                    }
+                    //foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                    //{
+                    //    _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r).Queue.Add(_Hotel.Guests.Single(g => g.Name == data.Key).Room);
+                    //}
                     //TODO: Send out all the Cleaners to clean all the dirty rooms
                     //TODO: Send all guests to Lobby
                     break;
