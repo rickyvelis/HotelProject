@@ -119,14 +119,11 @@ namespace HotelProject
         public void Step()
         {
             //TODO 
-            if (Path != null)
+            if (Path != null && Path.Count > 0)
             {
-                if (Path.Count > 0)
-                {
-                    Position = Path[Path.Count - 1];
-                    SpritePosition = new Point(Position.Position.X, Position.Position.Y);
-                    Path.Remove(Path[Path.Count - 1]);
-                }
+                Position = Path[Path.Count - 1];
+                SpritePosition = new Point(Position.Position.X, Position.Position.Y);
+                Path.Remove(Path[Path.Count - 1]);
             }
         }
     }

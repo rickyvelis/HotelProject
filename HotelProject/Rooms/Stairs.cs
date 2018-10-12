@@ -8,7 +8,7 @@ using HotelProject.Properties;
 
 namespace HotelProject.Rooms
 {
-    class Fitness : IRoom
+    class Stairs : IRoom
     {
         public override string AreaType { get; set; }
         public override Point Dimension { get; set; }
@@ -17,12 +17,12 @@ namespace HotelProject.Rooms
         public override Dictionary<IRoom, int> Neighbours { get; set; }
         public override Image Img { get; set; }
 
-        public Fitness(int dimX, int dimY, int posX, int posY)
+        public Stairs(int posX, int posY)
         {
-            AreaType = "Fitness";
-            Dimension = new Point(dimX, dimY);
+            AreaType = "Stairs";
+            Dimension = new Point(1, 1);
             Position = new Point(posX, posY);
-            Img = Resources.Cinema2;
+            Img = Resources.Stairs;
         }
     }
 }

@@ -11,7 +11,8 @@ namespace HotelProject
 {
     public class Guest : Human
     {
-        public IRoom Room { get; set; }
+
+        public Room Room { get; set; }
         private Hotel _Hotel { get; }
 
         public Guest(int posX, int posY)

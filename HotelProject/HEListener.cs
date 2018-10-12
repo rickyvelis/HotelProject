@@ -51,7 +51,7 @@ namespace HotelProject
                                 switch (data.Value)
                                 {
                                     case ("Checkin 1stars"):
-                                        foreach (IRoom room in _Hotel.iRoom)
+                                        foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                         {
                                             if (room.Available && room.Classification == "1 Star")
                                             {
@@ -65,7 +65,7 @@ namespace HotelProject
 
                                         if (!roomFound)
                                         {
-                                            foreach (IRoom room in _Hotel.iRoom)
+                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                             {
                                                 if (room.Available && room.Classification == "2 stars")
                                                 {
@@ -80,7 +80,7 @@ namespace HotelProject
 
                                         if (!roomFound)
                                         {
-                                            foreach (IRoom room in _Hotel.iRoom)
+                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                             {
                                                 if (room.Available && room.Classification == "3 stars")
                                                 {
@@ -95,7 +95,7 @@ namespace HotelProject
 
                                         if (!roomFound)
                                         {
-                                            foreach (IRoom room in _Hotel.iRoom)
+                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                             {
                                                 if (room.Available && room.Classification == "4 stars")
                                                 {
@@ -110,7 +110,7 @@ namespace HotelProject
 
                                         if (!roomFound)
                                         {
-                                            foreach (IRoom room in _Hotel.iRoom)
+                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                             {
                                                 if (room.Available && room.Classification == "5 stars")
                                                 {
@@ -129,7 +129,7 @@ namespace HotelProject
                                         break;
 
                                     case ("Checkin 2stars"):
-                                        foreach (IRoom room in _Hotel.iRoom)
+                                        foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                         {
                                             if (room.Available && room.Classification == "2 stars")
                                             {
@@ -143,7 +143,7 @@ namespace HotelProject
 
                                         if (!roomFound)
                                         {
-                                            foreach (IRoom room in _Hotel.iRoom)
+                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                             {
                                                 if (room.Available && room.Classification == "3 stars")
                                                 {
@@ -158,7 +158,7 @@ namespace HotelProject
 
                                         if (!roomFound)
                                         {
-                                            foreach (IRoom room in _Hotel.iRoom)
+                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                             {
                                                 if (room.Available && room.Classification == "4 stars")
                                                 {
@@ -173,7 +173,7 @@ namespace HotelProject
 
                                         if (!roomFound)
                                         {
-                                            foreach (IRoom room in _Hotel.iRoom)
+                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                             {
                                                 if (room.Available && room.Classification == "5 stars")
                                                 {
@@ -191,7 +191,7 @@ namespace HotelProject
                                         break;
 
                                     case ("Checkin 3stars"):
-                                        foreach (IRoom room in _Hotel.iRoom)
+                                        foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                         {
                                             if (room.Available && room.Classification == "3 stars")
                                             {
@@ -205,7 +205,7 @@ namespace HotelProject
 
                                         if (!roomFound)
                                         {
-                                            foreach (IRoom room in _Hotel.iRoom)
+                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                             {
                                                 if (room.Available && room.Classification == "4 stars")
                                                 {
@@ -220,7 +220,7 @@ namespace HotelProject
 
                                         if (!roomFound)
                                         {
-                                            foreach (IRoom room in _Hotel.iRoom)
+                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                             {
                                                 if (room.Available && room.Classification == "5 stars")
                                                 {
@@ -239,7 +239,7 @@ namespace HotelProject
                                         break;
 
                                     case ("Checkin 4stars"):
-                                        foreach (IRoom room in _Hotel.iRoom)
+                                        foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                         {
                                             if (room.Available && room.Classification == "4 stars")
                                             {
@@ -253,7 +253,7 @@ namespace HotelProject
 
                                         if (!roomFound)
                                         {
-                                            foreach (IRoom room in _Hotel.iRoom)
+                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                             {
                                                 if (room.Available && room.Classification == "5 stars")
                                                 {
@@ -272,7 +272,7 @@ namespace HotelProject
                                         break;
 
                                     case ("Checkin 5stars"):
-                                        foreach (IRoom room in _Hotel.iRoom)
+                                        foreach (Room room in _Hotel.iRoom.OfType<Room>())
                                         {
                                             if (room.Available && room.Classification == "5 stars")
                                             {
@@ -286,10 +286,6 @@ namespace HotelProject
 
                                         if(!roomFound)
                                             _Hotel.Guests.Remove(guest);
-
-                                        break;
-
-                                    default:
                                         break;
                                 }                                
                             }
@@ -317,7 +313,7 @@ namespace HotelProject
                     }
                         break;
                 case HotelEventType.CLEANING_EMERGENCY:
-                    foreach (IRoom room in _Hotel.iRoom)
+                    foreach (Room room in _Hotel.iRoom.OfType<Room>())
                     {
                         room.Dirty = true;
                     }
