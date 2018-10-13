@@ -243,7 +243,12 @@ namespace HotelProject
             }
         }
 
-        public void SetCleanerAmount(int amount, int cleaningTime)
+        /// <summary>
+        /// Sets the amount of cleaners and how many HTE it takes to clean a room
+        /// </summary>
+        /// <param name="amount">amount of cleaners</param>
+        /// <param name="cleaningTime">amount of HTE it takes to clean a room</param>
+        public void SetCleaners(int amount, int cleaningTime)
         {
             Cleaners = new List<Cleaner>();
             for (int i = 1; i <= amount; i++)

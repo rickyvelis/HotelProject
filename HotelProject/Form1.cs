@@ -30,29 +30,34 @@ namespace HotelProject
             InitializeComponent();
             _Hotel = Hotel.GetInstance();
             hel = new HEListener();
-            Paint += DrawHotel;            
+            Paint += DrawHotel;
+            
             HotelEventManager.Register(hel);
             HotelEventManager.HTE_Factor = hte;
-            _Hotel.SetCleanerAmount(cleaners, cleaningTime);
+
+            _Hotel.SetCleaners(cleaners, cleaningTime);
             //_Hotel.SetElevatorCapacity(elevatorCapacity);
+
             timer = new System.Timers.Timer(1000 * HotelEventManager.HTE_Factor) {Enabled = true};
             timer.Start();
             stopwatch = new Stopwatch();
             stopwatch.Start();
+
             HotelEventManager.Start();
+
             timer.Elapsed += TimerHandler;
             Console.WriteLine(timer.Interval);
             KeyUp += Pause;
 
             #region TestCode
-            HotelEvent hotelEvent = new HotelEvent()
-            {
-                Data = new Dictionary<string, string> { { "Gast", "Checkin 1stars" } },
-                EventType = HotelEventType.CHECK_IN,
-                Message = "Checkin 1stars",
-                Time = 2000
-            };
-            hel.Notify(hotelEvent);
+            //HotelEvent hotelEvent = new HotelEvent()
+            //{
+            //    Data = new Dictionary<string, string> { { "Gast", "Checkin 1stars" } },
+            //    EventType = HotelEventType.CHECK_IN,
+            //    Message = "Checkin 1stars",
+            //    Time = 2000
+            //};
+            //hel.Notify(hotelEvent);
             #endregion
         }
 
@@ -103,19 +108,19 @@ namespace HotelProject
             stopwatch.Restart();
 
             #region TestCode
-            Test++;
-            if (Test == 10)
-            {
-                HotelEvent hotelEvent = new HotelEvent()
-                {
-                    Data = new Dictionary<string, string> { { "Gast", "Check out" } },
-                    EventType = HotelEventType.CHECK_OUT,
-                    Message = "Check out",
-                    Time = 2000
-                };
+            //Test++;
+            //if (Test == 10)
+            //{
+            //    HotelEvent hotelEvent = new HotelEvent()
+            //    {
+            //        Data = new Dictionary<string, string> { { "Gast", "Check out" } },
+            //        EventType = HotelEventType.CHECK_OUT,
+            //        Message = "Check out",
+            //        Time = 2000
+            //    };
 
-                hel.Notify(hotelEvent);
-            }
+            //    hel.Notify(hotelEvent);
+            //}
             #endregion
 
 

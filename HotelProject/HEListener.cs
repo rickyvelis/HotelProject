@@ -298,15 +298,15 @@ namespace HotelProject
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
                         {
-                            if (_Hotel.Guests.Exists(g => g.Name == data.Key))
+                            if (_Hotel.Guests.Exists(g => g.Name == data.Key + data.Value))
                             {
-                                _Hotel.Guests.Single(g => g.Name == data.Key).CheckOut();
+                                _Hotel.Guests.Single(g => g.Name == data.Key + data.Value).CheckOut();
 
                                 if (_Hotel.Cleaners != null)
                                 {
                                     //TODO maybe make this line shorter and more understandable
                                     //gets cleaner with shortest queue and adds the to-be-cleaned room to its queue
-                                    _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r).Queue.Add(_Hotel.Guests.Single(g => g.Name == data.Key).Room);
+                                    _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r).Queue.Add(_Hotel.Guests.Single(g => g.Name == data.Key + data.Value).Room);
                                 }
                             }
                         }
