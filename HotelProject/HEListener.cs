@@ -311,7 +311,7 @@ namespace HotelProject
                             }
                         }
                     }
-                        break;
+                    break;
                 case HotelEventType.CLEANING_EMERGENCY:
                     //foreach (Room room in _Hotel.iRoom.OfType<Room>())
                     //{
