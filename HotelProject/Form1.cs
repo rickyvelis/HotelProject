@@ -43,7 +43,7 @@ namespace HotelProject
             stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            //HotelEventManager.Start();
+            HotelEventManager.Start();
 
             timer.Elapsed += TimerHandler;
             Console.WriteLine(timer.Interval);
@@ -51,14 +51,14 @@ namespace HotelProject
             KeyUp += Pause;
 
             #region TestCode
-            HotelEvent hotelEvent = new HotelEvent()
-            {
-                Data = new Dictionary<string, string> { { "Gast1", "Checkin 1stars" } },
-                EventType = HotelEventType.CHECK_IN,
-                Message = "Checkin 1stars",
-                Time = 2000
-            };
-            hel.Notify(hotelEvent);
+            //HotelEvent hotelEvent = new HotelEvent()
+            //{
+            //    Data = new Dictionary<string, string> { { "Gast1", "Checkin 1stars" } },
+            //    EventType = HotelEventType.CHECK_IN,
+            //    Message = "Checkin 1stars",
+            //    Time = 2000
+            //};
+            //hel.Notify(hotelEvent);
             #endregion
         }
 
@@ -109,19 +109,19 @@ namespace HotelProject
             stopwatch.Restart();
 
             #region TestCode
-            Test++;
-            if (Test == 6)
-            {
-                HotelEvent hotelEvent = new HotelEvent()
-                {
-                    Data = new Dictionary<string, string> { { "Gast", "1" } },
-                    EventType = HotelEventType.CHECK_OUT,
-                    Message = "Check out",
-                    Time = 2000
-                };
+            //Test++;
+            //if (Test == 6)
+            //{
+            //    HotelEvent hotelEvent = new HotelEvent()
+            //    {
+            //        Data = new Dictionary<string, string> { { "Gast", "1" } },
+            //        EventType = HotelEventType.CHECK_OUT,
+            //        Message = "Check out",
+            //        Time = 2000
+            //    };
 
-                hel.Notify(hotelEvent);
-            }
+            //    hel.Notify(hotelEvent);
+            //}
             #endregion
 
 

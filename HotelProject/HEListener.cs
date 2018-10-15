@@ -306,19 +306,22 @@ namespace HotelProject
                                 {
                                     //TODO maybe make this line shorter and more understandable
                                     //gets cleaner with shortest queue and adds the to-be-cleaned room to its queue
-                                    _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r).Queue.Add(_Hotel.Guests.Single(g => g.Name == data.Key + data.Value).Room);
+                                    _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r)
+                                        .Queue.Add(_Hotel.Guests.Single(g => g.Name == data.Key + data.Value).Room);
                                 }
                             }
                         }
                     }
                     break;
                 case HotelEventType.CLEANING_EMERGENCY:
-                    //foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                    //{
-                    //    _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r).Queue.Add(_Hotel.Guests.Single(g => g.Name == data.Key).Room);
-                    //}
-                    //TODO: Send out all the Cleaners to clean all the dirty rooms
-                    //TODO: Send all guests to Lobby
+                    Cleaner cleaner = _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r);
+                    foreach (KeyValuePair<string, string> data in Event.Data)
+                    {
+                        if (data.Key == "kamer")
+                            cleaner.Queue.Add(_Hotel.iRoom.OfType<Room>().Single(r => r.ID == int.Parse(data.Value)));
+                        if (data.Key == "HTE")
+                            cleaner.CleaningTime = int.Parse(data.Value);
+                    }
                     break;
                 case HotelEventType.EVACUATE:
                     //evacuate uhhhhh
@@ -328,7 +331,13 @@ namespace HotelProject
                     //BREAK STUFF
                     break;
                 case HotelEventType.GOTO_CINEMA:
-                    //guest goes to cinema
+                    //foreach (KeyValuePair<string, string> data in Event.Data)
+                    //{
+                    //    if (data.Key == "Gast")
+                    //    {
+                    //        _Hotel.Guests.Single(g => g.Name == data.Key + data.Value).FindRoom();
+                    //    }
+                    //}
                     break;
                 case HotelEventType.GOTO_FITNESS:
                     //guest goes to gym
