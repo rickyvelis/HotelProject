@@ -11,6 +11,7 @@ namespace HotelProject.Rooms
     class Hall : IRoom
     {
         public override string AreaType { get; set; }
+        public override int ID { get; set; }
         public override Point Dimension { get; set; }
         public override Point Position { get; set; }
         public override int Distance { get; set; }
@@ -23,6 +24,7 @@ namespace HotelProject.Rooms
             Dimension = new Point(1, 1);
             Position = new Point(posX, posY);
             Img = Resources.Hallway;
+            ID = 0;
         }
     }
 }

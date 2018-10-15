@@ -20,12 +20,12 @@ namespace HotelProject
                         Int32.Parse(room.Dimension.ToString().Split(',')[0]),
                         Int32.Parse(room.Dimension.ToString().Split(',')[1]),
                         Int32.Parse(room.Position.ToString().Split(',')[0]),
-                        Int32.Parse(room.Position.ToString().Split(',')[1]));
+                        Int32.Parse(room.Position.ToString().Split(',')[1]), Int32.Parse(room.ID.ToString()));
                 case ("Fitness"):
                     return new Fitness(Int32.Parse(room.Dimension.ToString().Split(',')[0]),
                         Int32.Parse(room.Dimension.ToString().Split(',')[1]),
                         Int32.Parse(room.Position.ToString().Split(',')[0]),
-                        Int32.Parse(room.Position.ToString().Split(',')[1]));
+                        Int32.Parse(room.Position.ToString().Split(',')[1]), Int32.Parse(room.ID.ToString()));
                 case ("Hall"):
                     return new Hall(Int32.Parse(room.Position.ToString().Split(',')[0]),
                         Int32.Parse(room.Position.ToString().Split(',')[1]));
@@ -39,7 +39,7 @@ namespace HotelProject
                     return new Cinema(Int32.Parse(room.Dimension.ToString().Split(',')[0]),
                         Int32.Parse(room.Dimension.ToString().Split(',')[1]),
                         Int32.Parse(room.Position.ToString().Split(',')[0]),
-                        Int32.Parse(room.Position.ToString().Split(',')[1]));
+                        Int32.Parse(room.Position.ToString().Split(',')[1]), Int32.Parse(room.ID.ToString()));
                 case ("Lobby"):
                     return new Lobby(room.Dimension);
                 case ("Restaurant"):
@@ -47,7 +47,7 @@ namespace HotelProject
                         Int32.Parse(room.Dimension.ToString().Split(',')[0]),
                         Int32.Parse(room.Dimension.ToString().Split(',')[1]),
                         Int32.Parse(room.Position.ToString().Split(',')[0]),
-                        Int32.Parse(room.Position.ToString().Split(',')[1]));
+                        Int32.Parse(room.Position.ToString().Split(',')[1]), Int32.Parse(room.ID.ToString()));
                 default:
                     return null;
             }
