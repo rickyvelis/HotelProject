@@ -123,7 +123,7 @@ namespace HotelProject
             //    hel.Notify(hotelEvent);
             //}
             #endregion
-
+            
 
             foreach (Guest guest in _Hotel.Guests)
                 guest.Update();
