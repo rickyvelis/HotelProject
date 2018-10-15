@@ -20,7 +20,7 @@ namespace HotelProject
         private Hotel _Hotel { get; set; }
         private HEListener hel;
         private int Test { get; set; }
-        public System.Timers.Timer timer { get; set; }
+        private System.Timers.Timer timer { get; set; }
         private Stopwatch stopwatch { get; }
 
         delegate void Form1Callback();
@@ -47,12 +47,13 @@ namespace HotelProject
 
             timer.Elapsed += TimerHandler;
             Console.WriteLine(timer.Interval);
+
             KeyUp += Pause;
 
             #region TestCode
             //HotelEvent hotelEvent = new HotelEvent()
             //{
-            //    Data = new Dictionary<string, string> { { "Gast", "Checkin 1stars" } },
+            //    Data = new Dictionary<string, string> { { "Gast1", "Checkin 1stars" } },
             //    EventType = HotelEventType.CHECK_IN,
             //    Message = "Checkin 1stars",
             //    Time = 2000
@@ -109,11 +110,11 @@ namespace HotelProject
 
             #region TestCode
             //Test++;
-            //if (Test == 10)
+            //if (Test == 6)
             //{
             //    HotelEvent hotelEvent = new HotelEvent()
             //    {
-            //        Data = new Dictionary<string, string> { { "Gast", "Check out" } },
+            //        Data = new Dictionary<string, string> { { "Gast", "1" } },
             //        EventType = HotelEventType.CHECK_OUT,
             //        Message = "Check out",
             //        Time = 2000
@@ -125,14 +126,9 @@ namespace HotelProject
 
 
             foreach (Guest guest in _Hotel.Guests)
-            {
-                guest.Step();
-            }
+                guest.Update();
             foreach (Cleaner cleaner in _Hotel.Cleaners)
-            {
-                cleaner.Step();
-                cleaner.CheckQueue();
-            }
+                cleaner.Update();
 
             UpdateForm();
         }

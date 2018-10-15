@@ -27,6 +27,12 @@ namespace HotelProject
             CleaningTime = cleaningTime;
         }
         
+        public void Update()
+        {
+            CheckQueue();
+            Step();
+        }
+
         /// <summary>
         /// Checks if there is a room to be cleaned and cleans the first room in the queue.
         /// </summary>
@@ -59,9 +65,7 @@ namespace HotelProject
         {
             if (Timer < CleaningTime)
             {
-                if (Timer > 0)
-                    Visible = false;
-
+                Visible = false;
                 Timer++;
             }
             else
