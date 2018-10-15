@@ -11,7 +11,7 @@ namespace HotelProject
 {
     public class HEListener : HotelEventListener
     {
-        private Hotel _Hotel { get; set; }
+        private Hotel _Hotel { get; }
 
         public HEListener()
         {
@@ -20,6 +20,8 @@ namespace HotelProject
 
         public void Notify(HotelEvent Event)
         {
+            #region MyRegion Printing out stuff for us fofr checks
+            
             Console.WriteLine("_____________________________________________________________");
             Console.WriteLine("TYPE: " + Event.EventType);
             Console.WriteLine("MESSAGE: " + Event.Message);
@@ -32,7 +34,8 @@ namespace HotelProject
                     Console.WriteLine("VALUE: " + data.Value);
                 }
             }
-            
+            #endregion
+
             switch (Event.EventType)
             {
                 case HotelEventType.CHECK_IN:
@@ -305,30 +308,46 @@ namespace HotelProject
                                 if (_Hotel.Cleaners != null)
                                 {
                                     //TODO maybe make this line shorter and more understandable
+                                    //TODO kijken of cleaner zelf bezig is??
+                                    /*
                                     //gets cleaner with shortest queue and adds the to-be-cleaned room to its queue
                                     _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r)
-                                        .Queue.Add(_Hotel.Guests.Single(g => g.Name == data.Key + data.Value).Room);
+                                        .Queue.Add(_Hotel.Guests.Single(g => g.Name == data.Key + data.Value).Room);*/
+
                                 }
+
+                                _Hotel.DirtyRooms.Add(_Hotel.Guests.Single(g => g.Name == data.Key + data.Value).Room);
                             }
                         }
                     }
                     break;
                 case HotelEventType.CLEANING_EMERGENCY:
                     Cleaner cleaner = _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r);
-                    foreach (KeyValuePair<string, string> data in Event.Data)
+                    if (Event.Data != null)
                     {
-                        if (data.Key == "kamer")
-                            cleaner.Queue.Add(_Hotel.iRoom.OfType<Room>().Single(r => r.ID == int.Parse(data.Value)));
-                        if (data.Key == "HTE")
-                            cleaner.CleaningTime = int.Parse(data.Value);
+                        //TODO cleaning time later pas setten/laten aflopen als ze bij de goede kamer zijn
+                        foreach (KeyValuePair<string, string> data in Event.Data)
+                        {
+                            if (data.Key == "kamer")
+                                _Hotel.DirtyRooms.Insert(0,
+                                    _Hotel.iRoom.OfType<Room>().Single(r => r.ID == int.Parse(data.Value)));
+                            if (data.Key == "HTE")
+                                cleaner.CleaningTime = int.Parse(data.Value);
+                        }
                     }
+
                     break;
                 case HotelEventType.EVACUATE:
                     //evacuate uhhhhh
+                    foreach (Guest guest in _Hotel.Guests)
+                    {
+                        guest.Evacuate();
+                    }
                     break;
                 case HotelEventType.GODZILLA:
-                    //GOJIRA
-                    //BREAK STUFF
+                        //GOJIRA
+                        //BREAK STUFF
+                        //NIET MEER NODIG
                     break;
                 case HotelEventType.GOTO_CINEMA:
                     //foreach (KeyValuePair<string, string> data in Event.Data)
@@ -346,7 +365,7 @@ namespace HotelProject
                     //guest hungry and goes to restaurant
                     break;
                 case HotelEventType.START_CINEMA:
-                    //??????
+                    //starts the movie, cinema cant be entered anymore, cinema timer starts running
                     break;
                 default:
                     //doe iets

@@ -17,7 +17,7 @@ namespace HotelProject
 {
     public partial class Form1 : Form
     {
-        private Hotel _Hotel { get; set; }
+        private Hotel _Hotel { get; }
         private HEListener hel;
         private int Test { get; set; }
         private System.Timers.Timer timer { get; set; }

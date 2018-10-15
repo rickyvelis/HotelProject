@@ -19,6 +19,7 @@ namespace HotelProject
     {
         public List<IRoom> iRoom { get; set; }
         private List<IRoom> iRoom2 { get; set; }
+        public List<IRoom> DirtyRooms { get; set; }
         public List<Guest> Guests { get; set; }
         public List<Cleaner> Cleaners { get; set; }
         private static Hotel Instance { get; set; }
@@ -26,6 +27,7 @@ namespace HotelProject
 
         private Hotel()
         {
+            DirtyRooms = new List<IRoom>();
             iRoom = new List<IRoom>();
             JSONreader();
             Guests = new List<Guest>();
@@ -186,8 +188,6 @@ namespace HotelProject
             }
         }
 
-        //TODO nagaan van logica hier. lijkt iets mis te gaan
-        //TODO Summary schrijven
         //TODO kan waarschijnlijk weg!!!
         private static void CheckBelow(int offset, List<IRoom> rooms, IRoom room)
         {

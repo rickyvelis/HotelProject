@@ -15,7 +15,8 @@ namespace HotelProject
         public Room Room { get; set; }
         private Hotel _Hotel { get; }
 
-        private bool CheckingOut;
+        private bool CheckingOut { get; set; }
+        private bool Evacuating { get; set; }
 
         public Guest(int posX, int posY)
         {
@@ -30,18 +31,31 @@ namespace HotelProject
         {
             Step();
 
-            if (Position == Room)
+            //if (Position == Room)
                 //Visible = false;
-            if (CheckingOut && Position == _Hotel.iRoom.Single(r => r.AreaType == "Lobby"))
+            if (CheckingOut && Position == _Hotel.iRoom.Single(r => r.AreaType == "Lobby"))            
                 Die();
         }
 
         public void CheckOut()
         {
             FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
-            Room.Dirty = true;
+            //Room.Dirty = true;
             CheckingOut = true;
 
+        }
+
+        public void Evacuate()
+        {
+            Wait = 0;
+            Evacuating = true;
+            FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
+        }
+
+        public void Go_Back()
+        {
+            if (!Evacuating)
+                FindRoom(_Hotel.iRoom.Single(r => r.Position.X == Room.Position.X && r.Position.Y == Room.Position.Y));
         }
 
         public void Die()

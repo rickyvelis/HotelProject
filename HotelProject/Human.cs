@@ -27,7 +27,8 @@ namespace HotelProject
         public void SetPosition(int x, int y)
         {
             Position = _Hotel.iRoom.Single(r => r.Position.X == x && r.Position.Y == y);
-            SpritePosition = new Point(Position.Position.X * 128, (_Hotel.GetMaxHeight() - Position.Position.Y + 1) * 89 - 25);
+            //SpritePosition = new Point(Position.Position.X * 128, (_Hotel.GetMaxHeight() - Position.Position.Y + 1) * 89 - 25);
+            SpritePosition = new Point(x, y);
         }
 
         #region Pathfinding code
@@ -129,8 +130,9 @@ namespace HotelProject
             {
                 if (Path != null && Path.Count > 0)
                 {
-                    Position = Path[Path.Count - 1];
-                    SpritePosition = new Point(Position.Position.X, Position.Position.Y);
+                    //Position = Path[Path.Count - 1];
+                    //SpritePosition = new Point(Position.Position.X, Position.Position.Y);
+                    SetPosition(Path[Path.Count - 1].Position.X, Path[Path.Count - 1].Position.Y);
                     Path.Remove(Path[Path.Count - 1]);
                 }
             }
