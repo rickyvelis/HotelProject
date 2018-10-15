@@ -20,7 +20,7 @@ namespace HotelProject
         public List<IRoom> iRoom { get; set; }
         private List<IRoom> iRoom2 { get; set; }
         public List<Human> Humans { get; set; }
-        public List<IRoom> DirtList { get; set; }
+        public List<IRoom> DirtyRooms { get; set; }
         private static Hotel Instance { get; set; }
         private RoomFactory RFactory { get; set; }
         private HumanFactory HFactory { get; set; }
