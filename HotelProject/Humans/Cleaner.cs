@@ -5,29 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using HotelProject.Rooms;
+using HotelProject.Properties;
 
 namespace HotelProject
 {
     public class Cleaner : Human
     {
         private Hotel _Hotel { get; }
+
+        public override string Name { get; set; }
+        public override bool Visible { get; set; }
+        public override List<IRoom> Path { get; set; }
+        public override IRoom Position { get; set; }
+        public override Point SpritePosition { get; set; }
+        public override int Wait { get; set; }
+        public override Image Img { get; set; }
+
         public bool Cleaning { get; set; }
         public int CleaningTime { get; set; }
+
         private int Timer { get; set; }
+
         public List<Room> Queue { get; set; }
 
-        public Cleaner(int cleaningTime)
+        public Cleaner()
         {
             _Hotel = Hotel.GetInstance();
             Visible = false;
+            Img = Resources.Cleaner;
             SetPosition(1, 0);
             SpritePosition = new Point(Position.Position.X, Position.Position.Y);
             Queue = new List<Room>();
             Timer = 0;
-            CleaningTime = cleaningTime;
+            CleaningTime = _Hotel.CleaningTime;
         }
         
-        public void Update()
+        public override void Update()
         {
             CheckQueue();
             Step();

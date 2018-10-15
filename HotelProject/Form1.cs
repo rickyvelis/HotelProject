@@ -82,23 +82,13 @@ namespace HotelProject
                 e.Graphics.DrawImage(bitmap, room.Position.X * 128, (height - room.Position.Y) * 89);
             }
 
-            foreach (Guest guest in _Hotel.Guests)
+            foreach (Human human in _Hotel.Humans)
             {
-                if (guest.Visible)
+                if (human.Visible)
                 {
-                    bitmap = new Bitmap(Resources.Guest1);
-                    e.Graphics.DrawImage(bitmap, guest.SpritePosition.X * 128,
-                        (_Hotel.GetMaxHeight() - guest.SpritePosition.Y + 1) * 89 - 25);
-                }
-            }
-
-            foreach (Cleaner cleaner in _Hotel.Cleaners)
-            {
-                if (cleaner.Visible)
-                {
-                    bitmap = new Bitmap(Resources.Cleaner);
-                    e.Graphics.DrawImage(bitmap, cleaner.SpritePosition.X * 128,
-                        (_Hotel.GetMaxHeight() - cleaner.SpritePosition.Y + 1) * 89 - 25);
+                    bitmap = new Bitmap(human.Img);
+                    e.Graphics.DrawImage(bitmap, human.SpritePosition.X * 128,
+                        (_Hotel.GetMaxHeight() - human.SpritePosition.Y + 1) * 89 - 25);
                 }
             }
         }
@@ -123,12 +113,9 @@ namespace HotelProject
             //    hel.Notify(hotelEvent);
             //}
             #endregion
-
-
-            foreach (Guest guest in _Hotel.Guests)
-                guest.Update();
-            foreach (Cleaner cleaner in _Hotel.Cleaners)
-                cleaner.Update();
+            
+            foreach (Human human in _Hotel.Humans)
+                human.Update();
 
             UpdateForm();
         }

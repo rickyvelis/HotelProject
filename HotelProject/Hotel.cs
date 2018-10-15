@@ -19,18 +19,19 @@ namespace HotelProject
     {
         public List<IRoom> iRoom { get; set; }
         private List<IRoom> iRoom2 { get; set; }
-        public List<IRoom> DirtyRooms { get; set; }
-        public List<Guest> Guests { get; set; }
-        public List<Cleaner> Cleaners { get; set; }
+        public List<Human> Humans { get; set; }
+        public List<IRoom> DirtList { get; set; }
         private static Hotel Instance { get; set; }
         private RoomFactory RFactory { get; set; }
+        private HumanFactory HFactory { get; set; }
+        public int CleaningTime { get; set; }
 
         private Hotel()
         {
             DirtyRooms = new List<IRoom>();
             iRoom = new List<IRoom>();
             JSONreader();
-            Guests = new List<Guest>();
+            Humans = new List<Human>();
             AddLiftAndStairs();
             CreateHalls();
             SetNeighbours();
@@ -248,14 +249,15 @@ namespace HotelProject
         /// </summary>
         /// <param name="amount">amount of cleaners</param>
         /// <param name="cleaningTime">amount of HTE it takes to clean a room</param>
-        public void SetCleaners(int amount, int cleaningTime)
+        public void SetCleaners(int amount, int CleaningTime)
         {
-            Cleaners = new List<Cleaner>();
+            this.CleaningTime = CleaningTime;
             for (int i = 1; i <= amount; i++)
             {
-                Cleaner cleaner = new Cleaner(cleaningTime);
+                HFactory = new HumanFactory();
+                Human cleaner = HFactory.CreateHuman("cleaner");
                 cleaner.Name = "Cleaner" + i;
-                Cleaners.Add(cleaner);
+                Humans.Add(cleaner);
             }
         }
     }

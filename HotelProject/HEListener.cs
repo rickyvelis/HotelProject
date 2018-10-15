@@ -12,10 +12,12 @@ namespace HotelProject
     public class HEListener : HotelEventListener
     {
         private Hotel _Hotel { get; }
+        private HumanFactory HFactory { get; set; }
 
         public HEListener()
         {
             _Hotel = Hotel.GetInstance();
+            HFactory = new HumanFactory();
         }
 
         public void Notify(HotelEvent Event)
@@ -43,12 +45,12 @@ namespace HotelProject
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
                         {
-                            if (!_Hotel.Guests.Exists(r => r.Name == data.Key))
+                            if (!_Hotel.Humans.Exists(r => r.Name == data.Key))
                             {
                                 bool roomFound = false;
-                                Guest guest = new Guest(1, 0);
+                                Guest guest = HFactory.CreateHuman("guest");
                                 guest.Name = data.Key;
-                                _Hotel.Guests.Add(guest);
+                                _Hotel.Humans.Add(guest);
 
                                 //TODO code verkorten.
                                 switch (data.Value)
@@ -127,7 +129,7 @@ namespace HotelProject
                                         }
 
                                         if(!roomFound)
-                                            _Hotel.Guests.Remove(guest);
+                                            _Hotel.Humans.Remove(guest);
 
                                         break;
 
@@ -189,7 +191,7 @@ namespace HotelProject
                                             }
                                         }
                                         if(!roomFound)
-                                            _Hotel.Guests.Remove(guest);
+                                            _Hotel.Humans.Remove(guest);
 
                                         break;
 
@@ -237,7 +239,7 @@ namespace HotelProject
                                         }
                                         
                                         if(!roomFound)
-                                            _Hotel.Guests.Remove(guest);
+                                            _Hotel.Humans.Remove(guest);
 
                                         break;
 
@@ -270,7 +272,7 @@ namespace HotelProject
                                         }
                                         
                                         if(!roomFound)
-                                            _Hotel.Guests.Remove(guest);
+                                            _Hotel.Humans.Remove(guest);
 
                                         break;
 
@@ -288,25 +290,23 @@ namespace HotelProject
                                         }
 
                                         if(!roomFound)
-                                            _Hotel.Guests.Remove(guest);
+                                            _Hotel.Humans.Remove(guest);
                                         break;
                                 }                                
                             }
                         }
                     }
                     break;
-
                 case HotelEventType.CHECK_OUT:
                     if (Event.Data != null)
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
                         {
-                            if (_Hotel.Guests.Exists(g => g.Name == data.Key + data.Value))
+                            if (_Hotel.Humans.Exists(g => g.Name == data.Key + data.Value))
                             {
-                                _Hotel.Guests.Single(g => g.Name == data.Key + data.Value).CheckOut();
+                                _Hotel.Humans.OfType<Guest>().Single(g => g.Name == data.Key + data.Value).CheckOut();
 
-                                if (_Hotel.Cleaners != null)
-                                {
+                                if (_Hotel.Humans.OfType<Cleaner>() != null)
                                     //TODO maybe make this line shorter and more understandable
                                     //TODO kijken of cleaner zelf bezig is??
                                     /*
@@ -322,7 +322,7 @@ namespace HotelProject
                     }
                     break;
                 case HotelEventType.CLEANING_EMERGENCY:
-                    Cleaner cleaner = _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r);
+                    //TODO Reset CleaningTime to standard value after CLEANING_EMERGENCY is over
                     if (Event.Data != null)
                     {
                         //TODO cleaning time later pas setten/laten aflopen als ze bij de goede kamer zijn
@@ -338,7 +338,8 @@ namespace HotelProject
 
                     break;
                 case HotelEventType.EVACUATE:
-                    //evacuate uhhhhh
+                    //Every human object goes to the lobby within a certain given timeframe
+
                     foreach (Guest guest in _Hotel.Guests)
                     {
                         guest.Evacuate();
@@ -350,6 +351,7 @@ namespace HotelProject
                         //NIET MEER NODIG
                     break;
                 case HotelEventType.GOTO_CINEMA:
+                    //GO TO nearest CINEMA AND WAIT TILL MOVIE STARTS
                     //foreach (KeyValuePair<string, string> data in Event.Data)
                     //{
                     //    if (data.Key == "Gast")
@@ -359,16 +361,16 @@ namespace HotelProject
                     //}
                     break;
                 case HotelEventType.GOTO_FITNESS:
-                    //guest goes to gym
+                    //Given guest goes to nearest gym and stays there for a given amount of HTE
                     break;
                 case HotelEventType.NEED_FOOD:
-                    //guest hungry and goes to restaurant
+                    //Given guest goes to nearest restaurant and stays there for some time (HOW LONG???)
                     break;
                 case HotelEventType.START_CINEMA:
-                    //starts the movie, cinema cant be entered anymore, cinema timer starts running
+                    //Starts the given cinema and throws out guests after the movie is over
                     break;
                 default:
-                    //doe iets
+                    //doe (n)iets
                     break;
             }
         }
