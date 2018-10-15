@@ -16,10 +16,12 @@ namespace HotelProject
         public IRoom Position { get; set; }
         public Point SpritePosition { get; set; }
         private Hotel _Hotel { get; }
+        public int Wait { get; set; }
 
         public Human()
         {
             _Hotel = Hotel.GetInstance();
+            Wait = 0;
         }
 
         public void SetPosition(int x, int y)
@@ -123,11 +125,18 @@ namespace HotelProject
         {
             //TODO code iets verbeteren zodat ze niet direct lopen bij een distance groter dan 1
             //TODO If(Lift == vol && Path[Path.Count - 1].AreaType == "Lift"){ WACHTEN }
-            if (Path != null && Path.Count > 0)
+            if (Wait == 0)
             {
-                Position = Path[Path.Count - 1];
-                SpritePosition = new Point(Position.Position.X, Position.Position.Y);
-                Path.Remove(Path[Path.Count - 1]);
+                if (Path != null && Path.Count > 0)
+                {
+                    Position = Path[Path.Count - 1];
+                    SpritePosition = new Point(Position.Position.X, Position.Position.Y);
+                    Path.Remove(Path[Path.Count - 1]);
+                }
+            }
+            else
+            {
+                Wait--;
             }
         }
     }
