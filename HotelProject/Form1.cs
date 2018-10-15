@@ -38,7 +38,7 @@ namespace HotelProject
             _Hotel.SetCleaners(cleaners, cleaningTime);
             //_Hotel.SetElevatorCapacity(elevatorCapacity);
 
-            timer = new System.Timers.Timer(1000 * HotelEventManager.HTE_Factor) {Enabled = true};
+            timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor) {Enabled = true};
             timer.Start();
             stopwatch = new Stopwatch();
             stopwatch.Start();
