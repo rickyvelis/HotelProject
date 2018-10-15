@@ -8,21 +8,25 @@ using System.Drawing;
 
 namespace HotelProject
 {
-    public class Human
+    public abstract class Human
     {
-        public string Name { get; set; }
-        public bool Visible { get; set; }
-        public List<IRoom> Path { get; set; }
-        public IRoom Position { get; set; }
-        public Point SpritePosition { get; set; }
+        public abstract string Name { get; set; }
+        public abstract bool Visible { get; set; }
+        public abstract List<IRoom> Path { get; set; }
+        public abstract IRoom Position { get; set; }
+        public abstract Point SpritePosition { get; set; }
+        public abstract int Wait { get; set; }
+        public abstract Image Img { get; set; }
+        
         private Hotel _Hotel { get; }
-        public int Wait { get; set; }
 
-        public Human()
+        protected Human()
         {
             _Hotel = Hotel.GetInstance();
             Wait = 0;
         }
+
+        abstract public void Update();
 
         public void SetPosition(int x, int y)
         {
