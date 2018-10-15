@@ -11,6 +11,7 @@ namespace HotelProject.Rooms
     public class Room : IRoom
     {
         public override string AreaType { get; set; }
+        public override int ID { get; set; }
         public override Point Dimension { get; set; }
         public override Point Position { get; set; }
         public override int Distance { get; set; }
@@ -20,7 +21,7 @@ namespace HotelProject.Rooms
         public bool Available { get; set; }
         public override Image Img { get; set; }
 
-        public Room(string classification, int dimX, int dimY, int posX, int posY)
+        public Room(string classification, int dimX, int dimY, int posX, int posY, int iD)
         {
             AreaType = "Room";
             Classification = classification;
@@ -28,7 +29,7 @@ namespace HotelProject.Rooms
             Position = new Point(posX, posY);
             Dirty = false;
             Available = true;
-
+            ID = iD;
             switch (Classification)
             {
                 case ("1 Star"):
