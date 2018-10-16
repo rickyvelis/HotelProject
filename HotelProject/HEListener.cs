@@ -338,7 +338,7 @@ namespace HotelProject
                 case HotelEventType.EVACUATE:
                     //Every human object goes to the lobby within a certain given timeframe
 
-                    foreach (Guest guest in _Hotel.Humans)
+                    foreach (Human guest in _Hotel.Humans)
                     {
                         guest.Evacuate();
                     }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +23,15 @@ namespace HotelProject
         private int Test { get; set; }
         private System.Timers.Timer timer { get; set; }
         private Stopwatch stopwatch { get; }
+        private List<Bitmap> humans { get; set; }
 
         delegate void Form1Callback();
 
         public Form1(float hte, int cleaners, int cleaningTime, int elevatorCapacity)
         {
             InitializeComponent();
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
+            humans = new List<Bitmap>();
             _Hotel = Hotel.GetInstance();
             hel = new HEListener();
             Paint += DrawHotel;
@@ -68,7 +72,7 @@ namespace HotelProject
         }
 
         /// <summary>
-        /// Draws the rooms in the hotel
+        /// Draws everything
         /// </summary>
         /// <param name="e"></param>
         private void Render(PaintEventArgs e)
@@ -78,7 +82,7 @@ namespace HotelProject
 
             foreach (IRoom room in _Hotel.iRoom)
             {
-                bitmap = new Bitmap(room.Img);
+                bitmap = new Bitmap(room.Img);               
                 e.Graphics.DrawImage(bitmap, room.Position.X * 128, (height - room.Position.Y) * 89);
             }
 
@@ -91,6 +95,12 @@ namespace HotelProject
                         (_Hotel.GetMaxHeight() - human.SpritePosition.Y + 1) * 89 - 25);
                 }
             }
+        }
+
+        private void RenderGuests(PaintEventArgs e)
+        {
+
+
         }
 
         private void TimerHandler(object source, ElapsedEventArgs e)
@@ -146,8 +156,10 @@ namespace HotelProject
                 Invoke(d);
             }
             else
-            {
+            {                
                 Refresh();
+               // ActiveForm.Update();
+                //this.ActiveControl.Update();
             }
         }
         

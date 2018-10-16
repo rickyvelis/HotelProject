@@ -24,7 +24,6 @@ namespace HotelProject
         private Hotel _Hotel { get; }
 
         private bool CheckingOut { get; set; }
-        private bool Evacuating { get; set; }
 
         public Guest(int posX, int posY)
         {
@@ -51,13 +50,6 @@ namespace HotelProject
             FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
             _Hotel.DirtyRooms.Add(Room);
             CheckingOut = true;
-        }
-
-        public void Evacuate()
-        {
-            Wait = 0;
-            Evacuating = true;
-            FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
         }
 
         public void Go_Back()
