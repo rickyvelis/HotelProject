@@ -47,252 +47,329 @@ namespace HotelProject
                         {
                             if (!_Hotel.Humans.Exists(r => r.Name == data.Key))
                             {
-                                bool roomFound = false;
+                                string search = data.Value;
                                 Guest guest = HFactory.CreateHuman("guest");
                                 guest.Name = data.Key;
                                 _Hotel.Humans.Add(guest);
 
-                                //TODO code verkorten.
-                                switch (data.Value)
+                                if (search == "Checkin 1stars")
                                 {
-                                    case ("Checkin 1stars"):
-                                        foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                    foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                    {
+                                        if (room.Available && room.Classification == "1 Star")
                                         {
-                                            if (room.Available && room.Classification == "1 Star")
-                                            {
-                                                guest.Room = room;
-                                                room.Available = false;
-                                                roomFound = true;
-                                                guest.FindRoom(room);
-                                                break;
-                                            }                                            
+                                            guest.Room = room;
+                                            room.Available = false;
+                                            guest.FindRoom(room);
+                                            return;
                                         }
+                                    }
+                                    search = "Checkin 2stars";
+                                }
 
-                                        if (!roomFound)
+                                if (search == "Checkin 2stars")
+                                {
+                                    foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                    {
+                                        if (room.Available && room.Classification == "2 stars")
                                         {
-                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                            {
-                                                if (room.Available && room.Classification == "2 stars")
-                                                {
-                                                    guest.Room = room;
-                                                    room.Available = false;
-                                                    roomFound = true;
-                                                    guest.FindRoom(room);
-                                                    break;
-                                                }
-                                            }
+                                            guest.Room = room;
+                                            room.Available = false;
+                                            guest.FindRoom(room);
+                                            return;
                                         }
+                                    }
+                                    search = "Checkin 3stars";
+                                }
 
-                                        if (!roomFound)
+                                if (search == "Checkin 3stars")
+                                {
+                                    foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                    {
+                                        if (room.Available && room.Classification == "3 stars")
                                         {
-                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                            {
-                                                if (room.Available && room.Classification == "3 stars")
-                                                {
-                                                    guest.Room = room;
-                                                    room.Available = false;
-                                                    roomFound = true;
-                                                    guest.FindRoom(room);
-                                                    break;
-                                                }
-                                            }
+                                            guest.Room = room;
+                                            room.Available = false;
+                                            guest.FindRoom(room);
+                                            return;
                                         }
+                                    }
+                                    search = "Checkin 4stars";
+                                }
 
-                                        if (!roomFound)
+                                if (search == "Checkin 4stars")
+                                {
+                                    foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                    {
+                                        if (room.Available && room.Classification == "4 stars")
                                         {
-                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                            {
-                                                if (room.Available && room.Classification == "4 stars")
-                                                {
-                                                    guest.Room = room;
-                                                    room.Available = false;
-                                                    roomFound = true;
-                                                    guest.FindRoom(room);
-                                                    break;
-                                                }
-                                            }
+                                            guest.Room = room;
+                                            room.Available = false;
+                                            guest.FindRoom(room);
+                                            return;
                                         }
+                                    }
+                                    search = "Checkin 5stars";
+                                }
 
-                                        if (!roomFound)
+                                if (search == "Checkin 5stars")
+                                {
+                                    foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                    {
+                                        if (room.Available && room.Classification == "5 stars")
                                         {
-                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                            {
-                                                if (room.Available && room.Classification == "5 stars")
-                                                {
-                                                    guest.Room = room;
-                                                    room.Available = false;
-                                                    roomFound = true;
-                                                    guest.FindRoom(room);
-                                                    break;
-                                                }
-                                            }
+                                            guest.Room = room;
+                                            room.Available = false;
+                                            guest.FindRoom(room);
+                                            return;
                                         }
+                                    }
+                                }
 
-                                        if(!roomFound)
-                                            _Hotel.Humans.Remove(guest);
+                                _Hotel.Humans.Remove(guest);
+                                #region oude code                               
+                                //switch (data.Value)
+                                //{
+                                //    case ("Checkin 1stars"):
+                                //        foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //        {
+                                //            if (room.Available && room.Classification == "1 Star")
+                                //            {
+                                //                guest.Room = room;
+                                //                room.Available = false;
+                                //                roomFound = true;
+                                //                guest.FindRoom(room);
+                                //                break;
+                                //            }                                            
+                                //        }
 
-                                        break;
+                                //        if (!roomFound)
+                                //        {
+                                //            foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //            {
+                                //                if (room.Available && room.Classification == "2 stars")
+                                //                {
+                                //                    guest.Room = room;
+                                //                    room.Available = false;
+                                //                    roomFound = true;
+                                //                    guest.FindRoom(room);
+                                //                    break;
+                                //                }
+                                //            }
+                                //        }
 
-                                    case ("Checkin 2stars"):
-                                        foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                        {
-                                            if (room.Available && room.Classification == "2 stars")
-                                            {
-                                                guest.Room = room;
-                                                room.Available = false;
-                                                roomFound = true;
-                                                guest.FindRoom(room);
-                                                break;
-                                            }
-                                        }
+                                //        if (!roomFound)
+                                //        {
+                                //            foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //            {
+                                //                if (room.Available && room.Classification == "3 stars")
+                                //                {
+                                //                    guest.Room = room;
+                                //                    room.Available = false;
+                                //                    roomFound = true;
+                                //                    guest.FindRoom(room);
+                                //                    break;
+                                //                }
+                                //            }
+                                //        }
 
-                                        if (!roomFound)
-                                        {
-                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                            {
-                                                if (room.Available && room.Classification == "3 stars")
-                                                {
-                                                    guest.Room = room;
-                                                    room.Available = false;
-                                                    roomFound = true;
-                                                    guest.FindRoom(room);
-                                                    break;
-                                                }
-                                            }
-                                        }
+                                //        if (!roomFound)
+                                //        {
+                                //            foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //            {
+                                //                if (room.Available && room.Classification == "4 stars")
+                                //                {
+                                //                    guest.Room = room;
+                                //                    room.Available = false;
+                                //                    roomFound = true;
+                                //                    guest.FindRoom(room);
+                                //                    break;
+                                //                }
+                                //            }
+                                //        }
 
-                                        if (!roomFound)
-                                        {
-                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                            {
-                                                if (room.Available && room.Classification == "4 stars")
-                                                {
-                                                    guest.Room = room;
-                                                    room.Available = false;
-                                                    roomFound = true;
-                                                    guest.FindRoom(room);
-                                                    break;
-                                                }
-                                            }
-                                        }
+                                //        if (!roomFound)
+                                //        {
+                                //            foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //            {
+                                //                if (room.Available && room.Classification == "5 stars")
+                                //                {
+                                //                    guest.Room = room;
+                                //                    room.Available = false;
+                                //                    roomFound = true;
+                                //                    guest.FindRoom(room);
+                                //                    break;
+                                //                }
+                                //            }
+                                //        }
 
-                                        if (!roomFound)
-                                        {
-                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                            {
-                                                if (room.Available && room.Classification == "5 stars")
-                                                {
-                                                    guest.Room = room;
-                                                    room.Available = false;
-                                                    roomFound = true;
-                                                    guest.FindRoom(room);
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        if(!roomFound)
-                                            _Hotel.Humans.Remove(guest);
+                                //        if(!roomFound)
+                                //            _Hotel.Humans.Remove(guest);
 
-                                        break;
+                                //        break;
 
-                                    case ("Checkin 3stars"):
-                                        foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                        {
-                                            if (room.Available && room.Classification == "3 stars")
-                                            {
-                                                guest.Room = room;
-                                                room.Available = false;
-                                                roomFound = true;
-                                                guest.FindRoom(room);
-                                                break;
-                                            }
-                                        }
+                                //    case ("Checkin 2stars"):
+                                //        foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //        {
+                                //            if (room.Available && room.Classification == "2 stars")
+                                //            {
+                                //                guest.Room = room;
+                                //                room.Available = false;
+                                //                roomFound = true;
+                                //                guest.FindRoom(room);
+                                //                break;
+                                //            }
+                                //        }
 
-                                        if (!roomFound)
-                                        {
-                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                            {
-                                                if (room.Available && room.Classification == "4 stars")
-                                                {
-                                                    guest.Room = room;
-                                                    room.Available = false;
-                                                    roomFound = true;
-                                                    guest.FindRoom(room);
-                                                    break;
-                                                }
-                                            }
-                                        }
+                                //        if (!roomFound)
+                                //        {
+                                //            foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //            {
+                                //                if (room.Available && room.Classification == "3 stars")
+                                //                {
+                                //                    guest.Room = room;
+                                //                    room.Available = false;
+                                //                    roomFound = true;
+                                //                    guest.FindRoom(room);
+                                //                    break;
+                                //                }
+                                //            }
+                                //        }
 
-                                        if (!roomFound)
-                                        {
-                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                            {
-                                                if (room.Available && room.Classification == "5 stars")
-                                                {
-                                                    guest.Room = room;
-                                                    room.Available = false;
-                                                    roomFound = true;
-                                                    guest.FindRoom(room);
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        
-                                        if(!roomFound)
-                                            _Hotel.Humans.Remove(guest);
+                                //        if (!roomFound)
+                                //        {
+                                //            foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //            {
+                                //                if (room.Available && room.Classification == "4 stars")
+                                //                {
+                                //                    guest.Room = room;
+                                //                    room.Available = false;
+                                //                    roomFound = true;
+                                //                    guest.FindRoom(room);
+                                //                    break;
+                                //                }
+                                //            }
+                                //        }
 
-                                        break;
+                                //        if (!roomFound)
+                                //        {
+                                //            foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //            {
+                                //                if (room.Available && room.Classification == "5 stars")
+                                //                {
+                                //                    guest.Room = room;
+                                //                    room.Available = false;
+                                //                    roomFound = true;
+                                //                    guest.FindRoom(room);
+                                //                    break;
+                                //                }
+                                //            }
+                                //        }
+                                //        if(!roomFound)
+                                //            _Hotel.Humans.Remove(guest);
 
-                                    case ("Checkin 4stars"):
-                                        foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                        {
-                                            if (room.Available && room.Classification == "4 stars")
-                                            {
-                                                guest.Room = room;
-                                                room.Available = false;
-                                                roomFound = true;
-                                                guest.FindRoom(room);
-                                                break;
-                                            }
-                                        }
+                                //        break;
 
-                                        if (!roomFound)
-                                        {
-                                            foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                            {
-                                                if (room.Available && room.Classification == "5 stars")
-                                                {
-                                                    guest.Room = room;
-                                                    room.Available = false;
-                                                    roomFound = true;
-                                                    guest.FindRoom(room);
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        
-                                        if(!roomFound)
-                                            _Hotel.Humans.Remove(guest);
+                                //    case ("Checkin 3stars"):
+                                //        foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //        {
+                                //            if (room.Available && room.Classification == "3 stars")
+                                //            {
+                                //                guest.Room = room;
+                                //                room.Available = false;
+                                //                roomFound = true;
+                                //                guest.FindRoom(room);
+                                //                break;
+                                //            }
+                                //        }
 
-                                        break;
+                                //        if (!roomFound)
+                                //        {
+                                //            foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //            {
+                                //                if (room.Available && room.Classification == "4 stars")
+                                //                {
+                                //                    guest.Room = room;
+                                //                    room.Available = false;
+                                //                    roomFound = true;
+                                //                    guest.FindRoom(room);
+                                //                    break;
+                                //                }
+                                //            }
+                                //        }
 
-                                    case ("Checkin 5stars"):
-                                        foreach (Room room in _Hotel.iRoom.OfType<Room>())
-                                        {
-                                            if (room.Available && room.Classification == "5 stars")
-                                            {
-                                                guest.Room = room;
-                                                room.Available = false;
-                                                roomFound = true;
-                                                guest.FindRoom(room);
-                                                break;
-                                            }
-                                        }
+                                //        if (!roomFound)
+                                //        {
+                                //            foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //            {
+                                //                if (room.Available && room.Classification == "5 stars")
+                                //                {
+                                //                    guest.Room = room;
+                                //                    room.Available = false;
+                                //                    roomFound = true;
+                                //                    guest.FindRoom(room);
+                                //                    break;
+                                //                }
+                                //            }
+                                //        }
 
-                                        if(!roomFound)
-                                            _Hotel.Humans.Remove(guest);
-                                        break;
-                                }                                
+                                //        if(!roomFound)
+                                //            _Hotel.Humans.Remove(guest);
+
+                                //        break;
+
+                                //    case ("Checkin 4stars"):
+                                //        foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //        {
+                                //            if (room.Available && room.Classification == "4 stars")
+                                //            {
+                                //                guest.Room = room;
+                                //                room.Available = false;
+                                //                roomFound = true;
+                                //                guest.FindRoom(room);
+                                //                break;
+                                //            }
+                                //        }
+
+                                //        if (!roomFound)
+                                //        {
+                                //            foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //            {
+                                //                if (room.Available && room.Classification == "5 stars")
+                                //                {
+                                //                    guest.Room = room;
+                                //                    room.Available = false;
+                                //                    roomFound = true;
+                                //                    guest.FindRoom(room);
+                                //                    break;
+                                //                }
+                                //            }
+                                //        }
+
+                                //        if(!roomFound)
+                                //            _Hotel.Humans.Remove(guest);
+
+                                //        break;
+
+                                //    case ("Checkin 5stars"):
+                                //        foreach (Room room in _Hotel.iRoom.OfType<Room>())
+                                //        {
+                                //            if (room.Available && room.Classification == "5 stars")
+                                //            {
+                                //                guest.Room = room;
+                                //                room.Available = false;
+                                //                roomFound = true;
+                                //                guest.FindRoom(room);
+                                //                break;
+                                //            }
+                                //        }
+
+                                //        if(!roomFound)
+                                //            _Hotel.Humans.Remove(guest);
+                                //        break;
+                                //}      
+
+                                #endregion
                             }
                         }
                     }

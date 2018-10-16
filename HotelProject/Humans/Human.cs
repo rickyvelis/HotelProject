@@ -127,7 +127,7 @@ namespace HotelProject
 
                 previous = previous.Previous;
             }
-            Console.WriteLine("\n" + path + "\nDistance: " + end.Distance);
+            //Console.WriteLine("\n" + path + "\nDistance: " + end.Distance);
 
             return Path;
         }
@@ -157,18 +157,18 @@ namespace HotelProject
         {
             //TODO code iets verbeteren zodat ze niet direct lopen bij een distance groter dan 1
             //TODO If(Lift == vol && Path[Path.Count - 1].AreaType == "Lift"){ WACHTEN }
-            if (Wait == 0)
-            {
+            //if (Wait == 0)
+            //{
                 if (Path != null && Path.Count > 0)
                 {
                     SetPosition(Path[Path.Count - 1].Position.X, Path[Path.Count - 1].Position.Y);
                     Path.Remove(Path[Path.Count - 1]);
                 }
-            }
-            else
-            {
-                Wait--;
-            }
+            //}
+            //else
+            //{
+            //    Wait--;
+            //}
         }
 
         public void Evacuate()

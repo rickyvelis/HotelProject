@@ -186,7 +186,6 @@ namespace HotelProject
                     {
                         room.Neighbours.Add(room2, 1);
                         room2.Neighbours.Add(room, 1);
-                        break;
                     }
                 }
             }
