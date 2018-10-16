@@ -17,7 +17,8 @@ namespace HotelProject
         public abstract Point SpritePosition { get; set; }
         public abstract int Wait { get; set; }
         public abstract Image Img { get; set; }
-        
+        public bool Evacuating { get; set; }
+
         private Hotel _Hotel { get; }
 
         protected Human()
@@ -144,6 +145,13 @@ namespace HotelProject
             {
                 Wait--;
             }
+        }
+
+        public void Evacuate()
+        {
+            Wait = 0;
+            Evacuating = true;
+            FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
         }
     }
 }
