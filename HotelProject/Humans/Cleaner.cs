@@ -75,23 +75,6 @@ namespace HotelProject
             }
         }
 
-        /// <summary>
-        /// Gets the distance from this Cleaner to the given Room
-        /// </summary>
-        /// <param name="room">The given Room</param>
-        /// <returns></returns>
-        public int GetDistanceToRoom(IRoom room)
-        {
-            List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
 
-            foreach (IRoom r in roomsToSearch)
-                r.Distance = Int32.MaxValue / 2;
-
-            IRoom current = Position;
-            while (!Visit(current, room, roomsToSearch)) //Voer dit uit totdat de end node is bezocht
-                current = roomsToSearch.Aggregate((l, r) => l.Distance < r.Distance ? l : r); //if(l.Distance < r.Distance) { return l; } else { return r; }
-
-            return room.Distance;
-        }
     }
 }

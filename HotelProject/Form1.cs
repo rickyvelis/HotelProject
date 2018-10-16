@@ -38,6 +38,7 @@ namespace HotelProject
             HotelEventManager.HTE_Factor = hte;
 
             _Hotel.SetCleaners(cleaners, cleaningTime);
+            _Hotel.SetScreeningTime(2);
             //_Hotel.SetElevatorCapacity(elevatorCapacity);
 
             timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor) {Enabled = true};
@@ -120,6 +121,9 @@ namespace HotelProject
 
             foreach (Human human in _Hotel.Humans)
                 human.Update();
+
+            foreach (Cinema cinema in _Hotel.iRoom.OfType<Cinema>())
+                cinema.Update();
             
             //foreach (Human human in _Hotel.Humans)
             //{

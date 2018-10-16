@@ -48,12 +48,9 @@ namespace HotelProject
         {
             if (Position != destination)
             {
-            Console.WriteLine("----------------------");
-            Console.WriteLine(Name + " GOES TO " + destination.AreaType + " " + destination.Position.ToString() + " " + destination.ID);
                 Console.WriteLine("----------------------");
-                Console.WriteLine(Name + " GOES TO " + destination.AreaType + " " + destination.Position.ToString());
-                Console.WriteLine("Starting from: " + Position.AreaType + "at location " + Position.Position.X + " " +
-                                  Position.Position.Y);
+                Console.WriteLine(Name + " GOES FROM " + Position.AreaType + " " + Position.Position.ToString() +
+                    " TO " + destination.AreaType + " " + destination.Position.ToString() + " " + destination.ID);
 
                 List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
 
@@ -136,7 +133,26 @@ namespace HotelProject
         }
 
         #endregion
-        
+
+
+        /// <summary>
+        /// Gets the distance from this Human to the given Room
+        /// </summary>
+        /// <param name="room">The given Room</param>
+        /// <returns></returns>
+        public int GetDistanceToRoom(IRoom room)
+        {
+            List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
+
+            foreach (IRoom r in roomsToSearch)
+                r.Distance = Int32.MaxValue / 2;
+
+            IRoom current = Position;
+            while (!Visit(current, room, roomsToSearch)) //Voer dit uit totdat de end node is bezocht
+                current = roomsToSearch.Aggregate((l, r) => l.Distance < r.Distance ? l : r); //if(l.Distance < r.Distance) { return l; } else { return r; }
+
+            return room.Distance;
+        }
         public void Step()
         {
             //TODO code iets verbeteren zodat ze niet direct lopen bij een distance groter dan 1

@@ -349,14 +349,26 @@ namespace HotelProject
                     //NIET MEER NODIG
                     break;
                 case HotelEventType.GOTO_CINEMA:
-                    //GO TO nearest CINEMA AND WAIT TILL MOVIE STARTS
-                    //foreach (KeyValuePair<string, string> data in Event.Data)
-                    //{
-                    //    if (data.Key == "Gast")
-                    //    {
-                    //        _Hotel.Guests.Single(g => g.Name == data.Key + data.Value).FindRoom();
-                    //    }
-                    //}
+                    if (Event.Data != null)
+                    {
+                        foreach (KeyValuePair<string, string> data in Event.Data)
+                        {
+                            if (data.Key == "Gast")
+                            {
+                                Dictionary<Cinema, int> cinemaDistances = new Dictionary<Cinema, int>();
+
+                                //Goes through every cinema which hasn't started yet
+                                foreach (Cinema c in _Hotel.iRoom.OfType<Cinema>().Where(c => !c.IsScreening))
+                                    //saves all the distances to the cinemaDistances dictionary
+                                    cinemaDistances.Add(c, _Hotel.Humans.Single(g => g.Name == data.Key + data.Value).GetDistanceToRoom(c));
+
+                                //Sends the specified Guest to the nearest Cinema
+                                Cinema nearestCinema = cinemaDistances.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
+                                nearestCinema.Visitors.Add(_Hotel.Humans.OfType<Guest>().Single(g => g.Name == data.Key + data.Value));
+                                _Hotel.Humans.Single(g => g.Name == data.Key + data.Value).FindRoom(nearestCinema);
+                            }
+                        }
+                    }
                     break;
                 case HotelEventType.GOTO_FITNESS:
                     //Given guest goes to nearest gym and stays there for a given amount of HTE
@@ -366,6 +378,16 @@ namespace HotelProject
                     break;
                 case HotelEventType.START_CINEMA:
                     //Starts the given cinema and throws out guests after the movie is over
+                    if (Event.Data != null)
+                    {
+                        foreach (KeyValuePair<string, string> data in Event.Data)
+                        {
+                            if(data.Key == "ID" && _Hotel.iRoom.Exists(r => r.ID == int.Parse(data.Value) && r is Cinema))
+                            {
+                                _Hotel.iRoom.OfType<Cinema>().Single(r => r.ID == int.Parse(data.Value)).Start();
+                            }
+                        }
+                    }
                     break;
                 default:
                     //doe (n)iets
