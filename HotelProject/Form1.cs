@@ -23,7 +23,6 @@ namespace HotelProject
         private int Test { get; set; }
         private System.Timers.Timer timer { get; set; }
         private Stopwatch stopwatch { get; }
-        private List<Bitmap> humans { get; set; }
 
         delegate void Form1Callback();
 
@@ -31,7 +30,6 @@ namespace HotelProject
         {
             InitializeComponent();
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
-            humans = new List<Bitmap>();
             _Hotel = Hotel.GetInstance();
             hel = new HEListener();
             Paint += DrawHotel;
@@ -97,12 +95,6 @@ namespace HotelProject
             }
         }
 
-        private void RenderGuests(PaintEventArgs e)
-        {
-
-
-        }
-
         private void TimerHandler(object source, ElapsedEventArgs e)
         {
             timer.Interval = 1000 / HotelEventManager.HTE_Factor;
@@ -126,6 +118,15 @@ namespace HotelProject
             
             foreach (Human human in _Hotel.Humans)
                 human.Update();
+
+            //foreach (Human human in _Hotel.Humans)
+            //{
+            //    if (human.Visible)
+            //        Console.WriteLine(human.Name + "CURRENT LOCATION: " + human.Position.AreaType);
+            //}
+            //Console.WriteLine("_________________________________________________________");
+
+            _Hotel.EvacuatingDone();
 
             UpdateForm();
         }
@@ -156,8 +157,6 @@ namespace HotelProject
             else
             {                
                 Refresh();
-               // ActiveForm.Update();
-                //this.ActiveControl.Update();
             }
         }
         

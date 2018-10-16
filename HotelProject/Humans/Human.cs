@@ -24,6 +24,7 @@ namespace HotelProject
         protected Human()
         {
             _Hotel = Hotel.GetInstance();
+            Evacuating = false;
             Wait = 0;
         }
 
@@ -45,23 +46,30 @@ namespace HotelProject
         /// <returns></returns>
         public List<IRoom> FindRoom(IRoom destination)
         {
-            Console.WriteLine("----------------------");
-            Console.WriteLine(Name + " GOES TO " + destination.AreaType + " " + destination.Position.ToString());
-
-            List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
-
-            foreach (IRoom room in roomsToSearch)
+            if (Position != destination)
             {
-                room.Distance = Int32.MaxValue / 2;
-            }
+                Console.WriteLine("----------------------");
+                Console.WriteLine(Name + " GOES TO " + destination.AreaType + " " + destination.Position.ToString());
+                Console.WriteLine("Starting from: " + Position.AreaType + "at location " + Position.Position.X + " " +
+                                  Position.Position.Y);
 
-            IRoom current = Position;
-            while (!Visit(current, destination, roomsToSearch)) //Voer dit uit totdat de end node is bezocht
-            {
-                current = roomsToSearch.Aggregate((l, r) => l.Distance < r.Distance ? l : r); //if(l.Distance < r.Distance) { return l; } else { return r; }
-            }
+                List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
 
-            return MakePath(destination);
+                foreach (IRoom room in roomsToSearch)
+                {
+                    room.Distance = Int32.MaxValue / 2;
+                }
+
+                IRoom current = Position;
+                while (!Visit(current, destination, roomsToSearch)) //Voer dit uit totdat de end node is bezocht
+                {
+                    current = roomsToSearch.Aggregate((l, r) =>
+                        l.Distance < r.Distance ? l : r); //if(l.Distance < r.Distance) { return l; } else { return r; }
+                }
+
+                return MakePath(destination);
+            }
+            else return null;
         }
 
         /// <summary>
@@ -135,8 +143,6 @@ namespace HotelProject
             {
                 if (Path != null && Path.Count > 0)
                 {
-                    //Position = Path[Path.Count - 1];
-                    //SpritePosition = new Point(Position.Position.X, Position.Position.Y);
                     SetPosition(Path[Path.Count - 1].Position.X, Path[Path.Count - 1].Position.Y);
                     Path.Remove(Path[Path.Count - 1]);
                 }

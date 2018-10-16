@@ -25,6 +25,7 @@ namespace HotelProject
         private RoomFactory RFactory { get; set; }
         private HumanFactory HFactory { get; set; }
         public int CleaningTime { get; set; }
+        public bool Evacuating { get; set; }
 
         private Hotel()
         {
@@ -258,6 +259,20 @@ namespace HotelProject
                 Human cleaner = HFactory.CreateHuman("cleaner");
                 cleaner.Name = "Cleaner" + i;
                 Humans.Add(cleaner);
+            }
+        }
+
+        public void EvacuatingDone()
+        {            
+            if (Humans.TrueForAll(r => r.Position.AreaType == "Lobby") && Evacuating)
+            {
+                foreach (Guest guest in Humans.OfType<Guest>())
+                {
+                    guest.Evacuating = false;
+
+                    guest.Go_Back();
+                }
+                Evacuating = false;
             }
         }
     }

@@ -55,7 +55,6 @@ namespace HotelProject
 
         public void Go_Back()
         {
-            if (!Evacuating)
                 FindRoom(_Hotel.iRoom.Single(r => r.Position.X == Room.Position.X && r.Position.Y == Room.Position.Y));
         }
 

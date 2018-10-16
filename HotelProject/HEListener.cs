@@ -339,7 +339,7 @@ namespace HotelProject
                     break;
                 case HotelEventType.EVACUATE:
                     //Every human object goes to the lobby within a certain given timeframe
-
+                    _Hotel.Evacuating = true;
                     foreach (Human guest in _Hotel.Humans)
                     {
                         guest.Evacuate();
