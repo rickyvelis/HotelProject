@@ -20,7 +20,7 @@ namespace HotelProject
         public List<IRoom> iRoom { get; set; }
         private List<IRoom> iRoom2 { get; set; }
         public List<Human> Humans { get; set; }
-        public List<IRoom> DirtyRooms { get; set; }
+        public List<Room> DirtyRooms { get; set; }
         private static Hotel Instance { get; set; }
         private RoomFactory RFactory { get; set; }
         private HumanFactory HFactory { get; set; }
@@ -28,7 +28,7 @@ namespace HotelProject
 
         private Hotel()
         {
-            DirtyRooms = new List<IRoom>();
+            DirtyRooms = new List<Room>();
             iRoom = new List<IRoom>();
             JSONreader();
             Humans = new List<Human>();
@@ -259,6 +259,44 @@ namespace HotelProject
                 cleaner.Name = "Cleaner" + i;
                 Humans.Add(cleaner);
             }
+        }
+
+
+        public void Update()
+        {
+            CheckDirtyRooms();
+        }
+
+        /// <summary>
+        /// Checks the first dirty room in the DirtyRooms list, finds the nearest available cleaner and notifies that cleaner
+        /// </summary>
+        private void CheckDirtyRooms()
+        {
+            if (DirtyRooms.Count != 0 && Humans.OfType<Cleaner>().Where(c => !c.Cleaning) != null)
+            {
+                GetClosestCleaner(DirtyRooms[0]).GoCleanRoom(DirtyRooms[0]);
+                DirtyRooms.Remove(DirtyRooms[0]);
+            }
+        }
+
+        /// <summary>
+        /// Gets the nearest Cleaner to the given Room
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns></returns>
+        private Cleaner GetClosestCleaner(IRoom room)
+        {
+            Dictionary<Cleaner, int> availableCleaners = new Dictionary<Cleaner, int>();
+            int closest = Int32.MaxValue / 2;
+
+            foreach (Cleaner c in Humans.OfType<Cleaner>().Where(c => !c.Cleaning))
+                availableCleaners.Add(c, c.GetDistanceToRoom(DirtyRooms[0]));
+            
+            foreach (KeyValuePair<Cleaner, int> c in availableCleaners)
+                if (c.Value < closest)
+                    closest = c.Value;
+
+            return availableCleaners.First(c => c.Value == closest).Key;
         }
     }
 }

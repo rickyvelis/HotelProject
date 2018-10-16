@@ -22,7 +22,7 @@ namespace HotelProject
 
         public void Notify(HotelEvent Event)
         {
-            #region MyRegion Printing out stuff for us fofr checks
+            #region MyRegion Printing out stuff for us for checks
             
             Console.WriteLine("_____________________________________________________________");
             Console.WriteLine("TYPE: " + Event.EventType);
@@ -306,17 +306,15 @@ namespace HotelProject
                             {
                                 _Hotel.Humans.OfType<Guest>().Single(g => g.Name == data.Key + data.Value).CheckOut();
 
-                                if (_Hotel.Humans.OfType<Cleaner>() != null)
+                                /*
+                                if (_Hotel.Humans.OfType<Cleaner>() != null) 
                                     //TODO maybe make this line shorter and more understandable
                                     //TODO kijken of cleaner zelf bezig is??
-                                    /*
+
                                     //gets cleaner with shortest queue and adds the to-be-cleaned room to its queue
                                     _Hotel.Cleaners.Aggregate((l, r) => l.Queue.Count < r.Queue.Count ? l : r)
-                                        .Queue.Add(_Hotel.Guests.Single(g => g.Name == data.Key + data.Value).Room);*/
-
-                                }
-
-                                _Hotel.DirtyRooms.Add(_Hotel.Guests.Single(g => g.Name == data.Key + data.Value).Room);
+                                        .Queue.Add(_Hotel.Guests.Single(g => g.Name == data.Key + data.Value).Room);
+                                        */
                             }
                         }
                     }
@@ -331,8 +329,8 @@ namespace HotelProject
                             if (data.Key == "kamer")
                                 _Hotel.DirtyRooms.Insert(0,
                                     _Hotel.iRoom.OfType<Room>().Single(r => r.ID == int.Parse(data.Value)));
-                            if (data.Key == "HTE")
-                                cleaner.CleaningTime = int.Parse(data.Value);
+                            //if (data.Key == "HTE")
+                            //    cleaner.CleaningTime = int.Parse(data.Value);
                         }
                     }
 
@@ -340,15 +338,15 @@ namespace HotelProject
                 case HotelEventType.EVACUATE:
                     //Every human object goes to the lobby within a certain given timeframe
 
-                    foreach (Guest guest in _Hotel.Guests)
+                    foreach (Guest guest in _Hotel.Humans)
                     {
                         guest.Evacuate();
                     }
                     break;
                 case HotelEventType.GODZILLA:
-                        //GOJIRA
-                        //BREAK STUFF
-                        //NIET MEER NODIG
+                    //GOJIRA
+                    //BREAK STUFF
+                    //NIET MEER NODIG
                     break;
                 case HotelEventType.GOTO_CINEMA:
                     //GO TO nearest CINEMA AND WAIT TILL MOVIE STARTS

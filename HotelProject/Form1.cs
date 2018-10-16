@@ -114,9 +114,11 @@ namespace HotelProject
             //}
             #endregion
             
+            _Hotel.Update();
+
             foreach (Human human in _Hotel.Humans)
                 human.Update();
-
+            
             UpdateForm();
         }
 

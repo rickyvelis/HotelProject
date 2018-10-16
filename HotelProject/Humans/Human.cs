@@ -45,7 +45,7 @@ namespace HotelProject
         public List<IRoom> FindRoom(IRoom destination)
         {
             Console.WriteLine("----------------------");
-            Console.WriteLine(Name + " GOES TO " + destination.AreaType + " " + destination.Position.ToString());
+            Console.WriteLine(Name + " GOES TO " + destination.AreaType + " " + destination.Position.ToString() + " " + destination.ID);
 
             List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
 
@@ -70,7 +70,7 @@ namespace HotelProject
         /// <param name="end">Destination</param>
         /// <param name="roomsToSearch">List of all the rooms in the hotel</param>
         /// <returns></returns>
-        private bool Visit(IRoom current, IRoom end, List<IRoom> roomsToSearch)
+        public bool Visit(IRoom current, IRoom end, List<IRoom> roomsToSearch)
         {
             //Console.WriteLine("Visiting " + current.AreaType + " at " + current.Position.ToString());
             if (current == end) //Checks if the destination is visited
