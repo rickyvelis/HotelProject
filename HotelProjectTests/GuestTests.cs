@@ -28,7 +28,7 @@ namespace HotelProjectTests
             
             hel.Notify(hotelEvent);
             
-            Assert.IsNotNull(_Hotel.Guests.Single(g => g.Name == "Gast").Room);
+            Assert.IsNotNull(_Hotel.Humans.OfType<Guest>().Single(g => g.Name == "Gast").Room);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace HotelProjectTests
             
             hel.Notify(hotelEvent);
 
-            string actualResult = _Hotel.Guests.Single(g => g.Name == "Gast1").Room.Classification;
+            string actualResult = _Hotel.Humans.OfType<Guest>().Single(g => g.Name == "Gast1").Room.Classification;
             string expectedResult = "3 stars";
             
             Assert.AreEqual(expectedResult, actualResult);
@@ -70,7 +70,7 @@ namespace HotelProjectTests
 
             hel.Notify(hotelEvent);
 
-            bool actualResult = _Hotel.Guests.Exists(g => g.Name == "Gast2");
+            bool actualResult = _Hotel.Humans.Exists(g => g.Name == "Gast2");
             bool expectedResult = false;
 
             Assert.AreEqual(expectedResult, actualResult);
@@ -89,21 +89,21 @@ namespace HotelProjectTests
             List<Point> actualResult = path;
             List<Point> expectedResult = new List<Point>()
             {
-                new Point(1, 0),
-                new Point(2, 0),
-                new Point(3, 0),
-                new Point(4, 0),
-                new Point(5, 0),
-                new Point(6, 0),
-                new Point(7, 0),
-                new Point(8, 0),
-                new Point(9, 0),
-                new Point(9, 1),
-                new Point(9, 2),
-                new Point(9, 3),
-                new Point(9, 4),
-                new Point(9, 5),
-                new Point(8, 5),
+                new Point(1,0),
+                new Point(0,0),
+                new Point(0,1),
+                new Point(0,2),
+                new Point(0,3),
+                new Point(0,4),
+                new Point(0,5),
+                new Point(1,5),
+                new Point(2,5),
+                new Point(3,5),
+                new Point(4,5),
+                new Point(5,5),
+                new Point(6,5),
+                new Point(7,5),
+                new Point(8,5),
             };
             expectedResult.Reverse();
 

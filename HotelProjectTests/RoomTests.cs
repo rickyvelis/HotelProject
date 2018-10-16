@@ -30,7 +30,7 @@ namespace HotelProjectTests
 
             hotelEvent = new HotelEvent()
             {
-                Data = new Dictionary<string, string> { { "Gast", "Check out" } },
+                Data = new Dictionary<string, string> { { "Gast", "" } },
                 EventType = HotelEventType.CHECK_OUT,
                 Message = "Check out",
                 Time = 2000
@@ -38,7 +38,7 @@ namespace HotelProjectTests
             hel.Notify(hotelEvent);
 
             bool expectedResult = true;
-            bool actualResult = _Hotel.Guests.Single(g => g.Name == "Gast").Room.Dirty;
+            bool actualResult = _Hotel.Humans.OfType<Guest>().Single(g => g.Name == "Gast").Room.Dirty;
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -49,7 +49,7 @@ namespace HotelProjectTests
             _Hotel.SetCleaners(5, 5);
 
             int expectedResult = 5;
-            int actualResult = _Hotel.Cleaners.Count();
+            int actualResult = _Hotel.Humans.OfType<Cleaner>().Count();
 
             Assert.AreEqual(expectedResult, actualResult);
         }

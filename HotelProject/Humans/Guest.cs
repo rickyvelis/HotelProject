@@ -48,6 +48,8 @@ namespace HotelProject
         public void CheckOut()
         {
             FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
+            Room.Dirty = true;
+            Room.Available = true;
             _Hotel.DirtyRooms.Add(Room);
             CheckingOut = true;
         }
