@@ -35,6 +35,9 @@ namespace HotelProject
             SpritePosition = new Point(Position.Position.X, Position.Position.Y);
         }
 
+        /// <summary>
+        /// Updates the object behaviour and property values
+        /// </summary>
         public override void Update()
         {
             Step();
@@ -45,6 +48,9 @@ namespace HotelProject
                 Die();
         }
 
+        /// <summary>
+        /// Lets this Guest Checkout of the Hotel
+        /// </summary>
         public void CheckOut()
         {
             FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
@@ -54,11 +60,17 @@ namespace HotelProject
             CheckingOut = true;
         }
 
+        /// <summary>
+        /// Makes the Guest go back to its Room
+        /// </summary>
         public void Go_Back()
         {
                 FindRoom(_Hotel.iRoom.Single(r => r.Position.X == Room.Position.X && r.Position.Y == Room.Position.Y));
         }
 
+        /// <summary>
+        /// Makes the Guest Die
+        /// </summary>
         public void Die()
         {
             Visible = false;

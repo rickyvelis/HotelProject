@@ -64,7 +64,7 @@ namespace HotelProject.Rooms
                 Timer = 0;
                 IsScreening = false;
                 foreach (Guest visitor in Visitors)
-                    visitor.FindRoom(visitor.Room);
+                    visitor.Go_Back();
                 Visitors.Clear();
             }
         }

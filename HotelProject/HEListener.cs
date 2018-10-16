@@ -410,20 +410,25 @@ namespace HotelProject
                             //    cleaner.CleaningTime = int.Parse(data.Value);
                         }
                     }
-
                     break;
                 case HotelEventType.EVACUATE:
                     //Every human object goes to the lobby within a certain given timeframe
-                    _Hotel.Evacuating = true;
-                    foreach (Human guest in _Hotel.Humans)
+                    if (Event.Data != null)
                     {
-                        guest.Evacuate();
+                        _Hotel.Evacuating = true;
+                        foreach (Human guest in _Hotel.Humans)
+                        {
+                            guest.Evacuate();
+                        }
                     }
                     break;
                 case HotelEventType.GODZILLA:
-                    //GOJIRA
-                    //BREAK STUFF
-                    //NIET MEER NODIG
+                    if (Event.Data != null)
+                    {
+                        //GOJIRA
+                        //BREAK STUFF
+                        //NIET MEER NODIG
+                    }
                     break;
                 case HotelEventType.GOTO_CINEMA:
                     if (Event.Data != null)
@@ -458,12 +463,8 @@ namespace HotelProject
                     if (Event.Data != null)
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
-                        {
                             if(data.Key == "ID" && _Hotel.iRoom.Exists(r => r.ID == int.Parse(data.Value) && r is Cinema))
-                            {
                                 _Hotel.iRoom.OfType<Cinema>().Single(r => r.ID == int.Parse(data.Value)).Start();
-                            }
-                        }
                     }
                     break;
                 default:

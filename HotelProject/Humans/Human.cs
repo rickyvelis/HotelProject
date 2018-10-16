@@ -30,6 +30,11 @@ namespace HotelProject
 
         abstract public void Update();
 
+        /// <summary>
+        /// Sets the Position of the Human object
+        /// </summary>
+        /// <param name="x">The X coördinate</param>
+        /// <param name="y">The X coördinate</param>
         public void SetPosition(int x, int y)
         {
             Position = _Hotel.iRoom.Single(r => r.Position.X == x && r.Position.Y == y);
@@ -55,16 +60,11 @@ namespace HotelProject
                 List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
 
                 foreach (IRoom room in roomsToSearch)
-                {
                     room.Distance = Int32.MaxValue / 2;
-                }
 
                 IRoom current = Position;
-                while (!Visit(current, destination, roomsToSearch)) //Voer dit uit totdat de end node is bezocht
-                {
-                    current = roomsToSearch.Aggregate((l, r) =>
-                        l.Distance < r.Distance ? l : r); //if(l.Distance < r.Distance) { return l; } else { return r; }
-                }
+                while (!Visit(current, destination, roomsToSearch)) //Do this until the destination node has been visited
+                    current = roomsToSearch.Aggregate((l, r) => l.Distance < r.Distance ? l : r); //if(l.Distance < r.Distance) { return l; } else { return r; }
 
                 return MakePath(destination);
             }
@@ -153,6 +153,10 @@ namespace HotelProject
 
             return room.Distance;
         }
+
+        /// <summary>
+        /// Makes this Human move on the Form and updates its Position
+        /// </summary>
         public void Step()
         {
             //TODO code iets verbeteren zodat ze niet direct lopen bij een distance groter dan 1
@@ -171,6 +175,10 @@ namespace HotelProject
             //}
         }
 
+
+        /// <summary>
+        /// Makes the Human go to Lobby
+        /// </summary>
         public void Evacuate()
         {
             Wait = 0;

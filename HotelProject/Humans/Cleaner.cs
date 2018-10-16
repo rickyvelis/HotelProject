@@ -38,6 +38,9 @@ namespace HotelProject
             CleaningTime = _Hotel.CleaningTime;
         }
         
+        /// <summary>
+        /// Updates the object behaviour and property values
+        /// </summary>
         public override void Update()
         {
             Step();
@@ -58,6 +61,9 @@ namespace HotelProject
             FindRoom(room);
         }
 
+        /// <summary>
+        /// Cleaner cleans the to-be-cleaned Room for a certain amount of HTE that has been specifeid in the CleaningTime property
+        /// </summary>
         private void Clean()
         {
             if (Timer < CleaningTime)
@@ -74,7 +80,5 @@ namespace HotelProject
                 FindRoom(_Hotel.iRoom.OfType<Lobby>().First());
             }
         }
-
-
     }
 }
