@@ -41,16 +41,15 @@ namespace HotelProject
 
             //if (Position == Room)
                 //Visible = false;
-            if (CheckingOut && Position == _Hotel.iRoom.Single(r => r.AreaType == "Lobby"))            
+            if (CheckingOut && Position == _Hotel.iRoom.OfType<Lobby>())            
                 Die();
         }
 
         public void CheckOut()
         {
             FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
-            //Room.Dirty = true;
+            _Hotel.DirtyRooms.Add(Room);
             CheckingOut = true;
-
         }
 
         public void Go_Back()
