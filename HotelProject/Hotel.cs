@@ -126,8 +126,8 @@ namespace HotelProject
         /// </summary>
         private void AddLiftAndStairs()
         {
-            int x = GetMaxX(iRoom);
-            int y = GetMaxY(iRoom);
+            int x = GetMaxX();
+            int y = GetMaxY();
             dynamic room = new ExpandoObject();
 
             for (int i = 0; i < y; i++)
