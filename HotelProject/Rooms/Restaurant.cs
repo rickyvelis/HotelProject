@@ -8,7 +8,7 @@ using HotelProject.Properties;
 
 namespace HotelProject.Rooms
 {
-    class Restaurant : IRoom
+    public class Restaurant : IRoom
     {
         public override string AreaType { get; set; }
         public override int ID { get; set; }
@@ -16,8 +16,9 @@ namespace HotelProject.Rooms
         public override Point Position { get; set; }
         public override int Distance { get; set; }
         public override Dictionary<IRoom, int> Neighbours { get; set; }
-        public int Capacity { get; set; }
         public override Image Img { get; set; }
+        
+        public int Capacity { get; set; }
 
         public Restaurant(int capacity, int dimX, int dimY, int posX, int posY, int iD)
         {
