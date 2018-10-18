@@ -120,6 +120,7 @@
   <ItemGroup>
     <Content Include="Resources\Cinema1.png" />
     <Content Include="Resources\Cinema2.png" />
+    <Content Include="Resources\Cinema_Start.png" />
     <Content Include="Resources\Cleaner.png" />
     <Content Include="Resources\Entrance.png" />
     <None Include="Resources\Error.png" />
