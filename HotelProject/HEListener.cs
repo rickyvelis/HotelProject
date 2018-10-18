@@ -21,7 +21,7 @@ namespace HotelProject
         }
 
         public void Notify(HotelEvent Event)
-        {
+        {   
             #region MyRegion Printing out stuff for us for checks
 
             Console.WriteLine("_____________________________________________________________");

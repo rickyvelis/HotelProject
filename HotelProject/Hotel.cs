@@ -76,12 +76,11 @@ namespace HotelProject
         /// <summary>
         /// Get the width of the hotel
         /// </summary>
-        /// <param name="rooms">the list of all the rooms in the hotel</param>
         /// <returns>Width of the hotel</returns>
-        private int GetMaxX(List<IRoom> rooms)
+        private int GetMaxX()
         {
             int x = 0;
-            foreach (IRoom room in rooms)
+            foreach (IRoom room in iRoom)
             {
                 if (room.Position.X + room.Dimension.X - 1 > x)
                     x = room.Position.X + room.Dimension.X - 1;
@@ -93,12 +92,11 @@ namespace HotelProject
         /// <summary>
         /// get the amount of floors of the hotel
         /// </summary>
-        /// <param name="rooms">list of rooms in the hotel</param>
         /// <returns>amount of floors of the hotel</returns>
-        private int GetMaxY(List<IRoom> rooms)
+        public int GetMaxY()
         {
             int y = 0;
-            foreach (IRoom room in rooms)
+            foreach (IRoom room in iRoom)
             {
                 if (room.Position.Y + room.Dimension.Y - 1 > y)
                     y = room.Position.Y;
@@ -129,8 +127,8 @@ namespace HotelProject
         /// </summary>
         private void AddLiftAndStairs()
         {
-            int x = GetMaxX(iRoom);
-            int y = GetMaxY(iRoom);
+            int x = GetMaxX();
+            int y = GetMaxY();
             dynamic room = new ExpandoObject();
 
             for (int i = 0; i < y; i++)
