@@ -46,6 +46,7 @@ namespace HotelProject.Rooms
 
         public void Start()
         {
+            Img = Resources.Cinema_Start;
             IsScreening = true;
             Screening();
         }
@@ -61,6 +62,7 @@ namespace HotelProject.Rooms
                 Console.WriteLine("===============");
                 Console.WriteLine("MOVIE IS OVER!!");
                 Console.WriteLine("===============");
+                Img = Resources.Cinema1;
                 Timer = 0;
                 IsScreening = false;
                 foreach (Guest visitor in Visitors)

@@ -23,6 +23,7 @@ namespace HotelProject
         private int Test { get; set; }
         private System.Timers.Timer timer { get; set; }
         private Stopwatch stopwatch { get; }
+        private float HTE_Factor { get; set; }
 
         delegate void Form1Callback();
 
@@ -35,7 +36,8 @@ namespace HotelProject
             Paint += DrawHotel;
             
             HotelEventManager.Register(hel);
-            HotelEventManager.HTE_Factor = hte;
+            HTE_Factor = hte;
+            HotelEventManager.HTE_Factor = HTE_Factor;
 
             _Hotel.SetCleaners(cleaners, cleaningTime);
             //_Hotel.SetElevatorCapacity(elevatorCapacity);
@@ -51,7 +53,7 @@ namespace HotelProject
             timer.Elapsed += TimerHandler;
             Console.WriteLine(timer.Interval);
 
-            KeyUp += Pause;
+            KeyUp += KeyListener;
 
             #region TestCode
             //HotelEvent hotelEvent = new HotelEvent()
@@ -137,18 +139,35 @@ namespace HotelProject
             UpdateForm();
         }
 
-        private void Pause(object sender, KeyEventArgs e)
+        private void KeyListener(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
             {
-                HotelEventManager.Pauze();
-                timer.Enabled = HotelEventManager.Running;
-                if (timer.Enabled)
-                {
-                    timer.Interval -= stopwatch.ElapsedMilliseconds;
-                    stopwatch.Restart();
-                }
+                Pause();
             }
+        }
+
+        private void Pause()
+        {
+            HotelEventManager.Pauze();
+            timer.Enabled = !HotelEventManager.Pauzed;
+            //if (timer.Enabled)
+            //{
+            //    timer.Interval -= stopwatch.ElapsedMilliseconds;
+            //    stopwatch.Restart();
+            //}
+        }
+        private void SpeedUp(int amount)
+        {
+            if (!speedUp_checkBox.Checked)
+            {
+                HotelEventManager.HTE_Factor = this.HTE_Factor;
+            }
+            else
+            {
+                HotelEventManager.HTE_Factor = this.HTE_Factor + amount;
+            }
+            //timer.Interval = 1000 / HotelEventManager.HTE_Factor;
         }
 
         //TODO nog goed kijken naar werking code.
@@ -165,6 +184,22 @@ namespace HotelProject
                 Refresh();
             }
         }
-        
+
+        private void PlayPause_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Pause();
+            if (HotelEventManager.Pauzed)
+                playPause_checkBox.Text = "⏵";
+            else
+                playPause_checkBox.Text = "⏸";
+        }
+
+        private void SpeedUp_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            SpeedUp(5);
+        }
+
+
+
     }
 }

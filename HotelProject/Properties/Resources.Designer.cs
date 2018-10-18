@@ -63,6 +63,16 @@ namespace HotelProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cinema_Start {
+            get {
+                object obj = ResourceManager.GetObject("Cinema_Start", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Cinema1 {
             get {
                 object obj = ResourceManager.GetObject("Cinema1", resourceCulture);
