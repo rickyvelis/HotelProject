@@ -46,16 +46,23 @@ namespace HotelProject
             return f;
         }
 
+        private int ConvertMovieDuration()
+        {
+            int i = int.Parse(movieDuration_textBox.Text);
+            return i;
+        }
+
         private void start_button_Click(object sender, EventArgs e)
         {
             if (cleanerAmount_textBox.Text != "" 
                 && cleanerAmount_textBox.Text != ""
                 //&& maxLiftPassengers_textBox.Text != ""
                 && sPerHTE_textBox.Text != ""
+                && movieDuration_textBox.Text != ""
                 )
             {
                 Hide();
-                MainForm = new Form1(ConvertHTEFactor(), ConvertCleanerAmount(), ConvertCleaningSpeed(), ConvertElevatorCapacity());
+                MainForm = new Form1(ConvertHTEFactor(), ConvertCleanerAmount(), ConvertCleaningSpeed(), ConvertElevatorCapacity(), ConvertMovieDuration());
                 MainForm.Show();
                 MainForm.Closed += (s, args) => Close();
             }

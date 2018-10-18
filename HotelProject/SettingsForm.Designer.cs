@@ -41,6 +41,8 @@
             this.start_button = new System.Windows.Forms.Button();
             this.sPerHTE_tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.cleanerAmount_tooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.movieDuration_label = new System.Windows.Forms.Label();
+            this.movieDuration_textBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +55,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.movieDuration_textBox);
+            this.groupBox1.Controls.Add(this.movieDuration_label);
             this.groupBox1.Controls.Add(this.cleaningSpeed_textBox);
             this.groupBox1.Controls.Add(this.cleaningSpeed_label);
             this.groupBox1.Controls.Add(this.sPerHTE_textBox);
@@ -63,7 +67,7 @@
             this.groupBox1.Controls.Add(this.cleanerAmount_textBox);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(289, 167);
+            this.groupBox1.Size = new System.Drawing.Size(295, 304);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
@@ -82,7 +86,7 @@
             this.cleaningSpeed_label.Name = "cleaningSpeed_label";
             this.cleaningSpeed_label.Size = new System.Drawing.Size(148, 17);
             this.cleaningSpeed_label.TabIndex = 3;
-            this.cleaningSpeed_label.Text = "Cleaner Speed (HTE):";
+            this.cleaningSpeed_label.Text = "Clean Duration (HTE):";
             // 
             // sPerHTE_textBox
             // 
@@ -129,19 +133,36 @@
             // 
             // start_button
             // 
-            this.start_button.Location = new System.Drawing.Point(12, 185);
+            this.start_button.Location = new System.Drawing.Point(12, 322);
             this.start_button.Name = "start_button";
-            this.start_button.Size = new System.Drawing.Size(289, 58);
+            this.start_button.Size = new System.Drawing.Size(295, 58);
             this.start_button.TabIndex = 8;
             this.start_button.Text = "START";
             this.start_button.UseVisualStyleBackColor = true;
             this.start_button.Click += new System.EventHandler(this.start_button_Click);
             // 
+            // movieDuration_label
+            // 
+            this.movieDuration_label.AutoSize = true;
+            this.movieDuration_label.Location = new System.Drawing.Point(7, 145);
+            this.movieDuration_label.Name = "movieDuration_label";
+            this.movieDuration_label.Size = new System.Drawing.Size(149, 17);
+            this.movieDuration_label.TabIndex = 8;
+            this.movieDuration_label.Text = "Movie Duration (HTE):";
+            this.sPerHTE_tooltip.SetToolTip(this.movieDuration_label, "Set how many seconds one HTE should take");
+            // 
+            // movieDuration_textBox
+            // 
+            this.movieDuration_textBox.Location = new System.Drawing.Point(161, 145);
+            this.movieDuration_textBox.Name = "movieDuration_textBox";
+            this.movieDuration_textBox.Size = new System.Drawing.Size(100, 22);
+            this.movieDuration_textBox.TabIndex = 9;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(313, 255);
+            this.ClientSize = new System.Drawing.Size(319, 392);
             this.Controls.Add(this.start_button);
             this.Controls.Add(this.groupBox1);
             this.Name = "SettingsForm";
@@ -166,5 +187,7 @@
         private System.Windows.Forms.Label cleaningSpeed_label;
         private System.Windows.Forms.ToolTip sPerHTE_tooltip;
         private System.Windows.Forms.ToolTip cleanerAmount_tooltip;
+        private System.Windows.Forms.Label movieDuration_label;
+        private System.Windows.Forms.TextBox movieDuration_textBox;
     }
 }

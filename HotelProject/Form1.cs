@@ -26,7 +26,7 @@ namespace HotelProject
 
         delegate void Form1Callback();
 
-        public Form1(float hte, int cleaners, int cleaningTime, int elevatorCapacity)
+        public Form1(float hte, int cleaners, int cleaningTime, int elevatorCapacity, int movieDuration)
         {
             InitializeComponent();
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
@@ -38,8 +38,8 @@ namespace HotelProject
             HotelEventManager.HTE_Factor = hte;
 
             _Hotel.SetCleaners(cleaners, cleaningTime);
-            _Hotel.SetScreeningTime(2);
             //_Hotel.SetElevatorCapacity(elevatorCapacity);
+            _Hotel.SetScreeningTime(movieDuration);
 
             timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor) {Enabled = true};
             timer.Start();
