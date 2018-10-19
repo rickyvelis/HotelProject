@@ -30,6 +30,7 @@ namespace HotelProject
         public Form1(float hte, int cleaners, int cleaningTime, int elevatorCapacity, int movieDuration)
         {
             InitializeComponent();
+            hotelStatus_label.Text = "Running";
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
             _Hotel = Hotel.GetInstance();
             hel = new HEListener();
@@ -42,6 +43,7 @@ namespace HotelProject
             _Hotel.SetCleaners(cleaners, cleaningTime);
             //_Hotel.SetElevatorCapacity(elevatorCapacity);
             _Hotel.SetScreeningTime(movieDuration);
+            _Hotel.EatDuration = 5;
 
             timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor) {Enabled = true};
             timer.Start();
@@ -52,7 +54,7 @@ namespace HotelProject
 
             timer.Elapsed += TimerHandler;
             Console.WriteLine(timer.Interval);
-
+            
             KeyUp += KeyListener;
 
             #region TestCode
@@ -84,7 +86,7 @@ namespace HotelProject
             foreach (IRoom room in _Hotel.iRoom)
             {
                 bitmap = new Bitmap(room.Img);               
-                e.Graphics.DrawImage(bitmap, room.Position.X * 128, (height - room.Position.Y) * 89);
+                e.Graphics.DrawImage(bitmap, room.Position.X * bitmap.Width + 100, (height - room.Position.Y) * bitmap.Height);
             }
 
             foreach (Human human in _Hotel.Humans)
@@ -92,8 +94,8 @@ namespace HotelProject
                 if (human.Visible)
                 {
                     bitmap = new Bitmap(human.Img);
-                    e.Graphics.DrawImage(bitmap, human.SpritePosition.X * 128,
-                        (_Hotel.GetMaxHeight() - human.SpritePosition.Y + 1) * 89 - 25);
+                    e.Graphics.DrawImage(bitmap, human.SpritePosition.X * Resources.Error.Width + 100,
+                        (_Hotel.GetMaxHeight() - human.SpritePosition.Y + 1) * Resources.Error.Height - 25);
                 }
             }
         }
@@ -136,20 +138,25 @@ namespace HotelProject
 
             _Hotel.EvacuatingDone();
 
+            //UpdateStats();
+
             UpdateForm();
+
         }
 
         private void KeyListener(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
-            {
                 Pause();
-            }
         }
 
         private void Pause()
         {
             HotelEventManager.Pauze();
+            if (HotelEventManager.Pauzed)
+                hotelStatus_label.Text = "Pauzed";
+            else
+                hotelStatus_label.Text = "Running";
             timer.Enabled = !HotelEventManager.Pauzed;
             //if (timer.Enabled)
             //{
@@ -157,17 +164,13 @@ namespace HotelProject
             //    stopwatch.Restart();
             //}
         }
+
         private void SpeedUp(int amount)
         {
             if (!speedUp_checkBox.Checked)
-            {
                 HotelEventManager.HTE_Factor = this.HTE_Factor;
-            }
             else
-            {
                 HotelEventManager.HTE_Factor = this.HTE_Factor + amount;
-            }
-            //timer.Interval = 1000 / HotelEventManager.HTE_Factor;
         }
 
         //TODO nog goed kijken naar werking code.
@@ -185,6 +188,13 @@ namespace HotelProject
             }
         }
 
+        private void UpdateStats()
+        {
+            //guestAmount_Label.Text = "" + _Hotel.Humans.OfType<Guest>().Count();
+            //listBox1.Items.AddRange(_Hotel.Humans.OfType<Guest>().ToArray());
+            //+ _Hotel.Humans.OfType<Guest>().Count();
+        }
+
         private void PlayPause_checkBox_CheckedChanged(object sender, EventArgs e)
         {
             Pause();
@@ -192,14 +202,12 @@ namespace HotelProject
                 playPause_checkBox.Text = "⏵";
             else
                 playPause_checkBox.Text = "⏸";
+            guestAmount_Label.Text = "" + _Hotel.Humans.OfType<Guest>().Count();
         }
 
         private void SpeedUp_checkBox_CheckedChanged(object sender, EventArgs e)
         {
             SpeedUp(5);
         }
-
-
-
     }
 }

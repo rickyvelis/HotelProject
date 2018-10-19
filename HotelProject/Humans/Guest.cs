@@ -25,6 +25,12 @@ namespace HotelProject
         private Hotel _Hotel { get; }
 
         private bool CheckingOut { get; set; }
+        public bool NeedFood { get; set; }
+        public bool NeedWorkout { get; set; }
+        public int EatDuration { get; set; }
+        public int FitnessDuration { get; set; }
+
+        public int Timer { get; set; }
 
         public Guest(int posX, int posY)
         {
@@ -34,6 +40,9 @@ namespace HotelProject
             CheckingOut = false;
             SetPosition(posX, posY);
             SpritePosition = new Point(Position.Position.X, Position.Position.Y);
+            Timer = 0;
+            EatDuration = _Hotel.EatDuration;
+            FitnessDuration = 0;
         }
 
         /// <summary>
@@ -45,7 +54,14 @@ namespace HotelProject
 
             //if (Position == Room)
                 //Visible = false;
-            if (CheckingOut && Position == _Hotel.iRoom.OfType<Lobby>())            
+
+            if (NeedFood && Position.AreaType == "Restaurant")
+                Eat();
+
+            if (NeedWorkout && Position.AreaType == "Fitness")
+                Workout();
+
+            if (CheckingOut && Position == _Hotel.iRoom.OfType<Lobby>())
                 Die();
         }
 
@@ -67,6 +83,39 @@ namespace HotelProject
         public void Go_Back()
         {
                 FindRoom(_Hotel.iRoom.Single(r => r.Position.X == Room.Position.X && r.Position.Y == Room.Position.Y));
+        }
+
+
+        private void Eat()
+        {
+            if (Timer < EatDuration)
+            {
+                //Visible = false;
+                Timer++;
+            }
+            else
+            {
+                Timer = 0;
+                NeedFood = false;
+                Visible = true;
+                FindRoom(Room);
+            }
+        }
+
+        public void Workout()
+        {
+            if (Timer < FitnessDuration)
+            {
+                //Visible = false;
+                Timer++;
+            }
+            else
+            {
+                Timer = 0;
+                NeedWorkout = false;
+                Visible = true;
+                FindRoom(Room);
+            }
         }
 
         /// <summary>

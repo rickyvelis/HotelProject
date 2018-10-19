@@ -26,7 +26,8 @@ namespace HotelProject
         private HumanFactory HFactory { get; set; }
         public Elevator elevator { get; set; }
 
-        public int CleaningTime { get; set; }
+        public int CleanDuration { get; set; }
+        public int EatDuration { get; set; }
 
         public bool Evacuating { get; set; }
 
@@ -229,7 +230,7 @@ namespace HotelProject
         /// <param name="cleaningTime">amount of HTE it takes to clean a room</param>
         public void SetCleaners(int amount, int CleaningTime)
         {
-            this.CleaningTime = CleaningTime;
+            this.CleanDuration = CleaningTime;
             for (int i = 1; i <= amount; i++)
             {
                 HFactory = new HumanFactory();

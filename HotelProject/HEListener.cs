@@ -23,7 +23,7 @@ namespace HotelProject
         public void Notify(HotelEvent Event)
         {   
             #region MyRegion Printing out stuff for us for checks
-            
+
             Console.WriteLine("_____________________________________________________________");
             Console.WriteLine("TYPE: " + Event.EventType);
             Console.WriteLine("MESSAGE: " + Event.Message);
@@ -190,7 +190,9 @@ namespace HotelProject
 
                                 //Sends the specified Guest to the nearest Cinema
                                 Cinema nearestCinema = cinemaDistances.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
+
                                 nearestCinema.Visitors.Add(_Hotel.Humans.OfType<Guest>().Single(g => g.Name == data.Key + data.Value));
+
                                 _Hotel.Humans.Single(g => g.Name == data.Key + data.Value).FindRoom(nearestCinema);
                             }
                         }
@@ -198,9 +200,58 @@ namespace HotelProject
                     break;
                 case HotelEventType.GOTO_FITNESS:
                     //Given guest goes to nearest gym and stays there for a given amount of HTE
+                    if (Event.Data != null)
+                    {
+                        string guestName = "";
+                        foreach(KeyValuePair<string, string> data in Event.Data)
+                        {
+                            if (data.Key == "Gast")
+                            {
+                                guestName = data.Key + data.Value;
+                                Dictionary<Fitness, int> gymDistances = new Dictionary<Fitness, int>(); 
+                                
+                                //Goes through every restaurant
+                                foreach (Fitness gym in _Hotel.iRoom.OfType<Fitness>())
+                                    //saves all the distances to the cinemaDistances dictionary
+                                    gymDistances.Add(gym, _Hotel.Humans.Single(g => g.Name == guestName).GetDistanceToRoom(gym));
+                                
+                                _Hotel.Humans.OfType<Guest>().Single(g => g.Name == guestName).NeedWorkout = true;
+
+                                //Sends the specified Guest to the nearest Restaurant
+                                _Hotel.Humans.Single(g => g.Name == guestName).
+                                    FindRoom(gymDistances.Aggregate((l, r) => l.Value < r.Value ? l : r).Key);
+                            }
+                            else if (data.Key == "HTE")
+                            {
+                                _Hotel.Humans.OfType<Guest>().Single(g => g.Name == guestName).FitnessDuration = int.Parse(data.Value);
+                            }
+                        }
+
+                    }
                     break;
                 case HotelEventType.NEED_FOOD:
                     //Given guest goes to nearest restaurant and stays there for some time (HOW LONG???)
+                    if (Event.Data != null)
+                    {
+                        foreach (KeyValuePair<string, string> data in Event.Data)
+                        {
+                            if (data.Key == "Gast")
+                            {
+                                Dictionary<Restaurant, int> restaurantDistances = new Dictionary<Restaurant, int>();
+
+                                //Goes through every restaurant
+                                foreach (Restaurant rest in _Hotel.iRoom.OfType<Restaurant>())
+                                    //saves all the distances to the cinemaDistances dictionary
+                                    restaurantDistances.Add(rest, _Hotel.Humans.Single(g => g.Name == data.Key + data.Value).GetDistanceToRoom(rest));
+
+                                _Hotel.Humans.OfType<Guest>().Single(g => g.Name == data.Key + data.Value).NeedFood = true;
+
+                                //Sends the specified Guest to the nearest Restaurant
+                                _Hotel.Humans.Single(g => g.Name == data.Key + data.Value).
+                                    FindRoom(restaurantDistances.Aggregate((l, r) => l.Value < r.Value ? l : r).Key);
+                            }
+                        }
+                    }
                     break;
                 case HotelEventType.START_CINEMA:
                     //Starts the given cinema and throws out guests after the movie is over

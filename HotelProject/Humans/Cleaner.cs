@@ -24,7 +24,7 @@ namespace HotelProject
 
         private Room RoomToClean {get;set;}
         public bool Cleaning { get; set; }
-        public int CleaningTime { get; set; }
+        public int CleanDuration { get; set; }
 
         private int Timer { get; set; }
 
@@ -36,7 +36,7 @@ namespace HotelProject
             SetPosition(1, 0);
             SpritePosition = new Point(Position.Position.X, Position.Position.Y);
             Timer = 0;
-            CleaningTime = _Hotel.CleaningTime;
+            CleanDuration = _Hotel.CleanDuration;
         }
         
         /// <summary>
@@ -67,7 +67,7 @@ namespace HotelProject
         /// </summary>
         private void Clean()
         {
-            if (Timer < CleaningTime)
+            if (Timer < CleanDuration)
             {
                 Visible = false;
                 Timer++;

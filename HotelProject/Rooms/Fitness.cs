@@ -8,7 +8,7 @@ using HotelProject.Properties;
 
 namespace HotelProject.Rooms
 {
-    class Fitness : IRoom
+    public class Fitness : IRoom
     {
         public override string AreaType { get; set; }
         public override int ID { get; set; }
