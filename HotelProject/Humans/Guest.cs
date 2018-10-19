@@ -58,9 +58,10 @@ namespace HotelProject
             //Visible = false;
 
             if (CheckingOut)
-                if(Position == _Hotel.iRoom.OfType<Lobby>())
+            {
+                if (Position == _Hotel.iRoom.OfType<Lobby>())
                     Die();
-
+            }
             else if (Evacuating)
             {
                 NeedFood = false;

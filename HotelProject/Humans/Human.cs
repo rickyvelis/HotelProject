@@ -57,7 +57,7 @@ namespace HotelProject
             if (Position != destination)
             {
                 Console.WriteLine("----------------------");
-                Console.WriteLine(Name + " GOES FROM " + Position.AreaType + " " + Position.Position.ToString() +
+                Console.WriteLine(Name + " GOES FROM " + Position.AreaType + " " + Position.Position.ToString() + " " + Position.ID +
                     " TO " + destination.AreaType + " " + destination.Position.ToString() + " " + destination.ID);
 
                 List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
@@ -164,18 +164,19 @@ namespace HotelProject
         {
             //TODO code iets verbeteren zodat ze niet direct lopen bij een distance groter dan 1
             //TODO If(Lift == vol && Path[Path.Count - 1].AreaType == "Lift"){ WACHTEN }
-            //if (Wait == 0)
-            //{
-                if (Path != null && Path.Count > 0)
+            if (Path != null && Path.Count > 0)
+            {
+                if (Path[Path.Count - 1].AreaType == "Stairs" && Wait == 0)
+                {
+                    Wait++;
+                }
+                else
                 {
                     SetPosition(Path[Path.Count - 1].Position.X, Path[Path.Count - 1].Position.Y);
                     Path.Remove(Path[Path.Count - 1]);
+                    Wait = 0;
                 }
-            //}
-            //else
-            //{
-            //    Wait--;
-            //}
+            }
         }
 
 

@@ -152,6 +152,9 @@ namespace HotelProject
                 Pause();
         }
 
+        /// <summary>
+        /// Pauses the simulation
+        /// </summary>
         private void Pause()
         {
             HotelEventManager.Pauze();
@@ -167,6 +170,10 @@ namespace HotelProject
             //}
         }
 
+        /// <summary>
+        /// Speeds up the simulation
+        /// </summary>
+        /// <param name="amount">Amount of HTE to be added to the HTE_Factor</param>
         private void SpeedUp(int amount)
         {
             if (!speedUp_checkBox.Checked)
@@ -176,7 +183,6 @@ namespace HotelProject
         }
 
         //TODO nog goed kijken naar werking code.
-        //TODO zorgen dat het hotel niet continue knippert
         public void UpdateForm()
         {
             if (InvokeRequired)
