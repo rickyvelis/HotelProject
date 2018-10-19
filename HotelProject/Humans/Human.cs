@@ -166,11 +166,19 @@ namespace HotelProject
             //TODO If(Lift == vol && Path[Path.Count - 1].AreaType == "Lift"){ WACHTEN }
             if (Path != null && Path.Count > 0)
             {
-                if (Path[Path.Count - 1].AreaType == "Stairs" && Wait == 0)
+
+                if (Wait != 0)
                 {
+                    Wait--;
+                }
+                else if (Path[Path.Count - 1].AreaType == "Stairs")
+                {
+                    
                     Wait++;
                 }
-                else
+
+
+                if (Wait == 0)
                 {
                     if ((Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType != "Elevator") ||
                         (Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType == "Elevator" &&
@@ -199,6 +207,7 @@ namespace HotelProject
 
                     }
                 }
+                
             }
         }
 
