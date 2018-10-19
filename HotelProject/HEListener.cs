@@ -156,23 +156,16 @@ namespace HotelProject
                     }
                     break;
                 case HotelEventType.EVACUATE:
-                    //Every human object goes to the lobby within a certain given timeframe
-                    if (Event.Data != null)
+                    _Hotel.Evacuating = true;
+                    foreach (Human human in _Hotel.Humans)
                     {
-                        _Hotel.Evacuating = true;
-                        foreach (Human guest in _Hotel.Humans)
-                        {
-                            guest.Evacuate();
-                        }
+                        human.Evacuate();
                     }
                     break;
                 case HotelEventType.GODZILLA:
-                    if (Event.Data != null)
-                    {
-                        //GOJIRA
-                        //BREAK STUFF
-                        //NIET MEER NODIG
-                    }
+                    //GOJIRA
+                    //BREAK STUFF
+                    //NIET MEER NODIG
                     break;
                 case HotelEventType.GOTO_CINEMA:
                     if (Event.Data != null)
@@ -232,7 +225,7 @@ namespace HotelProject
                                 _Hotel.Humans.Single(g => g.Name == guestName).
                                     FindRoom(gymDistances.Aggregate((l, r) => l.Value < r.Value ? l : r).Key);
                             }
-                            else if (data.Key == "HTE")
+                            else if (data.Key == "HTE" && guestName != "")
                             {
                                 _Hotel.Humans.OfType<Guest>().Single(g => g.Name == guestName).FitnessDuration = int.Parse(data.Value);
                             }
