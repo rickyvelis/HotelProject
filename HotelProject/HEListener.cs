@@ -41,7 +41,7 @@ namespace HotelProject
             switch (Event.EventType)
             {
                 case HotelEventType.CHECK_IN:
-                    if (Event.Data != null)
+                    if (Event.Data != null && !_Hotel.Evacuating)
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
                         {
@@ -142,7 +142,7 @@ namespace HotelProject
                     break;
                 case HotelEventType.CLEANING_EMERGENCY:
                     //TODO Reset CleaningTime to standard value after CLEANING_EMERGENCY is over
-                    if (Event.Data != null)
+                    if (Event.Data != null && !_Hotel.Evacuating)
                     {
                         //TODO cleaning time later pas setten/laten aflopen als ze bij de goede kamer zijn
                         foreach (KeyValuePair<string, string> data in Event.Data)
@@ -168,7 +168,7 @@ namespace HotelProject
                     //NIET MEER NODIG
                     break;
                 case HotelEventType.GOTO_CINEMA:
-                    if (Event.Data != null)
+                    if (Event.Data != null && !_Hotel.Evacuating)
                     {
                         string guestName = "";
                         foreach (KeyValuePair<string, string> data in Event.Data)
@@ -200,7 +200,7 @@ namespace HotelProject
                     break;
                 case HotelEventType.GOTO_FITNESS:
                     //Given guest goes to nearest gym and stays there for a given amount of HTE
-                    if (Event.Data != null)
+                    if (Event.Data != null && !_Hotel.Evacuating)
                     {
                         string guestName = "";
                         foreach(KeyValuePair<string, string> data in Event.Data)
@@ -235,7 +235,7 @@ namespace HotelProject
                     break;
                 case HotelEventType.NEED_FOOD:
                     //Given guest goes to nearest restaurant and stays there for some time (HOW LONG???)
-                    if (Event.Data != null)
+                    if (Event.Data != null && !_Hotel.Evacuating)
                     {
                         string guestName = "";
                         foreach (KeyValuePair<string, string> data in Event.Data)
@@ -265,7 +265,7 @@ namespace HotelProject
                     break;
                 case HotelEventType.START_CINEMA:
                     //Starts the given cinema and throws out guests after the movie is over
-                    if (Event.Data != null)
+                    if (Event.Data != null && !_Hotel.Evacuating)
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
                             if(data.Key == "ID" && _Hotel.iRoom.Exists(r => r.ID == int.Parse(data.Value) && r is Cinema))
