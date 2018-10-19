@@ -91,15 +91,17 @@ namespace HotelProject
                         CurrentFloor++;
 
                         //TODO Check toevoegen of er iemand uitwilt
-                        if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).UpPressed || _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).DownPressed)
+                        if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
+                                .UpPressed || _Hotel.iRoom.OfType<ElevatorShaft>()
+                                .First(r => r.Position == new Point(0, CurrentFloor)).DownPressed)
                         {
                             _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
                                 .UpPressed = false;
                             _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
                                 .DownPressed = false;
                             DoorsOpen = true;
-                            SwitchDirection();
                         }
+                        SwitchDirection();
                     }
                     break;
 
@@ -116,8 +118,8 @@ namespace HotelProject
                             _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
                                 .DownPressed = false;
                             DoorsOpen = true;
-                            SwitchDirection();
                         }
+                        SwitchDirection();
                     }
                     break;
             }

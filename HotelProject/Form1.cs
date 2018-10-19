@@ -140,6 +140,7 @@ namespace HotelProject
             //Console.WriteLine("_________________________________________________________");
 
             _Hotel.EvacuatingDone();
+
             _Hotel.elevator.DoEvents();
 
             //UpdateStats();

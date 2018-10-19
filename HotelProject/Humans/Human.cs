@@ -172,9 +172,32 @@ namespace HotelProject
                 }
                 else
                 {
-                    SetPosition(Path[Path.Count - 1].Position.X, Path[Path.Count - 1].Position.Y);
-                    Path.Remove(Path[Path.Count - 1]);
-                    Wait = 0;
+                    if ((Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType != "Elevator") ||
+                        (Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType == "Elevator" &&
+                         _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y &&
+                         _Hotel.elevator.DoorsOpen) ||
+                        (Position.AreaType == "Elevator" &&
+                         _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y && _Hotel.elevator.DoorsOpen))
+                    {
+                        SetPosition(Path[Path.Count - 1].Position.X, Path[Path.Count - 1].Position.Y);
+                        Path.Remove(Path[Path.Count - 1]);
+                        Wait = 0;
+                    }
+                    else if (Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType == "Elevator")
+                    {
+                        if (TargetFloor > Position.Position.Y)
+                        {
+                            _Hotel.iRoom.OfType<ElevatorShaft>()
+                                .First(r => r.Position == new Point(0, Position.Position.Y)).UpPressed = true;
+                        }
+
+                        if (TargetFloor < Position.Position.Y)
+                        {
+                            _Hotel.iRoom.OfType<ElevatorShaft>()
+                                .First(r => r.Position == new Point(0, Position.Position.Y)).DownPressed = true;
+                        }
+
+                    }
                 }
             }
         }

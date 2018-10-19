@@ -28,6 +28,7 @@ namespace HotelProject
         public bool NeedFood { get; set; }
         public bool NeedWorkout { get; set; }
         public bool NeedMovie { get; set; }
+        public bool InElevator { get; set; }
 
         public int EatDuration { get; set; }
         public int FitnessDuration { get; set; }
@@ -40,6 +41,7 @@ namespace HotelProject
             Img = Resources.Guest1;
             Visible = true;
             CheckingOut = false;
+            InElevator = false;
             SetPosition(posX, posY);
             SpritePosition = new Point(Position.Position.X, Position.Position.Y);
             Timer = 0;
