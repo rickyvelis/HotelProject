@@ -197,8 +197,6 @@ namespace HotelProject
             }
         }
 
-
-
         //TODO code mogelijk verbeteren.
         private void CreateHalls()
         {

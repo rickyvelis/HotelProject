@@ -55,16 +55,25 @@ namespace HotelProject
             Step();
 
             //if (Position == Room)
-                //Visible = false;
+            //Visible = false;
 
-            if (NeedFood && Position.AreaType == "Restaurant")
+            if (CheckingOut)
+                if(Position == _Hotel.iRoom.OfType<Lobby>())
+                    Die();
+
+            else if (Evacuating)
+            {
+                NeedFood = false;
+                NeedMovie = false;
+                NeedWorkout = false;
+                Timer = 0;
+            }
+
+            else if (NeedFood && Position.AreaType == "Restaurant")
                 Eat();
 
-            if (NeedWorkout && Position.AreaType == "Fitness")
+            else if (NeedWorkout && Position.AreaType == "Fitness")
                 Workout();
-
-            if (CheckingOut && Position == _Hotel.iRoom.OfType<Lobby>())
-                Die();
         }
 
         /// <summary>
@@ -87,7 +96,9 @@ namespace HotelProject
                 FindRoom(_Hotel.iRoom.Single(r => r.Position.X == Room.Position.X && r.Position.Y == Room.Position.Y));
         }
 
-
+        /// <summary>
+        /// Guest eats until Timer has reached the value of EatDuration
+        /// </summary>
         private void Eat()
         {
             if (Timer < EatDuration)
@@ -104,6 +115,9 @@ namespace HotelProject
             }
         }
 
+        /// <summary>
+        /// Guest spends time in the gym until Timer has reached the value of WorkoutDuration
+        /// </summary>
         public void Workout()
         {
             if (Timer < FitnessDuration)
@@ -119,7 +133,7 @@ namespace HotelProject
                 FindRoom(Room);
             }
         }
-
+        
         /// <summary>
         /// Makes the Guest Die
         /// </summary>
