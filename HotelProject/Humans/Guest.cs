@@ -26,6 +26,8 @@ namespace HotelProject
         private bool CheckingOut { get; set; }
         public bool NeedFood { get; set; }
         public bool NeedWorkout { get; set; }
+        public bool NeedMovie { get; set; }
+
         public int EatDuration { get; set; }
         public int FitnessDuration { get; set; }
 

@@ -51,8 +51,6 @@ namespace HotelProject.Rooms
             Screening();
         }
 
-
-
         private void Screening()
         {
             if (Timer < ScreeningTime)
@@ -66,7 +64,10 @@ namespace HotelProject.Rooms
                 Timer = 0;
                 IsScreening = false;
                 foreach (Guest visitor in Visitors)
+                {
+                    visitor.NeedMovie = false;
                     visitor.Go_Back();
+                }
                 Visitors.Clear();
             }
         }
