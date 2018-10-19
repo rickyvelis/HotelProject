@@ -166,16 +166,24 @@ namespace HotelProject
             //TODO If(Lift == vol && Path[Path.Count - 1].AreaType == "Lift"){ WACHTEN }
             if (Path != null && Path.Count > 0)
             {
-                if (Path[Path.Count - 1].AreaType == "Stairs" && Wait == 0)
+
+                if (Wait != 0)
                 {
+                    Wait--;
+                }
+                else if (Path[Path.Count - 1].AreaType == "Stairs")
+                {
+                    
                     Wait++;
                 }
-                else
+
+
+                if (Wait == 0)
                 {
                     SetPosition(Path[Path.Count - 1].Position.X, Path[Path.Count - 1].Position.Y);
                     Path.Remove(Path[Path.Count - 1]);
-                    Wait = 0;
                 }
+                
             }
         }
 

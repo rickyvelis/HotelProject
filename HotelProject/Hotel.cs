@@ -302,7 +302,12 @@ namespace HotelProject
                 if (c.Value < nearest)
                     nearest = c.Value;
 
-            return availableCleaners.First(c => c.Value == nearest).Key;
+            if (availableCleaners != null)
+            {
+                return availableCleaners.First(c => c.Value == nearest).Key;
+            }
+
+            return null;
         }
     }
 }
