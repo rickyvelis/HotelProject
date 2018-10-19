@@ -40,7 +40,7 @@ namespace HotelProject
             AddLiftAndStairs();
             CreateHalls();
             SetNeighbours();
-            //elevator = new Elevator();
+
         }
 
         //TODO Summary schrijven
@@ -51,6 +51,11 @@ namespace HotelProject
                 Instance = new Hotel();
             }
             return Instance;
+        }
+
+        public void CreateElevator()
+        {
+            elevator = new Elevator();
         }
 
         //TODO Summary schrijven

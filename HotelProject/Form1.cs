@@ -33,6 +33,7 @@ namespace HotelProject
             hotelStatus_label.Text = "Running";
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
             _Hotel = Hotel.GetInstance();
+            _Hotel.CreateElevator();
             hel = new HEListener();
             Paint += DrawHotel;
             
@@ -137,6 +138,7 @@ namespace HotelProject
             //Console.WriteLine("_________________________________________________________");
 
             _Hotel.EvacuatingDone();
+            _Hotel.elevator.DoEvents();
 
             //UpdateStats();
 
