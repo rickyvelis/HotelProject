@@ -21,6 +21,7 @@ namespace HotelProject
         private Hotel _Hotel { get; }
         private HEListener hel;
         private int Test { get; set; }
+        private List<Human> HumanList { get; set; }
         private System.Timers.Timer timer { get; set; }
         private Stopwatch stopwatch { get; }
         private float HTE_Factor { get; set; }
@@ -36,7 +37,7 @@ namespace HotelProject
             _Hotel.CreateElevator();
             hel = new HEListener();
             Paint += DrawHotel;
-            
+
             HotelEventManager.Register(hel);
             HTE_Factor = hte;
             HotelEventManager.HTE_Factor = HTE_Factor;
@@ -81,6 +82,7 @@ namespace HotelProject
         /// <param name="e"></param>
         private void Render(PaintEventArgs e)
         {
+            HumanList = new List<Human>(_Hotel.Humans);
             Bitmap bitmap;
             int height = _Hotel.GetMaxHeight();
 
@@ -90,7 +92,7 @@ namespace HotelProject
                 e.Graphics.DrawImage(bitmap, room.Position.X * bitmap.Width + 100, (height - room.Position.Y) * bitmap.Height);
             }
 
-            foreach (Human human in _Hotel.Humans)
+            foreach (Human human in HumanList)
             {
                 if (human.Visible)
                 {
@@ -187,13 +189,18 @@ namespace HotelProject
         {
             if (InvokeRequired)
             {
-                Form1Callback d = UpdateForm;
-                Invoke(d);
+                    Form1Callback d = UpdateForm;
+                    Invoke(d);
             }
             else
             {                
                 Refresh();
             }
+        }
+
+        protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
         }
 
         private void UpdateStats()
@@ -217,5 +224,6 @@ namespace HotelProject
         {
             SpeedUp(5);
         }
+
     }
 }
