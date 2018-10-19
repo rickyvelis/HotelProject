@@ -17,6 +17,7 @@ namespace HotelProject
         public abstract Point SpritePosition { get; set; }
         public abstract int Wait { get; set; }
         public abstract Image Img { get; set; }
+        public abstract int TargetFloor { get; set; }
         public bool Evacuating { get; set; }
 
         private Hotel _Hotel { get; }
@@ -26,6 +27,7 @@ namespace HotelProject
             _Hotel = Hotel.GetInstance();
             Evacuating = false;
             Wait = 0;
+            TargetFloor = 0;
         }
 
         abstract public void Update();
@@ -51,6 +53,7 @@ namespace HotelProject
         /// <returns></returns>
         public List<IRoom> FindRoom(IRoom destination)
         {
+            TargetFloor = destination.Position.Y;
             if (Position != destination)
             {
                 Console.WriteLine("----------------------");

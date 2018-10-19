@@ -24,6 +24,7 @@ namespace HotelProject
         private static Hotel Instance { get; set; }
         private RoomFactory RFactory { get; set; }
         private HumanFactory HFactory { get; set; }
+        public Elevator elevator { get; set; }
 
         public int CleaningTime { get; set; }
 
@@ -38,6 +39,7 @@ namespace HotelProject
             AddLiftAndStairs();
             CreateHalls();
             SetNeighbours();
+            //elevator = new Elevator();
         }
 
         //TODO Summary schrijven
@@ -189,30 +191,6 @@ namespace HotelProject
             }
         }
 
-        //TODO kan waarschijnlijk weg!!!
-        private static void CheckBelow(int offset, List<IRoom> rooms, IRoom room)
-        {
-            for (int i = room.Position.Y - 1; i > 0; i--)
-            {
-                foreach (IRoom room2 in rooms)
-                {
-                    if (room.Position.X + room.Dimension.X - 1 + offset == room2.Position.X && i == room2.Position.Y && room.Position.Y - room2.Position.Y < room2.Dimension.Y)
-                    {
-                        offset += room2.Dimension.X;
-                        foreach (IRoom room3 in rooms)
-                        {
-                            if (room.Position.X + room.Dimension.X - 1 + offset == room3.Position.X && room.Position.Y == room3.Position.Y && !room.Neighbours.ContainsKey(room3))
-                            {
-                                room.Neighbours.Add(room3, offset);
-                                room3.Neighbours.Add(room, offset);
-                                return;
-                            }
-                        }
-                        CheckBelow(offset, rooms, room);
-                    }
-                }
-            }
-        }
 
 
         //TODO code mogelijk verbeteren.

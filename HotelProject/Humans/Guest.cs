@@ -19,6 +19,7 @@ namespace HotelProject
         public override Point SpritePosition { get; set; }
         public override int Wait { get; set; }
         public override Image Img { get; set; }
+        public override int TargetFloor { get; set; }
 
         public Room Room { get; set; }
         private Hotel _Hotel { get; }
