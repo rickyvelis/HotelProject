@@ -20,6 +20,7 @@ namespace HotelProject
         public override Point SpritePosition { get; set; }
         public override int Wait { get; set; }
         public override Image Img { get; set; }
+        public override int TargetFloor { get; set; }
 
         private Room RoomToClean {get;set;}
         public bool Cleaning { get; set; }

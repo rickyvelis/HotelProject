@@ -9,17 +9,18 @@ using HotelProject.Rooms;
 
 namespace HotelProject
 {
-    class Elevator
+    public class Elevator
     {
-        public int? UpperTargetFloor { get; set; }
-        public int? LowerTargetFloor { get; set; }
+        private int? UpperTargetFloor { get; set; }
+        private int? LowerTargetFloor { get; set; }
         public int CurrentFloor { get; set; }
-        public int RestPosition { get; set; }
-        public IRoom CurrentShaft { get; set; }
-        public IRoom RestShaft { get; set; }
-        public string Direction { get; set; }
+        private int RestPosition { get; set; }
+        private string Direction { get; set; }
         public bool Useable { get; set; }
-        public Hotel _Hotel { get; }
+        public bool DoorsOpen { get; set; }
+        private Hotel _Hotel { get; }
+        private List<Human> humans { get; set; }
+        
 
         public Elevator()
         {
@@ -28,11 +29,22 @@ namespace HotelProject
             LowerTargetFloor = null;
             CurrentFloor = _Hotel.GetMaxY() / 2;
             RestPosition = CurrentFloor;
-            CurrentShaft = _Hotel.iRoom.First(r => r.Position == new Point(0, CurrentFloor));
             Useable = true;
+            DoorsOpen = false;
             Direction = null;
 
-            //TODO inplaats van een bool om gasten naar binnen te laten gaan een methode gebruiken om wachtende gasten in de lift te laten gaan
+            humans = new List<Human>();
+
+            //TODO ZORGEN DAT MENSEN BEWEGEN MET DE LIFT EN NIET ZELF
+        }
+
+        public void DoEvents()
+        {
+            //TODO wanneer rij checken of mensen erin/eruit willen
+            DoorsOpen = false;
+            Scan();
+            Check();
+            Move();
         }
 
         /// <summary>
@@ -44,20 +56,26 @@ namespace HotelProject
         {
             foreach (ElevatorShaft floor in _Hotel.iRoom.OfType<ElevatorShaft>())
             {
-                if ((UpperTargetFloor == null || floor.Position.Y > UpperTargetFloor) && floor.Position.Y > CurrentFloor)
+                if (floor.Position.Y == CurrentFloor && (floor.UpPressed || floor.DownPressed))
+                {
+                    DoorsOpen = true;
+                }
+
+                if (floor.Position.Y > CurrentFloor && (UpperTargetFloor == null || floor.Position.Y > UpperTargetFloor) && (floor.UpPressed || floor.DownPressed))
                 {
                     UpperTargetFloor = floor.Position.Y;
                     if (Direction == null)
                         Direction = "UP";
                 }
 
-                if ((LowerTargetFloor == null || floor.Position.Y < LowerTargetFloor) && floor.Position.Y < CurrentFloor)
+                if (floor.Position.Y < CurrentFloor && (LowerTargetFloor == null || floor.Position.Y < LowerTargetFloor) && (floor.UpPressed || floor.DownPressed))
                 {
                     LowerTargetFloor = floor.Position.Y;
                     if (Direction == null)
                         Direction = "DOWN";
                 }
             }
+
         }
 
         /// <summary>
@@ -68,39 +86,40 @@ namespace HotelProject
             switch (Direction)
             {
                 case "UP":
-                    _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).CanEnter = false;
-                    CurrentFloor++;
-
-                    if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
-                        .UpPressed)
+                    if (!DoorsOpen)
                     {
-                        /*
-                        _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
-                            .CanEnter = true;
-                            */
-                        Check();
-                        _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
-                            .UpPressed = false;
+                        CurrentFloor++;
+
+                        //TODO Check toevoegen of er iemand uitwilt
+                        if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).UpPressed || _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).DownPressed)
+                        {
+                            _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
+                                .UpPressed = false;
+                            _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
+                                .DownPressed = false;
+                            DoorsOpen = true;
+                            SwitchDirection();
+                        }
                     }
                     break;
 
                 case "DOWN":
-                    _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).CanEnter = false;
-                    CurrentFloor--;
-                    if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
-                        .DownPressed)
+                    if (!DoorsOpen)
                     {
-                        /*
-                        _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
-                            .CanEnter = true;
-                            */
-                        Check();
-                        _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
-                            .DownPressed = false;
+                        CurrentFloor--;
+
+                        //TODO Check toevoegen of er iemand uitwilt
+                        if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).UpPressed || _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).DownPressed)
+                        {
+                            _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
+                                .UpPressed = false;
+                            _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
+                                .DownPressed = false;
+                            DoorsOpen = true;
+                            SwitchDirection();
+                        }
                     }
-
                     break;
-
             }
         }
 
@@ -109,7 +128,66 @@ namespace HotelProject
         /// </summary>
         private void Check()
         {
+            foreach (Human human in humans)
+            {
+                if (human.TargetFloor > CurrentFloor &&
+                    (UpperTargetFloor == null || human.TargetFloor > UpperTargetFloor))
+                    UpperTargetFloor = human.TargetFloor;
 
+                if (human.TargetFloor < CurrentFloor &&
+                    (LowerTargetFloor == null || human.TargetFloor < LowerTargetFloor))
+                    LowerTargetFloor = human.TargetFloor;
+            }
+        }
+
+        private void SwitchDirection()
+        {
+            if (Direction == "UP" && CurrentFloor == UpperTargetFloor)
+            {
+                if (LowerTargetFloor != null)
+                {
+                    Direction = "Down";
+                }
+                else
+                {
+                    if (RestPosition < CurrentFloor)
+                    {
+                        Direction = "DOWN";
+                        LowerTargetFloor = RestPosition;
+                    }
+                    else if (RestPosition == CurrentFloor)
+                    {
+                        Direction = null;
+                    }
+                    else
+                    {
+                        UpperTargetFloor = RestPosition;
+                    }
+                }
+            }
+            else if (Direction == "DOWN" && CurrentFloor == LowerTargetFloor)
+            {
+                if (UpperTargetFloor != null)
+                {
+                    Direction = "UP";
+                }
+                else
+                {
+                    if (RestPosition > CurrentFloor)
+                    {
+                        Direction = "UP";
+                        UpperTargetFloor = RestPosition;
+                    }
+                    else if (RestPosition == CurrentFloor)
+                    {
+                        Direction = null;
+                    }
+                    else
+                    {
+                        LowerTargetFloor = RestPosition;
+                    }
+                }
+            }
         }
     }
 }
