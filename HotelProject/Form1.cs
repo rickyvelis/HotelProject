@@ -178,7 +178,7 @@ namespace HotelProject
         /// Speeds up the simulation
         /// </summary>
         /// <param name="amount">Amount of HTE to be added to the HTE_Factor</param>
-        private void SpeedUp(int amount)
+        public void SpeedUp(int amount)
         {
             if (!speedUp_checkBox.Checked)
                 HotelEventManager.HTE_Factor = this.HTE_Factor;

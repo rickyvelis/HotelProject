@@ -243,22 +243,26 @@ namespace HotelProject
                             if (data.Key == "Gast")
                             {
                                 guestName = data.Key + data.Value;
-                                if (_Hotel.Humans.OfType<Guest>().Single(g => g.Name == guestName).NeedWorkout
-                                    || _Hotel.Humans.OfType<Guest>().Single(g => g.Name == guestName).NeedMovie)
-                                    break;
 
-                                Dictionary<Restaurant, int> restaurantDistances = new Dictionary<Restaurant, int>();
+                                if (_Hotel.Humans.Exists(h => h.Name == guestName))
+                                {
+                                    if (_Hotel.Humans.OfType<Guest>().Single(g => g.Name == guestName).NeedWorkout
+                                        || _Hotel.Humans.OfType<Guest>().Single(g => g.Name == guestName).NeedMovie)
+                                        break;
 
-                                //Goes through every restaurant
-                                foreach (Restaurant rest in _Hotel.iRoom.OfType<Restaurant>())
-                                    //saves all the distances to the cinemaDistances dictionary
-                                    restaurantDistances.Add(rest, _Hotel.Humans.Single(g => g.Name == data.Key + data.Value).GetDistanceToRoom(rest));
+                                    Dictionary<Restaurant, int> restaurantDistances = new Dictionary<Restaurant, int>();
 
-                                _Hotel.Humans.OfType<Guest>().Single(g => g.Name == data.Key + data.Value).NeedFood = true;
+                                    //Goes through every restaurant
+                                    foreach (Restaurant rest in _Hotel.iRoom.OfType<Restaurant>())
+                                        //saves all the distances to the cinemaDistances dictionary
+                                        restaurantDistances.Add(rest, _Hotel.Humans.Single(g => g.Name == data.Key + data.Value).GetDistanceToRoom(rest));
 
-                                //Sends the specified Guest to the nearest Restaurant
-                                _Hotel.Humans.Single(g => g.Name == data.Key + data.Value).
-                                    FindRoom(restaurantDistances.Aggregate((l, r) => l.Value < r.Value ? l : r).Key);
+                                    _Hotel.Humans.OfType<Guest>().Single(g => g.Name == data.Key + data.Value).NeedFood = true;
+
+                                    //Sends the specified Guest to the nearest Restaurant
+                                    _Hotel.Humans.Single(g => g.Name == data.Key + data.Value).
+                                        FindRoom(restaurantDistances.Aggregate((l, r) => l.Value < r.Value ? l : r).Key);
+                                }
                             }
                         }
                     }

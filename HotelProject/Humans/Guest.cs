@@ -24,7 +24,7 @@ namespace HotelProject
         public Room Room { get; set; }
         private Hotel _Hotel { get; }
 
-        private bool CheckingOut { get; set; }
+        public bool CheckingOut { get; set; }
         public bool NeedFood { get; set; }
         public bool NeedWorkout { get; set; }
         public bool NeedMovie { get; set; }
@@ -47,6 +47,10 @@ namespace HotelProject
             Timer = 0;
             EatDuration = _Hotel.EatDuration;
             FitnessDuration = 0;
+
+            NeedFood = false;
+            NeedMovie = false;
+            NeedWorkout = false;
         }
 
         /// <summary>

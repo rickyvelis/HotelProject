@@ -54,7 +54,7 @@ namespace HotelProjectTests
         }
 
         [TestMethod]
-        public void New_Guests_Get_Refused_When_Unable_To_Upgrade_Room()
+        public void New_Guest_Get_Refused_When_Unable_To_Upgrade_Room()
         {
             foreach (Room r in _Hotel.iRoom.OfType<Room>())
                 if(r.Available == true && r.Classification == "2 stars" || r.Classification == "3 stars" || r.Classification == "4 stars" || r.Classification == "5 stars")

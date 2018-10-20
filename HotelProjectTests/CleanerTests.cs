@@ -11,6 +11,5 @@ namespace HotelProjectTests
     {
         Hotel _Hotel = Hotel.GetInstance();
         HEListener hel = new HEListener();
-        HotelEvent hotelEvent;
     }
 }

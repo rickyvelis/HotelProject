@@ -14,6 +14,7 @@ namespace HotelProjectTests
         Hotel _Hotel = Hotel.GetInstance();
         HEListener hel = new HEListener();
         HotelEvent hotelEvent;
+
         [TestMethod]
 
         public void Dirty_Rooms_Get_Cleaned()
