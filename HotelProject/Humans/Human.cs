@@ -147,7 +147,6 @@ namespace HotelProject
                 }
             }
 
-            //if (First > 0)
             if(CountShafts > 0)
                 Path.RemoveRange(First, CountShafts - 1);
 

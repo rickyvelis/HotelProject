@@ -155,8 +155,8 @@ namespace HotelProject
             {
                 Wait = 0;
                 Evacuating = true;
-                FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
             }
+            FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
         }
     }
 }

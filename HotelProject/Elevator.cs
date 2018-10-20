@@ -41,15 +41,24 @@ namespace HotelProject
         public void DoEvents()
         {
             //TODO wanneer rij checken of mensen erin/eruit willen
-
-            if (DoorsOpen)
-                DoorsOpen = false;
+            if (!_Hotel.Evacuating)
+            {
+                if (DoorsOpen)
+                    DoorsOpen = false;
+                else
+                {
+                    Move();
+                    Scan();
+                    Check();
+                    SwitchDirection();
+                }
+            }
             else
-                Move();
+            {
+                DoorsOpen = true;
+            }
 
-            Scan();
-            Check();
-            SwitchDirection();
+
 
 
             Console.WriteLine("ELEVATOR AT FLOOR" + CurrentFloor);

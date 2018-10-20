@@ -66,7 +66,8 @@ namespace HotelProject.Rooms
                 foreach (Guest visitor in Visitors)
                 {
                     visitor.NeedMovie = false;
-                    visitor.Go_Back();
+                    if (!visitor.Evacuating)
+                        visitor.Go_Back();
                 }
                 Visitors.Clear();
             }
