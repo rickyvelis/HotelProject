@@ -31,6 +31,7 @@ namespace HotelProject
         }
 
         abstract public void Update();
+        abstract public void Evacuate();
 
         /// <summary>
         /// Sets the Position of the Human object
@@ -176,8 +177,7 @@ namespace HotelProject
                     
                     Wait++;
                 }
-
-
+                
                 if (Wait == 0)
                 {
                     SetPosition(Path[Path.Count - 1].Position.X, Path[Path.Count - 1].Position.Y);
@@ -185,17 +185,6 @@ namespace HotelProject
                 }
                 
             }
-        }
-
-
-        /// <summary>
-        /// Makes the Human go to Lobby
-        /// </summary>
-        public void Evacuate()
-        {
-            Wait = 0;
-            Evacuating = true;
-            FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
         }
     }
 }
