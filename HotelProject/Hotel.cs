@@ -278,10 +278,18 @@ namespace HotelProject
         /// </summary>
         private void CheckDirtyRooms()
         {
-            if (DirtyRooms.Count != 0 && Humans.OfType<Cleaner>().Where(c => !c.Cleaning) != null)
+            if (DirtyRooms.Count > 0 && Humans.OfType<Cleaner>().Where(c => !c.Cleaning) != null)
             {
-                GetNearestCleaner(DirtyRooms[0]).GoCleanRoom(DirtyRooms[0]);
-                DirtyRooms.Remove(DirtyRooms[0]);
+                try
+                {
+                    GetNearestCleaner(DirtyRooms[0]).GoCleanRoom(DirtyRooms[0]);
+                    DirtyRooms.Remove(DirtyRooms[0]);
+                    CheckDirtyRooms();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
 

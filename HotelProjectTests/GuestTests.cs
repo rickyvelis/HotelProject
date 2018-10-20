@@ -89,21 +89,16 @@ namespace HotelProjectTests
             List<Point> actualResult = path;
             List<Point> expectedResult = new List<Point>()
             {
-                new Point(1,0),
-                new Point(0,0),
-                new Point(0,1),
-                new Point(0,2),
-                new Point(0,3),
-                new Point(0,4),
-                new Point(0,5),
-                new Point(1,5),
-                new Point(2,5),
-                new Point(3,5),
-                new Point(4,5),
-                new Point(5,5),
-                new Point(6,5),
-                new Point(7,5),
-                new Point(8,5),
+                new Point(1,0), //Lobby
+                new Point(0,0), //Elevator
+                new Point(1,5), //Room
+                new Point(2,5), //Hall
+                new Point(3,5), //Room
+                new Point(4,5), //Hall
+                new Point(5,5), //Room
+                new Point(6,5), //Hall
+                new Point(7,5), //Hall
+                new Point(8,5)  //Hall
             };
             expectedResult.Reverse();
 

@@ -14,9 +14,25 @@ namespace HotelProjectTests
         Hotel _Hotel = Hotel.GetInstance();
         HEListener hel = new HEListener();
         HotelEvent hotelEvent;
+        [TestMethod]
+
+        public void Dirty_Rooms_Get_Cleaned()
+        {
+            _Hotel.SetCleaners(5, 1);
+
+            _Hotel.DirtyRooms.Add(_Hotel.iRoom.OfType<Room>().Single(r => r.Position == new Point(1, 1)));
+            _Hotel.DirtyRooms.Add(_Hotel.iRoom.OfType<Room>().Single(r => r.Position == new Point(5, 1)));
+
+            _Hotel.Update();
+
+            int expectedResult = 2;
+            int actualResult = _Hotel.Humans.OfType<Cleaner>().Where(c => c.Cleaning).Count();
+            
+            Assert.AreEqual(expectedResult, actualResult);
+        }
 
         [TestMethod]
-        public void Can_Rooms_Get_Dirty()
+        public void Rooms_Get_Dirty_After_Checkout()
         {
             hotelEvent = new HotelEvent()
             {
@@ -38,18 +54,8 @@ namespace HotelProjectTests
             hel.Notify(hotelEvent);
 
             bool expectedResult = true;
+            var gasten = _Hotel.Humans.OfType<Guest>();
             bool actualResult = _Hotel.Humans.OfType<Guest>().Single(g => g.Name == "Gast").Room.Dirty;
-
-            Assert.AreEqual(expectedResult, actualResult);
-        }
-
-        [TestMethod]
-        public void Do_Cleaners_Get_Created()
-        {
-            _Hotel.SetCleaners(5, 5);
-
-            int expectedResult = 5;
-            int actualResult = _Hotel.Humans.OfType<Cleaner>().Count();
 
             Assert.AreEqual(expectedResult, actualResult);
         }
