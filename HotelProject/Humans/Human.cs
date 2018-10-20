@@ -102,7 +102,7 @@ namespace HotelProject
                 {
                     newDistance = current.Distance + x.Value;
                 }
-                if (newDistance < x.Key.Distance) //If the new distance of the neighbour is shorter than the distance it already had, the neighbour gets assigned the new distance
+                if (newDistance < x.Key.Distance && ((_Hotel.Evacuating && x.Key.AreaType != "Elevator") || !_Hotel.Evacuating)) //If the new distance of the neighbour is shorter than the distance it already had, the neighbour gets assigned the new distance
                 {
                     x.Key.Distance = newDistance; //THe current neighbour gets a distance, which is the already traversed distance + the distance of the current room to the neighbour
                     x.Key.Previous = current; //The current neighbour get the current room assigned ass Previous
@@ -147,7 +147,7 @@ namespace HotelProject
                 }
             }
 
-            if (First > 0)
+            if(CountShafts > 0)
                 Path.RemoveRange(First, CountShafts - 1);
 
             return Path;
