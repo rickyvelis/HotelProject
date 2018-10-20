@@ -257,13 +257,14 @@ namespace HotelProject
         {            
             if (Humans.TrueForAll(r => r.Position.AreaType == "Lobby") && Evacuating)
             {
+                Evacuating = false;
                 foreach (Guest guest in Humans.OfType<Guest>())
                 {
                     guest.Evacuating = false;
 
                     guest.Go_Back();
                 }
-                Evacuating = false;
+
             }
         }
 
