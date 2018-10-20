@@ -69,6 +69,7 @@ namespace HotelProject
             //};
             //hel.Notify(hotelEvent);
             #endregion
+
         }
 
         private void DrawHotel(object sender, PaintEventArgs e)
@@ -143,7 +144,7 @@ namespace HotelProject
 
             _Hotel.elevator.DoEvents();
 
-            //UpdateStats();
+            UpdateStats();
 
             UpdateForm();
 
@@ -190,8 +191,8 @@ namespace HotelProject
         {
             if (InvokeRequired)
             {
-                    Form1Callback d = UpdateForm;
-                    Invoke(d);
+                Form1Callback d = UpdateForm;
+                Invoke(d);
             }
             else
             {                
@@ -206,9 +207,8 @@ namespace HotelProject
 
         private void UpdateStats()
         {
-            //guestAmount_Label.Text = "" + _Hotel.Humans.OfType<Guest>().Count();
+            
             //listBox1.Items.AddRange(_Hotel.Humans.OfType<Guest>().ToArray());
-            //+ _Hotel.Humans.OfType<Guest>().Count();
         }
 
         private void PlayPause_checkBox_CheckedChanged(object sender, EventArgs e)
@@ -218,7 +218,6 @@ namespace HotelProject
                 playPause_checkBox.Text = "⏵";
             else
                 playPause_checkBox.Text = "⏸";
-            guestAmount_Label.Text = "" + _Hotel.Humans.OfType<Guest>().Count();
         }
 
         private void SpeedUp_checkBox_CheckedChanged(object sender, EventArgs e)

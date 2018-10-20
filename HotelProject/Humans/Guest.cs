@@ -145,5 +145,18 @@ namespace HotelProject
             Visible = false;
             //_Hotel.Guests.Remove(this);
         }
+
+        /// <summary>
+        /// Makes the Guest evacuate to the Lobby
+        /// </summary>
+        public override void Evacuate()
+        {
+            if (!CheckingOut)
+            {
+                Wait = 0;
+                Evacuating = true;
+                FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
+            }
+        }
     }
 }

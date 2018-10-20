@@ -81,5 +81,15 @@ namespace HotelProject
                 FindRoom(_Hotel.iRoom.OfType<Lobby>().First());
             }
         }
+
+        /// <summary>
+        /// Makes the Cleaner evacuate to the Lobby
+        /// </summary>
+        public override void Evacuate()
+        {
+            Wait = 0;
+            Evacuating = true;
+            FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
+        }
     }
 }

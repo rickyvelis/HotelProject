@@ -33,6 +33,7 @@ namespace HotelProject
         }
 
         abstract public void Update();
+        abstract public void Evacuate();
 
         /// <summary>
         /// Sets the Position of the Human object
@@ -242,17 +243,6 @@ namespace HotelProject
                 }
                 
             }
-        }
-
-
-        /// <summary>
-        /// Makes the Human go to Lobby
-        /// </summary>
-        public void Evacuate()
-        {
-            Wait = 0;
-            Evacuating = true;
-            FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
         }
     }
 }
