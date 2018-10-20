@@ -19,6 +19,7 @@ namespace HotelProject
         public abstract Image Img { get; set; }
         public abstract int TargetFloor { get; set; }
         public bool Evacuating { get; set; }
+        public bool InElevator { get; set; }
 
         private Hotel _Hotel { get; }
 
@@ -26,6 +27,7 @@ namespace HotelProject
         {
             _Hotel = Hotel.GetInstance();
             Evacuating = false;
+            InElevator = false;
             Wait = 0;
             TargetFloor = 0;
         }
@@ -132,6 +134,21 @@ namespace HotelProject
                 previous = previous.Previous;
             }
             //Console.WriteLine("\n" + path + "\nDistance: " + end.Distance);
+            int First = 0;
+            int CountShafts = 0;
+
+            First = Path.FindIndex(r => r.AreaType == "Elevator");
+
+            for (int i = 0; i < Path.Count - 1; i++)
+            {
+                if (Path[i].AreaType == "Elevator")
+                {
+                    CountShafts++;
+                }
+            }
+
+            if (First > 0)
+                Path.RemoveRange(First, CountShafts - 1);
 
             return Path;
         }
@@ -177,11 +194,51 @@ namespace HotelProject
                     
                     Wait++;
                 }
-                
+
+                //TODO if statement mogelijk schijden/opruimen
                 if (Wait == 0)
                 {
-                    SetPosition(Path[Path.Count - 1].Position.X, Path[Path.Count - 1].Position.Y);
-                    Path.Remove(Path[Path.Count - 1]);
+                    if ((Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType != "Elevator") ||
+                        (Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType == "Elevator" &&
+                         _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y &&
+                         _Hotel.elevator.DoorsOpen) ||
+                        (Position.AreaType == "Elevator" &&
+                         _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y && _Hotel.elevator.DoorsOpen))
+                    {
+                        if (Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType == "Elevator" &&
+                            _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y &&
+                            _Hotel.elevator.DoorsOpen)
+                        {
+                            //_Hotel.elevator.humans.Add(this);
+                            InElevator = true;
+                        }
+
+                        if (Position.AreaType == "Elevator" &&
+                            _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y &&
+                            _Hotel.elevator.DoorsOpen)
+                        {
+                            InElevator = false;
+                        }
+
+                        SetPosition(Path[Path.Count - 1].Position.X, Path[Path.Count - 1].Position.Y);
+                        Path.Remove(Path[Path.Count - 1]);
+                        Wait = 0;
+                    }
+                    else if (Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType == "Elevator")
+                    {
+                        if (TargetFloor > Position.Position.Y)
+                        {
+                            _Hotel.iRoom.OfType<ElevatorShaft>()
+                                .First(r => r.Position == new Point(0, Position.Position.Y)).UpPressed = true;
+                        }
+
+                        if (TargetFloor < Position.Position.Y)
+                        {
+                            _Hotel.iRoom.OfType<ElevatorShaft>()
+                                .First(r => r.Position == new Point(0, Position.Position.Y)).DownPressed = true;
+                        }
+
+                    }
                 }
                 
             }

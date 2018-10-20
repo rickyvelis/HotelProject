@@ -19,7 +19,7 @@ namespace HotelProject
         public bool Useable { get; set; }
         public bool DoorsOpen { get; set; }
         private Hotel _Hotel { get; }
-        private List<Human> humans { get; set; }
+        //public List<Human> humans { get; set; }
         
 
         public Elevator()
@@ -33,7 +33,7 @@ namespace HotelProject
             DoorsOpen = false;
             Direction = null;
 
-            humans = new List<Human>();
+            //humans = new List<Human>();
 
             //TODO ZORGEN DAT MENSEN BEWEGEN MET DE LIFT EN NIET ZELF
         }
@@ -41,10 +41,33 @@ namespace HotelProject
         public void DoEvents()
         {
             //TODO wanneer rij checken of mensen erin/eruit willen
-            DoorsOpen = false;
+
+            if (DoorsOpen)
+                DoorsOpen = false;
+            else
+                Move();
+
             Scan();
             Check();
-            Move();
+            SwitchDirection();
+
+
+            Console.WriteLine("ELEVATOR AT FLOOR" + CurrentFloor);
+            foreach (Human human in _Hotel.Humans)
+            {
+                if (human.InElevator)
+                    Console.WriteLine(human.Name);
+            }
+            Console.WriteLine("UP " + UpperTargetFloor);
+            Console.WriteLine("DOWN " + LowerTargetFloor);
+            Console.WriteLine("RESTFLOOR: " + RestPosition);
+            Console.WriteLine("DIRECTION " + Direction);
+            if (DoorsOpen)
+                Console.WriteLine("DOORS OPEN");
+            else
+                Console.WriteLine("DOORS CLOSED");
+            Console.WriteLine("_______________________________________________________________________");
+
         }
 
         /// <summary>
@@ -83,22 +106,35 @@ namespace HotelProject
         /// </summary>
         private void Move()
         {
+
             switch (Direction)
             {
                 case "UP":
                     if (!DoorsOpen)
                     {
                         CurrentFloor++;
+                        foreach (Human human in _Hotel.Humans)
+                        {
 
+                            if (human.InElevator)
+                            {
+                                //human.Position = _Hotel.iRoom.Single(r => r.Position == new Point(human.Position.Position.X, CurrentFloor));
+                                human.SetPosition(human.Position.Position.X, CurrentFloor);
+
+                                if (CurrentFloor == human.TargetFloor)
+                                    DoorsOpen = true;
+                            }
+                        }
                         //TODO Check toevoegen of er iemand uitwilt
-                        if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).UpPressed || _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).DownPressed)
+                        if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
+                                .UpPressed || _Hotel.iRoom.OfType<ElevatorShaft>()
+                                .First(r => r.Position == new Point(0, CurrentFloor)).DownPressed)
                         {
                             _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
                                 .UpPressed = false;
                             _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
                                 .DownPressed = false;
                             DoorsOpen = true;
-                            SwitchDirection();
                         }
                     }
                     break;
@@ -108,6 +144,18 @@ namespace HotelProject
                     {
                         CurrentFloor--;
 
+                        foreach (Human human in _Hotel.Humans)
+                        {
+                            if (human.InElevator)
+                            {
+                                //human.Position = _Hotel.iRoom.Single(r => r.Position == new Point(human.Position.Position.X, CurrentFloor));
+                                human.SetPosition(human.Position.Position.X, CurrentFloor);
+
+                                if (CurrentFloor == human.TargetFloor)
+                                    DoorsOpen = true;
+                            }
+                        }
+
                         //TODO Check toevoegen of er iemand uitwilt
                         if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).UpPressed || _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).DownPressed)
                         {
@@ -116,7 +164,6 @@ namespace HotelProject
                             _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
                                 .DownPressed = false;
                             DoorsOpen = true;
-                            SwitchDirection();
                         }
                     }
                     break;
@@ -128,14 +175,14 @@ namespace HotelProject
         /// </summary>
         private void Check()
         {
-            foreach (Human human in humans)
+            foreach (Human human in _Hotel.Humans)
             {
                 if (human.TargetFloor > CurrentFloor &&
-                    (UpperTargetFloor == null || human.TargetFloor > UpperTargetFloor))
+                    (UpperTargetFloor == null || human.TargetFloor > UpperTargetFloor) && human.InElevator)
                     UpperTargetFloor = human.TargetFloor;
 
                 if (human.TargetFloor < CurrentFloor &&
-                    (LowerTargetFloor == null || human.TargetFloor < LowerTargetFloor))
+                    (LowerTargetFloor == null || human.TargetFloor < LowerTargetFloor) && human.InElevator)
                     LowerTargetFloor = human.TargetFloor;
             }
         }
@@ -144,9 +191,10 @@ namespace HotelProject
         {
             if (Direction == "UP" && CurrentFloor == UpperTargetFloor)
             {
+                UpperTargetFloor = null;
                 if (LowerTargetFloor != null)
                 {
-                    Direction = "Down";
+                    Direction = "DOWN";
                 }
                 else
                 {
@@ -167,6 +215,7 @@ namespace HotelProject
             }
             else if (Direction == "DOWN" && CurrentFloor == LowerTargetFloor)
             {
+                LowerTargetFloor = null;
                 if (UpperTargetFloor != null)
                 {
                     Direction = "UP";
@@ -187,6 +236,14 @@ namespace HotelProject
                         LowerTargetFloor = RestPosition;
                     }
                 }
+            }
+
+            if (Direction == null)
+            {
+                if (UpperTargetFloor != null)
+                    Direction = "UP";
+                else if (LowerTargetFloor != null)
+                    Direction = "DOWN";
             }
         }
     }
