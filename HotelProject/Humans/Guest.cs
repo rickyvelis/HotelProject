@@ -82,6 +82,7 @@ namespace HotelProject
             {
                 Busy = true;
                 _Hotel.iRoom.OfType<Cinema>().First(r => r.Position == Position.Position).Visitors.Add(this);
+                Img = Resources.Guest1_Inside;
             }
 
             if (CheckingOut)
@@ -114,6 +115,10 @@ namespace HotelProject
                 Workout();
             }
 
+            if (!Visible || InElevator || Position == Room)
+                Img = Resources.Guest1_Inside;
+            else
+                Img = Resources.Guest1;
         }
 
         /// <summary>
@@ -143,7 +148,7 @@ namespace HotelProject
         {
             if (Timer < EatDuration)
             {
-                //Visible = false;
+                Visible = false;
                 Timer++;
             }
             else
@@ -164,6 +169,7 @@ namespace HotelProject
         {
             if (Timer < FitnessDuration)
             {
+                Visible = false;
                 Timer++;
             }
             else

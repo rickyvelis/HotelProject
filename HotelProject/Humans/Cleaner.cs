@@ -48,6 +48,11 @@ namespace HotelProject
 
             if (Cleaning == true && Position == RoomToClean)
                 Clean();
+
+            if (Position == RoomToClean)
+                Img = Resources.Cleaner_Inside;
+            else
+                Img = Resources.Cleaner;
         }
 
         /// <summary>

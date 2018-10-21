@@ -130,6 +130,9 @@
   <data name="Cleaner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Cleaner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Cleaner_Inside" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Cleaner_Inside.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Elevator" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Elevator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -150,6 +153,9 @@
   </data>
   <data name="Guest1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Guest1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Guest1_Inside" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Guest1_Inside.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Hallway" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Hallway.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

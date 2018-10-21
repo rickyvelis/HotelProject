@@ -82,12 +82,9 @@ namespace HotelProject
 
             foreach (Human human in HumanList)
             {
-                if (human.Visible)
-                {
-                    bitmap = new Bitmap(human.Img);
-                    e.Graphics.DrawImage(bitmap, human.SpritePosition.X * Resources.Error.Width + 100,
-                        (_Hotel.GetMaxHeight() - human.SpritePosition.Y + 1) * Resources.Error.Height - 25);
-                }
+                bitmap = new Bitmap(human.Img);
+                e.Graphics.DrawImage(bitmap, human.SpritePosition.X * Resources.Error.Width + 150,
+                    (_Hotel.GetMaxHeight() - human.SpritePosition.Y + 1) * Resources.Error.Height - 25);
             }
         }
 
