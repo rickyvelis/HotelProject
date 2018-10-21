@@ -98,7 +98,14 @@ namespace HotelProject
             }
             else if (NeedFood && Position.AreaType == "Restaurant")
             {
-                Busy = true;
+                if (!Busy && _Hotel.iRoom.OfType<Restaurant>().First(r => Position.Position == r.Position)
+                        .AmountOfGuests < _Hotel.iRoom.OfType<Restaurant>().First(r => Position.Position == r.Position)
+                        .Capacity)
+                {
+                    _Hotel.iRoom.OfType<Restaurant>().First(r => Position.Position == r.Position).AmountOfGuests++;
+                    Busy = true;
+                }
+
                 Eat();
             }
             else if (NeedWorkout && Position.AreaType == "Fitness")
@@ -141,6 +148,7 @@ namespace HotelProject
             }
             else
             {
+                _Hotel.iRoom.OfType<Restaurant>().First(r => Position.Position == r.Position).AmountOfGuests--;
                 Timer = 0;
                 Busy = false;
                 NeedFood = false;

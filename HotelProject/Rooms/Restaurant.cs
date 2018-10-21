@@ -19,6 +19,7 @@ namespace HotelProject.Rooms
         public override Image Img { get; set; }
         
         public int Capacity { get; set; }
+        public int AmountOfGuests { get; set; }
 
         public Restaurant(int capacity, int dimX, int dimY, int posX, int posY, int iD)
         {
@@ -28,6 +29,7 @@ namespace HotelProject.Rooms
             Position = new Point(posX, posY);
             Img = Resources.Restaurant;
             ID = iD;
+            AmountOfGuests = 0;
         }
 
     }
