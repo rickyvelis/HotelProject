@@ -122,6 +122,8 @@
     <Content Include="Resources\Cinema2.png" />
     <Content Include="Resources\Cinema_Start.png" />
     <Content Include="Resources\Cleaner.png" />
+    <Content Include="Resources\Elevator_Atfloor.png" />
+    <Content Include="Resources\Elevator_Open.png" />
     <Content Include="Resources\Entrance.png" />
     <None Include="Resources\Error.png" />
     <None Include="Resources\Fitness.png" />

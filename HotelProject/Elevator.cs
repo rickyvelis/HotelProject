@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HotelProject.Rooms;
+using HotelProject.Properties;
 
 namespace HotelProject
 {
@@ -53,8 +54,6 @@ namespace HotelProject
             }
 
 
-
-
             Console.WriteLine("ELEVATOR AT FLOOR" + CurrentFloor);
             foreach (Human human in _Hotel.Humans)
             {
@@ -100,8 +99,20 @@ namespace HotelProject
                     if (Direction == null)
                         Direction = "DOWN";
                 }
-            }
 
+                if (floor.Position.Y == CurrentFloor && DoorsOpen)
+                {
+                    floor.Img = Resources.Elevator_Open;
+                }
+                else if (floor.Position.Y == CurrentFloor)
+                {
+                    floor.Img = Resources.Elevator_Atfloor;
+                }
+                else
+                {
+                    floor.Img = Resources.Elevator;
+                }
+            }
         }
 
         /// <summary>
