@@ -32,7 +32,11 @@
             this.speedUp_checkBox = new System.Windows.Forms.CheckBox();
             this.hotelStatus_label = new System.Windows.Forms.Label();
             this.guestAmount_Label = new System.Windows.Forms.Label();
-            this.stats = new System.Windows.Forms.RichTextBox();
+            this.statsBox = new System.Windows.Forms.RichTextBox();
+            this.dirtyRoomsBox = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.elevatorBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // playPause_checkBox
@@ -77,26 +81,64 @@
             // guestAmount_Label
             // 
             this.guestAmount_Label.AutoSize = true;
-            this.guestAmount_Label.Location = new System.Drawing.Point(0, 108);
+            this.guestAmount_Label.Location = new System.Drawing.Point(0, 87);
             this.guestAmount_Label.Name = "guestAmount_Label";
             this.guestAmount_Label.Size = new System.Drawing.Size(69, 17);
             this.guestAmount_Label.TabIndex = 6;
             this.guestAmount_Label.Text = "Guests: 0";
             // 
-            // stats
+            // statsBox
             // 
-            this.stats.Location = new System.Drawing.Point(3, 128);
-            this.stats.Name = "stats";
-            this.stats.Size = new System.Drawing.Size(100, 96);
-            this.stats.TabIndex = 7;
-            this.stats.Text = "";
+            this.statsBox.Location = new System.Drawing.Point(3, 107);
+            this.statsBox.Name = "statsBox";
+            this.statsBox.Size = new System.Drawing.Size(100, 96);
+            this.statsBox.TabIndex = 7;
+            this.statsBox.Text = "";
+            // 
+            // dirtyRoomsBox
+            // 
+            this.dirtyRoomsBox.Location = new System.Drawing.Point(3, 244);
+            this.dirtyRoomsBox.Name = "dirtyRoomsBox";
+            this.dirtyRoomsBox.Size = new System.Drawing.Size(100, 96);
+            this.dirtyRoomsBox.TabIndex = 8;
+            this.dirtyRoomsBox.Text = "";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(0, 224);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 17);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Dirty Rooms:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 359);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(64, 17);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Elevator:";
+            // 
+            // elevatorBox
+            // 
+            this.elevatorBox.Location = new System.Drawing.Point(3, 379);
+            this.elevatorBox.Name = "elevatorBox";
+            this.elevatorBox.Size = new System.Drawing.Size(100, 96);
+            this.elevatorBox.TabIndex = 11;
+            this.elevatorBox.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1382, 766);
-            this.Controls.Add(this.stats);
+            this.Controls.Add(this.elevatorBox);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.dirtyRoomsBox);
+            this.Controls.Add(this.statsBox);
             this.Controls.Add(this.guestAmount_Label);
             this.Controls.Add(this.hotelStatus_label);
             this.Controls.Add(this.speedUp_checkBox);
@@ -116,7 +158,11 @@
         private System.Windows.Forms.CheckBox speedUp_checkBox;
         private System.Windows.Forms.Label hotelStatus_label;
         private System.Windows.Forms.Label guestAmount_Label;
-        private System.Windows.Forms.RichTextBox stats;
+        private System.Windows.Forms.RichTextBox statsBox;
+        private System.Windows.Forms.RichTextBox dirtyRoomsBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RichTextBox elevatorBox;
     }
 }
 

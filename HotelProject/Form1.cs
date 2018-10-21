@@ -20,7 +20,6 @@ namespace HotelProject
     {
         private Hotel _Hotel { get; }
         private HEListener hel;
-        private int Test { get; set; }
         private List<Human> HumanList { get; set; }
         private System.Timers.Timer timer { get; set; }
         private Stopwatch stopwatch { get; }
@@ -93,7 +92,7 @@ namespace HotelProject
         }
 
         /// <summary>
-        /// Occurs when Time has elapsed
+        /// Occurs when one HTE has elapsed
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
@@ -101,7 +100,7 @@ namespace HotelProject
         {
             timer.Interval = 1000 / HotelEventManager.HTE_Factor;
             stopwatch.Restart();
-            
+        
             _Hotel.Update();
 
             foreach (Human human in _Hotel.Humans.Reverse<Human>())
@@ -110,15 +109,13 @@ namespace HotelProject
             foreach (Cinema cinema in _Hotel.iRoom.OfType<Cinema>())
                 cinema.Update();
 
-
             _Hotel.EvacuatingDone();
-
             _Hotel.elevator.DoEvents();
-
-            UpdateStats();
-
+            SetTextLabel();
+            SetTextStatsBox();
+            SetTextDirtyRoomsBox();
+            SetTextElevatorBox();
             UpdateForm();
-
         }
 
         /// <summary>
@@ -162,7 +159,9 @@ namespace HotelProject
                 HotelEventManager.HTE_Factor = this.HTE_Factor + amount;
         }
 
-        //TODO nog goed kijken naar werking code.
+        /// <summary>
+        /// Checks if an invoke is required (if the thread IDs are different) and updates the form itself.
+        /// </summary>
         public void UpdateForm()
         {
             if (InvokeRequired)
@@ -176,22 +175,20 @@ namespace HotelProject
             }
         }
 
+        /// <summary>
+        /// Exits the program on closing this form.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)
         {
             Environment.Exit(0);
         }
 
-        private void UpdateStats()
-        {
-            SetTextLabel();
-            SetTextTBox();
-        }
-
+        /// <summary>
+        /// Checks if an invoke is required (if the thread IDs are different) and updates guestAmount_Label with the current amount of guests in the hotel.
+        /// </summary>
         private void SetTextLabel()
         {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
             if (guestAmount_Label.InvokeRequired)
             {
                 SetTextCallback d = SetTextLabel;
@@ -203,11 +200,14 @@ namespace HotelProject
             }
         }
 
-        private void SetTextTBox()
+        /// <summary>
+        /// Checks if an invoke is required (if the thread IDs are different) and updates statsBox with new text
+        /// </summary>
+        private void SetTextStatsBox()
         {
-            if (stats.InvokeRequired)
+            if (statsBox.InvokeRequired)
             {
-                SetTextCallback d = SetTextTBox;
+                SetTextCallback d = SetTextStatsBox;
                 Invoke(d);
             }
             else
@@ -215,10 +215,58 @@ namespace HotelProject
                 string info = "";
                 foreach (Human human in _Hotel.Humans)
                 {
-                    info += (human.Name + " is at position " + human.Position.Position.X + " " + human.Position.Position.Y + "\n");
+                    info += (human.Name + " is at position " + human.Position.Position.X + " " + human.Position.Position.Y + "\n\n");
                 }
 
-                stats.Text = info;
+                statsBox.Text = info;
+            }
+        }
+
+        private void SetTextDirtyRoomsBox()
+        {
+            if (statsBox.InvokeRequired)
+            {
+                SetTextCallback d = SetTextDirtyRoomsBox;
+                Invoke(d);
+            }
+            else
+            {
+                string info = "";
+                foreach (Room room in _Hotel.DirtyRooms)
+                {
+                    info += "Room at: " + room.Position.X + " " + room.Position.Y + " is dirty \n\n";
+                }
+
+                dirtyRoomsBox.Text = info;
+            }
+        }
+
+        private void SetTextElevatorBox()
+        {
+            if (statsBox.InvokeRequired)
+            {
+                SetTextCallback d = SetTextElevatorBox;
+                Invoke(d);
+            }
+            else
+            {
+                string info = "";
+                info += "The elevator currently is at floor " + _Hotel.elevator.CurrentFloor;
+                if (_Hotel.elevator.DoorsOpen)
+                    info += " and is currently opened. \n";
+                else
+                    info += " and is currently closed. \n";
+
+                info += "The following people are currently using the elevator: \n";
+
+
+                foreach (Human human in _Hotel.Humans)
+                {
+                    if (human.InElevator)
+                        info += human.Name + " to go to floor: " + human.TargetFloor + "\n";
+                }
+
+                elevatorBox.Text = info;
             }
         }
 
