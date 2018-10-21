@@ -237,7 +237,6 @@ namespace HotelProject
                             _Hotel.iRoom.OfType<ElevatorShaft>()
                                 .First(r => r.Position == new Point(0, Position.Position.Y)).DownPressed = true;
                         }
-
                     }
                 }  
             }
