@@ -28,7 +28,7 @@ namespace HotelProject
 
         delegate void Form1Callback();
 
-        public Form1(float hte, int cleaners, int cleaningTime, int elevatorCapacity, int movieDuration, int eatDuration)
+        public Form1(float hte, int cleaners, int cleaningTime, int movieDuration, int eatDuration)
         {
             InitializeComponent();
             hotelStatus_label.Text = "Running";
@@ -43,7 +43,6 @@ namespace HotelProject
             HotelEventManager.HTE_Factor = HTE_Factor;
 
             _Hotel.SetCleaners(cleaners, cleaningTime);
-            //_Hotel.SetElevatorCapacity(elevatorCapacity);
             _Hotel.SetScreeningTime(movieDuration);
             _Hotel.EatDuration = eatDuration;
 
@@ -57,7 +56,7 @@ namespace HotelProject
             timer.Elapsed += TimerHandler;
             Console.WriteLine(timer.Interval);
             
-            KeyUp += KeyListener;
+            KeyUp += SpacePress;
 
             #region TestCode
             //HotelEvent hotelEvent = new HotelEvent()
@@ -104,6 +103,11 @@ namespace HotelProject
             }
         }
 
+        /// <summary>
+        /// Occurs when Time has elapsed
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private void TimerHandler(object source, ElapsedEventArgs e)
         {
             timer.Interval = 1000 / HotelEventManager.HTE_Factor;
@@ -150,7 +154,12 @@ namespace HotelProject
 
         }
 
-        private void KeyListener(object sender, KeyEventArgs e)
+        /// <summary>
+        /// Responds to a press of the Space-key
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SpacePress(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
                 Pause();
@@ -211,6 +220,11 @@ namespace HotelProject
             //listBox1.Items.AddRange(_Hotel.Humans.OfType<Guest>().ToArray());
         }
 
+        /// <summary>
+        /// Occurs when the playPause_checkBox Check state has changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlayPause_checkBox_CheckedChanged(object sender, EventArgs e)
         {
             Pause();
@@ -220,6 +234,11 @@ namespace HotelProject
                 playPause_checkBox.Text = "⏸";
         }
 
+        /// <summary>
+        /// Occurs when the speedUp_checkBox Check state has changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SpeedUp_checkBox_CheckedChanged(object sender, EventArgs e)
         {
             SpeedUp(5);

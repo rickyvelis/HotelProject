@@ -5,6 +5,11 @@ namespace HotelProject
 {
     class RoomFactory
     {
+        /// <summary>
+        /// Creates an IRoom object
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns></returns>
         public IRoom CreateRoom(dynamic room)
         {
             switch (room.AreaType.ToString())
