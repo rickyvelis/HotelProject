@@ -74,7 +74,7 @@ namespace HotelProject
             if (DeathTimer == 20)
             {
                 _Hotel.iRoom.OfType<Room>().First(r => Room == r).Available = true;
-                _Hotel.DirtyRooms.Add(_Hotel.iRoom.OfType<Room>().First(r => Room == r));
+                _Hotel.DirtyRooms.Add(_Hotel.iRoom.OfType<Room>().First(r => Room.Position == r.Position));
                 Die();
             }
 
