@@ -21,6 +21,9 @@ namespace HotelProject
         public override Image Img { get; set; }
         public override int TargetFloor { get; set; }
 
+        private int DeathTimer { get; set; }
+        public bool Busy { get; set; }
+
         public Room Room { get; set; }
         private Hotel _Hotel { get; }
 
@@ -47,6 +50,7 @@ namespace HotelProject
             Timer = 0;
             EatDuration = _Hotel.EatDuration;
             FitnessDuration = 0;
+            DeathTimer = 0;
 
             NeedFood = false;
             NeedMovie = false;
@@ -58,10 +62,25 @@ namespace HotelProject
         /// </summary>
         public override void Update()
         {
+            IRoom oldLocation = Position;
+
             Step();
+
+            if (Position != Room && !InElevator && Path.Count > 0 && oldLocation != Position && Wait == 0 && !Busy)
+                DeathTimer++;
+            else
+                DeathTimer = 0;
+
+            if (DeathTimer == 20)
+            {
+                _Hotel.iRoom.OfType<Room>().First(r => Room == r).Available = true;
+                _Hotel.DirtyRooms.Add(_Hotel.iRoom.OfType<Room>().First(r => Room == r));
+                Die();
+            }
 
             if (Position.AreaType == "Cinema" && NeedMovie && !_Hotel.iRoom.OfType<Cinema>().First(r => r.Position == Position.Position).IsScreening)
             {
+                Busy = true;
                 _Hotel.iRoom.OfType<Cinema>().First(r => r.Position == Position.Position).Visitors.Add(this);
                 Img = Resources.Guest1_Inside;
             }
@@ -79,9 +98,15 @@ namespace HotelProject
                 Timer = 0;
             }
             else if (NeedFood && Position.AreaType == "Restaurant")
+            {
+                Busy = true;
                 Eat();
+            }
             else if (NeedWorkout && Position.AreaType == "Fitness")
+            {
+                Busy = true;
                 Workout();
+            }
 
             if (!Visible || InElevator || Position == Room)
                 Img = Resources.Guest1_Inside;
@@ -122,6 +147,7 @@ namespace HotelProject
             else
             {
                 Timer = 0;
+                Busy = false;
                 NeedFood = false;
                 Visible = true;
                 FindRoom(Room);
@@ -141,6 +167,7 @@ namespace HotelProject
             else
             {
                 Timer = 0;
+                Busy = false;
                 NeedWorkout = false;
                 Visible = true;
                 FindRoom(Room);
@@ -162,7 +189,6 @@ namespace HotelProject
         {
             if (!CheckingOut)
             {
-                Wait = 0;
                 Evacuating = true;
             }
             FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
