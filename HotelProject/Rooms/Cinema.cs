@@ -38,6 +38,9 @@ namespace HotelProject.Rooms
             Visitors = new List<Guest>();
         }
 
+        /// <summary>
+        /// Updates the object behaviour and property values
+        /// </summary>
         public void Update()
         {
             if (IsScreening)

@@ -253,6 +253,9 @@ namespace HotelProject
                 c.ScreeningTime = screeningTime;
         }
 
+        /// <summary>
+        /// When all evacuees have evacuated (reached the Lobby), each guest gets sent back to their room and cleaners will continue cleaning
+        /// </summary>
         public void EvacuatingDone()
         {            
             if (Humans.TrueForAll(r => r.Position.AreaType == "Lobby") && Evacuating)
@@ -268,7 +271,9 @@ namespace HotelProject
             }
         }
 
-
+        /// <summary>
+        /// Updates the object behaviour and property values
+        /// </summary>
         public void Update()
         {
             CheckDirtyRooms();

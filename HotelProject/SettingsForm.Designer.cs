@@ -37,8 +37,6 @@
             this.cleaningSpeed_label = new System.Windows.Forms.Label();
             this.sPerHTE_textBox = new System.Windows.Forms.TextBox();
             this.sPerHTE_label = new System.Windows.Forms.Label();
-            this.elevatorCapacity_textBox = new System.Windows.Forms.TextBox();
-            this.elevatorCapacity_label = new System.Windows.Forms.Label();
             this.cleanerAmount_label = new System.Windows.Forms.Label();
             this.cleanerAmount_textBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -57,7 +55,7 @@
             // eatDuration_label
             // 
             this.eatDuration_label.AutoSize = true;
-            this.eatDuration_label.Location = new System.Drawing.Point(11, 129);
+            this.eatDuration_label.Location = new System.Drawing.Point(11, 105);
             this.eatDuration_label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.eatDuration_label.Name = "eatDuration_label";
             this.eatDuration_label.Size = new System.Drawing.Size(100, 13);
@@ -66,7 +64,7 @@
             // 
             // eatDuration_textBox
             // 
-            this.eatDuration_textBox.Location = new System.Drawing.Point(133, 129);
+            this.eatDuration_textBox.Location = new System.Drawing.Point(133, 105);
             this.eatDuration_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.eatDuration_textBox.Name = "eatDuration_textBox";
             this.eatDuration_textBox.Size = new System.Drawing.Size(76, 20);
@@ -74,7 +72,7 @@
             // 
             // movieDuration_textBox
             // 
-            this.movieDuration_textBox.Location = new System.Drawing.Point(133, 105);
+            this.movieDuration_textBox.Location = new System.Drawing.Point(133, 81);
             this.movieDuration_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.movieDuration_textBox.Name = "movieDuration_textBox";
             this.movieDuration_textBox.Size = new System.Drawing.Size(76, 20);
@@ -83,7 +81,7 @@
             // movieDuration_label
             // 
             this.movieDuration_label.AutoSize = true;
-            this.movieDuration_label.Location = new System.Drawing.Point(11, 105);
+            this.movieDuration_label.Location = new System.Drawing.Point(11, 81);
             this.movieDuration_label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.movieDuration_label.Name = "movieDuration_label";
             this.movieDuration_label.Size = new System.Drawing.Size(113, 13);
@@ -92,7 +90,7 @@
             // 
             // cleaningSpeed_textBox
             // 
-            this.cleaningSpeed_textBox.Location = new System.Drawing.Point(133, 81);
+            this.cleaningSpeed_textBox.Location = new System.Drawing.Point(133, 57);
             this.cleaningSpeed_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.cleaningSpeed_textBox.Name = "cleaningSpeed_textBox";
             this.cleaningSpeed_textBox.Size = new System.Drawing.Size(76, 20);
@@ -101,7 +99,7 @@
             // cleaningSpeed_label
             // 
             this.cleaningSpeed_label.AutoSize = true;
-            this.cleaningSpeed_label.Location = new System.Drawing.Point(11, 81);
+            this.cleaningSpeed_label.Location = new System.Drawing.Point(11, 57);
             this.cleaningSpeed_label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.cleaningSpeed_label.Name = "cleaningSpeed_label";
             this.cleaningSpeed_label.Size = new System.Drawing.Size(111, 13);
@@ -110,7 +108,7 @@
             // 
             // sPerHTE_textBox
             // 
-            this.sPerHTE_textBox.Location = new System.Drawing.Point(133, 57);
+            this.sPerHTE_textBox.Location = new System.Drawing.Point(133, 33);
             this.sPerHTE_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.sPerHTE_textBox.Name = "sPerHTE_textBox";
             this.sPerHTE_textBox.Size = new System.Drawing.Size(76, 20);
@@ -119,30 +117,12 @@
             // sPerHTE_label
             // 
             this.sPerHTE_label.AutoSize = true;
-            this.sPerHTE_label.Location = new System.Drawing.Point(11, 57);
+            this.sPerHTE_label.Location = new System.Drawing.Point(11, 33);
             this.sPerHTE_label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.sPerHTE_label.Name = "sPerHTE_label";
             this.sPerHTE_label.Size = new System.Drawing.Size(65, 13);
             this.sPerHTE_label.TabIndex = 18;
             this.sPerHTE_label.Text = "HTE Factor:";
-            // 
-            // elevatorCapacity_textBox
-            // 
-            this.elevatorCapacity_textBox.Location = new System.Drawing.Point(133, 33);
-            this.elevatorCapacity_textBox.Margin = new System.Windows.Forms.Padding(2);
-            this.elevatorCapacity_textBox.Name = "elevatorCapacity_textBox";
-            this.elevatorCapacity_textBox.Size = new System.Drawing.Size(76, 20);
-            this.elevatorCapacity_textBox.TabIndex = 15;
-            // 
-            // elevatorCapacity_label
-            // 
-            this.elevatorCapacity_label.AutoSize = true;
-            this.elevatorCapacity_label.Location = new System.Drawing.Point(11, 33);
-            this.elevatorCapacity_label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.elevatorCapacity_label.Name = "elevatorCapacity_label";
-            this.elevatorCapacity_label.Size = new System.Drawing.Size(93, 13);
-            this.elevatorCapacity_label.TabIndex = 16;
-            this.elevatorCapacity_label.Text = "Elevator Capacity:";
             // 
             // cleanerAmount_label
             // 
@@ -175,8 +155,6 @@
             this.Controls.Add(this.cleaningSpeed_label);
             this.Controls.Add(this.sPerHTE_textBox);
             this.Controls.Add(this.sPerHTE_label);
-            this.Controls.Add(this.elevatorCapacity_textBox);
-            this.Controls.Add(this.elevatorCapacity_label);
             this.Controls.Add(this.cleanerAmount_label);
             this.Controls.Add(this.cleanerAmount_textBox);
             this.Controls.Add(this.start_button);
@@ -198,8 +176,6 @@
         private System.Windows.Forms.Label cleaningSpeed_label;
         private System.Windows.Forms.TextBox sPerHTE_textBox;
         private System.Windows.Forms.Label sPerHTE_label;
-        private System.Windows.Forms.TextBox elevatorCapacity_textBox;
-        private System.Windows.Forms.Label elevatorCapacity_label;
         private System.Windows.Forms.Label cleanerAmount_label;
         private System.Windows.Forms.TextBox cleanerAmount_textBox;
     }

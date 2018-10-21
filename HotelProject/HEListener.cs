@@ -20,6 +20,10 @@ namespace HotelProject
             HFactory = new HumanFactory();
         }
 
+        /// <summary>
+        /// Receives an HotelEvent and acts accordingly
+        /// </summary>
+        /// <param name="Event"></param>
         public void Notify(HotelEvent Event)
         {   
             #region MyRegion Printing out stuff for us for checks
@@ -40,6 +44,7 @@ namespace HotelProject
 
             switch (Event.EventType)
             {
+                //when CHECK_IN occurs; guest gets created, gets assigned a room and moves to the room
                 case HotelEventType.CHECK_IN:
                     if (Event.Data != null && !_Hotel.Evacuating)
                     {
@@ -130,6 +135,8 @@ namespace HotelProject
                         }
                     }
                     break;
+
+                //when CHECK_OUT occurs; guest moves to Lobby to check out, guest's room gets added to the DirtyRooms list of _Hotel
                 case HotelEventType.CHECK_OUT:
                     if (Event.Data != null)
                     {
@@ -140,6 +147,8 @@ namespace HotelProject
                         }
                     }
                     break;
+
+                //when CLEANING_EMERGENCY occurs; the room which the HotelEvent refers to gets added to te DirtyRooms list of _Hotel
                 case HotelEventType.CLEANING_EMERGENCY:
                     //TODO Reset CleaningTime to standard value after CLEANING_EMERGENCY is over
                     if (Event.Data != null && !_Hotel.Evacuating)
@@ -154,6 +163,9 @@ namespace HotelProject
                         }
                     }
                     break;
+
+                //when EVACUATE occurs; all Humans in _Hotel will stop what they're doing and move to the Lobby to Evacuate. When everyone
+                //is to the Lobby they will be sent back to their Rooms (cleaners will continue cleaning rooms)
                 case HotelEventType.EVACUATE:
                     _Hotel.Evacuating = true;
                     foreach (Human human in _Hotel.Humans)
@@ -161,11 +173,14 @@ namespace HotelProject
                         human.Evacuate();
                     }
                     break;
+
                 case HotelEventType.GODZILLA:
                     //GOJIRA
                     //BREAK STUFF
                     //NIET MEER NODIG
                     break;
+
+                //when GOTO_CINEMA occurs; the guest which the HotelEvent refers to gets sent to the nearest Cinema
                 case HotelEventType.GOTO_CINEMA:
                     if (Event.Data != null && !_Hotel.Evacuating)
                     {
@@ -197,8 +212,10 @@ namespace HotelProject
                         }
                     }
                     break;
+
+                //when GOTO_FITNESS occurs; the guest which the HotelEvent refers gets sent to the nearest Fitness and stays there for an amount
+                //of HTE which is specified in the HotelEvent
                 case HotelEventType.GOTO_FITNESS:
-                    //Given guest goes to nearest gym and stays there for a given amount of HTE
                     if (Event.Data != null && !_Hotel.Evacuating)
                     {
                         string guestName = "";
@@ -232,6 +249,8 @@ namespace HotelProject
 
                     }
                     break;
+
+                //when NEED_FOOD occurs; the guest which the HotelEvent refers to gets sent to the nearest Restaurant and eats there for a set amount of HTE
                 case HotelEventType.NEED_FOOD:
                     //Given guest goes to nearest restaurant and stays there for some time (HOW LONG???)
                     if (Event.Data != null && !_Hotel.Evacuating)
@@ -266,6 +285,9 @@ namespace HotelProject
                         }
                     }
                     break;
+
+                //when START_CINEMA occurs; the specified Cinema starts and screens for a set amount of HTE. When screening is over, Guest visitors get sent
+                //back to their room
                 case HotelEventType.START_CINEMA:
                     //Starts the given cinema and throws out guests after the movie is over
                     if (Event.Data != null && !_Hotel.Evacuating)

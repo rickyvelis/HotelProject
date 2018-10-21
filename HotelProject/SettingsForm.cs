@@ -22,50 +22,68 @@ namespace HotelProject
             _Hotel = Hotel.GetInstance();
         }
 
-        //TODO Maybe remove all the convert methods and put their functionality in start_button_Click()
+        /// <summary>
+        /// Converts the text in cleanerAmount_textBox to an integer
+        /// </summary>
+        /// <returns></returns>
         private int ConvertCleanerAmount()
         {
             int i = int.Parse(cleanerAmount_textBox.Text);
             return i;
         }
 
+        /// <summary>
+        /// Converts the text in cleaningSpeed_textBox to an integer
+        /// </summary>
+        /// <returns></returns>
         private int ConvertCleaningSpeed()
         {
             int i = int.Parse(cleaningSpeed_textBox.Text);
             return i;
         }
 
-        private int ConvertElevatorCapacity()
-        {
-            int i = int.Parse(elevatorCapacity_textBox.Text);
-            return i;
-        }
-
+        /// <summary>
+        /// Converts the text in sPerHTE_textBox to a float
+        /// </summary>
+        /// <returns></returns>
         private float ConvertHTEFactor()
         {
             float f = float.Parse(sPerHTE_textBox.Text);
             return f;
         }
 
+        /// <summary>
+        /// Converts the text in movieDuration_textBox to an integer
+        /// </summary>
+        /// <returns></returns>
         private int ConvertMovieDuration()
         {
             int i = int.Parse(movieDuration_textBox.Text);
             return i;
         }
 
+        /// <summary>
+        /// Converts the text in eatDuration_textBox to an integer
+        /// </summary>
+        /// <returns></returns>
         private int ConvertEatDuration()
         {
             int i = int.Parse(eatDuration_textBox.Text);
             return i;
         }
 
+        /// <summary>
+        /// Occurs when start_button is clicked. Checks whether all textBoxes have been filled; if so, open next Form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void start_button_Click(object sender, EventArgs e)
         {
             bool sallgood = true;
 
             foreach (TextBox txtBox in Controls.OfType<TextBox>())
             {
-                if (txtBox.Text == "" || txtBox.Text == null)
+                if (string.IsNullOrEmpty(txtBox.Text))
                 {
                     txtBox.BackColor = Color.AntiqueWhite;
                     sallgood = false;
@@ -77,8 +95,7 @@ namespace HotelProject
                 Hide();
                 MainForm = new Form1(ConvertHTEFactor(), 
                     ConvertCleanerAmount(),
-                    ConvertCleaningSpeed(), 
-                    ConvertElevatorCapacity(), 
+                    ConvertCleaningSpeed(),
                     ConvertMovieDuration(),
                     ConvertEatDuration());
                 MainForm.Show();
