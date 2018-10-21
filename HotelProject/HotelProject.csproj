@@ -119,7 +119,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Cinema1.png" />
-    <Content Include="Resources\Cinema2.png" />
     <Content Include="Resources\Cinema_Start.png" />
     <Content Include="Resources\Cleaner.png" />
     <Content Include="Resources\Cleaner_Inside.png" />
@@ -131,7 +130,6 @@
     <Content Include="Resources\Guest1.png" />
     <Content Include="Resources\Guest1_Inside.png" />
     <Content Include="Resources\Hallway.png" />
-    <Content Include="Resources\Hallway2.png" />
     <None Include="Resources\Restaurant.png" />
     <Content Include="Resources\Room1.png" />
     <Content Include="Resources\Room2.png" />

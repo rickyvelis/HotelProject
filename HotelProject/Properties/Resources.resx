@@ -121,9 +121,6 @@
   <data name="Cinema1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Cinema1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Cinema2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Cinema2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Cinema_Start" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Cinema_Start.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -159,9 +156,6 @@
   </data>
   <data name="Hallway" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Hallway.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Hallway2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Hallway2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Restaurant" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Restaurant.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
