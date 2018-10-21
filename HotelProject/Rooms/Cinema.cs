@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HotelProject.Humans;
 using HotelProject.Properties;
-using HotelProject.Rooms;
 
 namespace HotelProject.Rooms
 {    
     public class Cinema : IRoom
     {
-
         public override string AreaType { get; set; }
         public override int ID { get; set; }
         public override Point Dimension { get; set; }
@@ -47,6 +43,9 @@ namespace HotelProject.Rooms
                 Screening();
         }
 
+        /// <summary>
+        /// Starts the movie.
+        /// </summary>
         public void Start()
         {
             Img = Resources.Cinema_Start;
@@ -54,15 +53,15 @@ namespace HotelProject.Rooms
             Screening();
         }
 
+        /// <summary>
+        /// Checks if the movie is over, if so it stops playing and everybody who was in the cinema at the time will return to their rooms.
+        /// </summary>
         private void Screening()
         {
             if (Timer < ScreeningTime)
                 Timer++;
             else
             {
-                Console.WriteLine("===============");
-                Console.WriteLine("MOVIE IS OVER!!");
-                Console.WriteLine("===============");
                 Img = Resources.Cinema1;
                 Timer = 0;
                 IsScreening = false;

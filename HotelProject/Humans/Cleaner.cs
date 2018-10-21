@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using HotelProject.Rooms;
+using System.Linq;
 using HotelProject.Properties;
+using HotelProject.Rooms;
 
-namespace HotelProject
+namespace HotelProject.Humans
 {
     public class Cleaner : Human
     {

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HotelEvents;
+using HotelProject.Humans;
 using HotelProject.Rooms;
 
 namespace HotelProject
@@ -26,22 +23,6 @@ namespace HotelProject
         /// <param name="Event"></param>
         public void Notify(HotelEvent Event)
         {   
-            #region MyRegion Printing out stuff for us for checks
-
-            Console.WriteLine("_____________________________________________________________");
-            Console.WriteLine("TYPE: " + Event.EventType);
-            Console.WriteLine("MESSAGE: " + Event.Message);
-            Console.WriteLine("TIME: " + Event.Time);
-            if (Event.Data != null)
-            {
-                foreach (KeyValuePair<string, string> data in Event.Data)
-                {
-                    Console.WriteLine("KEY: " + data.Key);
-                    Console.WriteLine("VALUE: " + data.Value);
-                }
-            }
-            #endregion
-
             switch (Event.EventType)
             {
                 //when CHECK_IN occurs; guest gets created, gets assigned a room and moves to the room
@@ -150,7 +131,6 @@ namespace HotelProject
 
                 //when CLEANING_EMERGENCY occurs; the room which the HotelEvent refers to gets added to te DirtyRooms list of _Hotel
                 case HotelEventType.CLEANING_EMERGENCY:
-                    //TODO Reset CleaningTime to standard value after CLEANING_EMERGENCY is over
                     if (Event.Data != null && !_Hotel.Evacuating)
                     {
                         foreach (KeyValuePair<string, string> data in Event.Data)
@@ -158,8 +138,6 @@ namespace HotelProject
                             if (data.Key == "kamer")
                                 _Hotel.DirtyRooms.Insert(0,
                                     _Hotel.iRoom.OfType<Room>().Single(r => r.ID == int.Parse(data.Value)));
-                            //if (data.Key == "HTE")
-                            //    cleaner.CleaningTime = int.Parse(data.Value);
                         }
                     }
                     break;
@@ -174,17 +152,11 @@ namespace HotelProject
                     }
                     break;
 
-                case HotelEventType.GODZILLA:
-                    //GOJIRA
-                    //BREAK STUFF
-                    //NIET MEER NODIG
-                    break;
-
                 //when GOTO_CINEMA occurs; the guest which the HotelEvent refers to gets sent to the nearest Cinema
                 case HotelEventType.GOTO_CINEMA:
                     if (Event.Data != null && !_Hotel.Evacuating)
                     {
-                        string guestName = "";
+                        string guestName;
                         foreach (KeyValuePair<string, string> data in Event.Data)
                         {
                             if (data.Key == "Gast")
@@ -242,11 +214,8 @@ namespace HotelProject
                                     FindRoom(gymDistances.Aggregate((l, r) => l.Value < r.Value ? l : r).Key);
                             }
                             else if (data.Key == "HTE" && guestName != "")
-                            {
                                 _Hotel.Humans.OfType<Guest>().Single(g => g.Name == guestName).FitnessDuration = int.Parse(data.Value);
-                            }
                         }
-
                     }
                     break;
 
@@ -255,7 +224,7 @@ namespace HotelProject
                     //Given guest goes to nearest restaurant and stays there for some time (HOW LONG???)
                     if (Event.Data != null && !_Hotel.Evacuating)
                     {
-                        string guestName = "";
+                        string guestName;
                         foreach (KeyValuePair<string, string> data in Event.Data)
                         {
                             if (data.Key == "Gast")
@@ -296,9 +265,6 @@ namespace HotelProject
                             if(data.Key == "ID" && _Hotel.iRoom.Exists(r => r.ID == int.Parse(data.Value) && r is Cinema))
                                 _Hotel.iRoom.OfType<Cinema>().Single(r => r.ID == int.Parse(data.Value)).Start();
                     }
-                    break;
-                default:
-                    //doe (n)iets
                     break;
             }
         }

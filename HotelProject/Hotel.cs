@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Dynamic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
-using System.Runtime.CompilerServices;
 using HotelProject.Rooms;
-using HotelEvents;
-using HotelProject.Properties;
+using HotelProject.Humans;
 
 namespace HotelProject
 {
-    //TODO Code maken zodat er hallen worden toegevoegd!
     public class Hotel
     {
         public List<IRoom> iRoom { get; set; }
@@ -24,11 +18,9 @@ namespace HotelProject
         private static Hotel Instance { get; set; }
         private RoomFactory RFactory { get; set; }
         private HumanFactory HFactory { get; set; }
-        public Elevator elevator { get; set; }
-
+        public Elevator Elevator { get; set; }
         public int CleanDuration { get; set; }
         public int EatDuration { get; set; }
-
         public bool Evacuating { get; set; }
 
         private Hotel()
@@ -40,25 +32,30 @@ namespace HotelProject
             AddLiftAndStairs();
             CreateHalls();
             SetNeighbours();
-
         }
 
-        //TODO Summary schrijven
+        /// <summary>
+        /// If no instance of Hotel exists, create Hotel.
+        /// </summary>
+        /// <returns>Returns the instance of Hotel.</returns>
         public static Hotel GetInstance()
         {
             if (Instance == null)
-            {
                 Instance = new Hotel();
-            }
             return Instance;
         }
 
+        /// <summary>
+        /// Creates an elevator for the hotel. This is not done in the constructor as this would cause erros bc Hotel is a singleton and elevator also creates hotel.
+        /// </summary>
         public void CreateElevator()
         {
-            elevator = new Elevator();
+            Elevator = new Elevator();
         }
 
-        //TODO Summary schrijven
+        /// <summary>
+        /// Reads the layout file and uses the room factory to create the rooms of the hotel
+        /// </summary>
         private void JSONreader()
         {
             try
@@ -112,7 +109,6 @@ namespace HotelProject
             return y + 1;
         }
 
-        //TODO kijken of deze methode op een andere plek moet in Form1.
         /// <summary>
         /// gets the maximum height of the hotel (is different from amount of floors if there are rooms on the top floor that take up 2 floors)
         /// </summary>
@@ -156,7 +152,6 @@ namespace HotelProject
             iRoom.Add(lobby);
         }
         
-        //TODO Wordt herschreven want hallen zullen worden toegevoegd als rooms voor betere pathfinding
         /// <summary>
         /// sets the neighbours of each room.
         /// </summary>
@@ -166,14 +161,6 @@ namespace HotelProject
             {
                 foreach (IRoom room2 in iRoom)
                 {
-                    //TODO distance van trap en lift instelbaar maken.
-                    //TODO trap 2 keer zo langzaam maken als de lift
-                    //if (((room.AreaType == "Elevator" && room2.AreaType == "Elevator") || (room.AreaType == "Stairs" && room2.AreaType == "Stairs")) &&
-                    //    (room.Position.Y - room2.Position.Y == 1 || room2.Position.Y - room.Position.Y == 1))
-                    //{
-                    //    room.Neighbours.Add(room2, 1);
-                    //}
-
                     if (room.AreaType == "Elevator" && room2.AreaType == "Elevator" &&
                         room.Position.Y + 1 == room2.Position.Y)
                     {
@@ -197,7 +184,9 @@ namespace HotelProject
             }
         }
 
-        //TODO code mogelijk verbeteren.
+        /// <summary>
+        /// Creates Hallways in the hotel at the right locations using the dimensions of rooms
+        /// </summary>
         private void CreateHalls()
         {
             iRoom2 = new List<IRoom>();
@@ -212,8 +201,6 @@ namespace HotelProject
                             dynamic hall = new ExpandoObject();                            
                             hall.AreaType = "Hall";
                             hall.Position = ((i + room.Position.X - 1) + ", " + (j + room.Position.Y - 1)); 
-                            //Console.WriteLine(hall.Position);
-                            //hall.Position = new Point(i + room.Position.X - 1, j + room.Position.Y - 1);
                             iRoom2.Add(RFactory.CreateRoom(hall));
                         }
                     }
@@ -231,9 +218,9 @@ namespace HotelProject
         /// </summary>
         /// <param name="amount">amount of cleaners</param>
         /// <param name="cleaningTime">amount of HTE it takes to clean a room</param>
-        public void SetCleaners(int amount, int CleaningTime)
+        public void SetCleaners(int amount, int cleaningTime)
         {
-            this.CleanDuration = CleaningTime;
+            CleanDuration = cleaningTime;
             for (int i = 1; i <= amount; i++)
             {
                 HFactory = new HumanFactory();
@@ -264,10 +251,8 @@ namespace HotelProject
                 foreach (Guest guest in Humans.OfType<Guest>())
                 {
                     guest.Evacuating = false;
-
                     guest.Go_Back();
                 }
-
             }
         }
 
@@ -284,11 +269,11 @@ namespace HotelProject
         /// </summary>
         private void CheckDirtyRooms()
         {
-            if (DirtyRooms.Count > 0 && Humans.OfType<Cleaner>().Where(c => !c.Cleaning) != null)
+            if (DirtyRooms.Count > 0 && Humans.OfType<Cleaner>().Where(c => !c.Cleaning) != null && !Evacuating)
             {
                 try
                 {
-                    GetNearestCleaner(DirtyRooms[0]).GoCleanRoom(DirtyRooms[0]);
+                    GetNearestCleaner().GoCleanRoom(DirtyRooms[0]);
                     DirtyRooms.Remove(DirtyRooms[0]);
                     CheckDirtyRooms();
                 }
@@ -300,11 +285,10 @@ namespace HotelProject
         }
 
         /// <summary>
-        /// Gets the nearest Cleaner to the given Room
+        /// Gets the nearest Cleaner to next room in the dirty rooms list.
         /// </summary>
-        /// <param name="room"></param>
-        /// <returns></returns>
-        private Cleaner GetNearestCleaner(IRoom room)
+        /// <returns>closest available cleaner</returns>
+        private Cleaner GetNearestCleaner()
         {
             Dictionary<Cleaner, int> availableCleaners = new Dictionary<Cleaner, int>();
             int nearest = Int32.MaxValue / 2;
@@ -317,9 +301,7 @@ namespace HotelProject
                     nearest = c.Value;
 
             if (availableCleaners.Count > 0)
-            {
                 return availableCleaners.First(c => c.Value == nearest).Key;
-            }
 
             return null;
         }

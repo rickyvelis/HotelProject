@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.VisualStyles;
-using HotelProject.Rooms;
 using HotelProject.Properties;
+using HotelProject.Rooms;
 
-namespace HotelProject
+namespace HotelProject.Humans
 {
     public class Guest : Human
     {
@@ -196,9 +192,7 @@ namespace HotelProject
         public override void Evacuate()
         {
             if (!CheckingOut)
-            {
                 Evacuating = true;
-            }
             FindRoom(_Hotel.iRoom.Single(r => r.AreaType == "Lobby"));
         }
     }

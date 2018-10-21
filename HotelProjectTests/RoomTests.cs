@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
+using HotelProject.Humans;
 
 namespace HotelProjectTests
 {

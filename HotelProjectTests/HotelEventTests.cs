@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Configuration;
 using HotelEvents;
 using HotelProject;
+using HotelProject.Humans;
 using HotelProject.Rooms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

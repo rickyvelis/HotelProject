@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HotelProject.Rooms;
 using System.Drawing;
+using System.Linq;
+using HotelProject.Rooms;
 
-namespace HotelProject
+namespace HotelProject.Humans
 {
     public abstract class Human
     {
@@ -32,8 +30,8 @@ namespace HotelProject
             TargetFloor = 0;
         }
 
-        abstract public void Update();
-        abstract public void Evacuate();
+        public abstract void Update();
+        public abstract void Evacuate();
 
         /// <summary>
         /// Sets the Position of the Human object
@@ -43,7 +41,6 @@ namespace HotelProject
         public void SetPosition(int x, int y)
         {
             Position = _Hotel.iRoom.Single(r => r.Position.X == x && r.Position.Y == y);
-            //SpritePosition = new Point(Position.Position.X * 128, (_Hotel.GetMaxHeight() - Position.Position.Y + 1) * 89 - 25);
             SpritePosition = new Point(x, y);
         }
 
@@ -59,10 +56,6 @@ namespace HotelProject
             TargetFloor = destination.Position.Y;
             if (Position != destination)
             {
-                Console.WriteLine("----------------------");
-                Console.WriteLine(Name + " GOES FROM " + Position.AreaType + " " + Position.Position.ToString() + " " + Position.ID +
-                    " TO " + destination.AreaType + " " + destination.Position.ToString() + " " + destination.ID);
-
                 List<IRoom> roomsToSearch = new List<IRoom>(_Hotel.iRoom);
 
                 foreach (IRoom room in roomsToSearch)
@@ -74,7 +67,7 @@ namespace HotelProject
 
                 return MakePath(destination);
             }
-            else return null;
+            return null;
         }
 
         /// <summary>
@@ -86,22 +79,15 @@ namespace HotelProject
         /// <returns></returns>
         public bool Visit(IRoom current, IRoom end, List<IRoom> roomsToSearch)
         {
-            //Console.WriteLine("Visiting " + current.AreaType + " at " + current.Position.ToString());
             if (current == end) //Checks if the destination is visited
-            {
                 return true;
-            }
             if (roomsToSearch.Contains(current))
-            {
                 roomsToSearch.Remove(current); //Every visited room will be removed from the list of all the rooms
-            }
             foreach (KeyValuePair<IRoom, int> x in current.Neighbours) //This checks every neighbouring room
             {
                 int newDistance = x.Value;
                 if (current != Position)
-                {
                     newDistance = current.Distance + x.Value;
-                }
                 if (newDistance < x.Key.Distance && ((_Hotel.Evacuating && x.Key.AreaType != "Elevator") || !_Hotel.Evacuating)) //If the new distance of the neighbour is shorter than the distance it already had, the neighbour gets assigned the new distance
                 {
                     x.Key.Distance = newDistance; //THe current neighbour gets a distance, which is the already traversed distance + the distance of the current room to the neighbour
@@ -121,12 +107,10 @@ namespace HotelProject
             IRoom previous = end.Previous;
             Path = new List<IRoom>();
             Path.Add(end);
-            string path = "" + end.AreaType + " " + end.Position.ToString();
 
             while (previous != null)
             {
                 Path.Add(previous);
-                path = "" + previous.AreaType + " " + previous.Position.ToString() + " -> " + path;
 
                 if (previous == Position)
                     break;
@@ -134,23 +118,18 @@ namespace HotelProject
                 previous = previous.Previous;
             }
 
-            int First = 0;
-            int CountShafts = 0;
+            int countShafts = 0;
 
-            First = Path.FindIndex(r => r.AreaType == "Elevator");
+            var first = Path.FindIndex(r => r.AreaType == "Elevator");
 
             for (int i = 0; i < Path.Count - 1; i++)
             {
                 if (Path[i].AreaType == "Elevator")
-                {
-                    CountShafts++;
-                }
+                    countShafts++;
             }
 
-            if (CountShafts > 0)
-            {
-                Path.RemoveRange(First, CountShafts - 1);
-            }
+            if (countShafts > 0)
+                Path.RemoveRange(first, countShafts - 1);
 
             return Path;
         }
@@ -182,43 +161,29 @@ namespace HotelProject
         /// </summary>
         public void Step()
         {
-            //TODO code iets verbeteren zodat ze niet direct lopen bij een distance groter dan 1
-            //TODO If(Lift == vol && Path[Path.Count - 1].AreaType == "Lift"){ WACHTEN }
             if (Path != null && Path.Count > 0)
             {
-
                 if (Wait != 0)
-                {
                     Wait--;
-                }
                 else if (Path[Path.Count - 1].AreaType == "Stairs")
-                {
-                    
                     Wait++;
-                }
 
-                //TODO if statement mogelijk schijden/opruimen
                 if (Wait == 0)
                 {
                     if ((Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType != "Elevator") ||
                         (Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType == "Elevator" &&
-                         _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y &&
-                         _Hotel.elevator.DoorsOpen) ||
+                         _Hotel.Elevator.CurrentFloor == Path[Path.Count - 1].Position.Y &&
+                         _Hotel.Elevator.DoorsOpen) ||
                         (Position.AreaType == "Elevator" &&
-                         _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y && _Hotel.elevator.DoorsOpen))
+                         _Hotel.Elevator.CurrentFloor == Path[Path.Count - 1].Position.Y && _Hotel.Elevator.DoorsOpen))
                     {
                         if (Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType == "Elevator" &&
-                            _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y &&
-                            _Hotel.elevator.DoorsOpen)
-                        {
+                            _Hotel.Elevator.CurrentFloor == Path[Path.Count - 1].Position.Y && _Hotel.Elevator.DoorsOpen)
                             InElevator = true;
-                        }
 
                         if (Position.AreaType == "Elevator" &&
-                            _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y && _Hotel.elevator.DoorsOpen)
-                        {
+                            _Hotel.Elevator.CurrentFloor == Path[Path.Count - 1].Position.Y && _Hotel.Elevator.DoorsOpen)
                             InElevator = false;
-                        }
 
                         SetPosition(Path[Path.Count - 1].Position.X, Path[Path.Count - 1].Position.Y);
                         Path.Remove(Path[Path.Count - 1]);
@@ -227,16 +192,10 @@ namespace HotelProject
                     else if (Position.AreaType != "Elevator" && Path.Count > 0 && Path[Path.Count - 1].AreaType == "Elevator")
                     {
                         if (TargetFloor > Position.Position.Y)
-                        {
-                            _Hotel.iRoom.OfType<ElevatorShaft>()
-                                .First(r => r.Position == new Point(0, Position.Position.Y)).UpPressed = true;
-                        }
+                            _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, Position.Position.Y)).UpPressed = true;
 
                         if (TargetFloor < Position.Position.Y)
-                        {
-                            _Hotel.iRoom.OfType<ElevatorShaft>()
-                                .First(r => r.Position == new Point(0, Position.Position.Y)).DownPressed = true;
-                        }
+                            _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, Position.Position.Y)).DownPressed = true;
                     }
                 }  
             }

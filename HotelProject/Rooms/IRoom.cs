@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HotelProject.Properties;
 
 namespace HotelProject.Rooms
@@ -25,6 +22,5 @@ namespace HotelProject.Rooms
             Distance = Int32.MaxValue / 2;
             Img = Resources.Error;
         }
-
     }       
 }

@@ -8,7 +8,7 @@ namespace HotelProject
         /// <summary>
         /// Creates an IRoom object
         /// </summary>
-        /// <param name="room"></param>
+        /// <param name="room">dynamic object that keeps track of all values from the layout file</param>
         /// <returns></returns>
         public IRoom CreateRoom(dynamic room)
         {
@@ -28,7 +28,6 @@ namespace HotelProject
                 case ("Hall"):
                     return new Hall(Int32.Parse(room.Position.ToString().Split(',')[0]),
                         Int32.Parse(room.Position.ToString().Split(',')[1]));
-                        //return new Hall(room.Position.X, room.Position.Y);
                 case ("Elevator"):
                     return new ElevatorShaft(room.Position);
                 case ("Stairs"):
