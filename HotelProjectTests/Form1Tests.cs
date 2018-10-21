@@ -9,7 +9,7 @@ namespace HotelProjectTests
     public class Form1Tests
     {
         Hotel _Hotel = Hotel.GetInstance();
-        Form1 form = new Form1(1.0f, 1, 1, 1, 1);
+        Form1 form = new Form1(1.0f, 1, 1, 1, 1, 1);
 
         [TestMethod]
         public void HTEFactor_Gets_Adjusted()

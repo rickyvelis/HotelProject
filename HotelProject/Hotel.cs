@@ -40,7 +40,6 @@ namespace HotelProject
             AddLiftAndStairs();
             CreateHalls();
             SetNeighbours();
-
         }
 
         //TODO Summary schrijven
@@ -53,9 +52,9 @@ namespace HotelProject
             return Instance;
         }
 
-        public void CreateElevator()
+        public void CreateElevator(int elevatorDelay)
         {
-            elevator = new Elevator();
+            elevator = new Elevator(elevatorDelay);
         }
 
         //TODO Summary schrijven
@@ -277,6 +276,7 @@ namespace HotelProject
         public void Update()
         {
             CheckDirtyRooms();
+            elevator.DoEvents();
         }
 
         /// <summary>

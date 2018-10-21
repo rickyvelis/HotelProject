@@ -39,14 +39,16 @@
             this.sPerHTE_label = new System.Windows.Forms.Label();
             this.cleanerAmount_label = new System.Windows.Forms.Label();
             this.cleanerAmount_textBox = new System.Windows.Forms.TextBox();
+            this.elevatorDur_label = new System.Windows.Forms.Label();
+            this.elevatorDur_textBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // start_button
             // 
             this.start_button.Location = new System.Drawing.Point(11, 164);
-            this.start_button.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.start_button.Margin = new System.Windows.Forms.Padding(2);
             this.start_button.Name = "start_button";
-            this.start_button.Size = new System.Drawing.Size(198, 47);
+            this.start_button.Size = new System.Drawing.Size(207, 47);
             this.start_button.TabIndex = 12;
             this.start_button.Text = "START";
             this.start_button.UseVisualStyleBackColor = true;
@@ -64,18 +66,18 @@
             // 
             // eatDuration_textBox
             // 
-            this.eatDuration_textBox.Location = new System.Drawing.Point(133, 105);
+            this.eatDuration_textBox.Location = new System.Drawing.Point(138, 105);
             this.eatDuration_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.eatDuration_textBox.Name = "eatDuration_textBox";
-            this.eatDuration_textBox.Size = new System.Drawing.Size(76, 20);
+            this.eatDuration_textBox.Size = new System.Drawing.Size(80, 20);
             this.eatDuration_textBox.TabIndex = 23;
             // 
             // movieDuration_textBox
             // 
-            this.movieDuration_textBox.Location = new System.Drawing.Point(133, 81);
+            this.movieDuration_textBox.Location = new System.Drawing.Point(138, 81);
             this.movieDuration_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.movieDuration_textBox.Name = "movieDuration_textBox";
-            this.movieDuration_textBox.Size = new System.Drawing.Size(76, 20);
+            this.movieDuration_textBox.Size = new System.Drawing.Size(80, 20);
             this.movieDuration_textBox.TabIndex = 21;
             // 
             // movieDuration_label
@@ -90,10 +92,10 @@
             // 
             // cleaningSpeed_textBox
             // 
-            this.cleaningSpeed_textBox.Location = new System.Drawing.Point(133, 57);
+            this.cleaningSpeed_textBox.Location = new System.Drawing.Point(138, 57);
             this.cleaningSpeed_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.cleaningSpeed_textBox.Name = "cleaningSpeed_textBox";
-            this.cleaningSpeed_textBox.Size = new System.Drawing.Size(76, 20);
+            this.cleaningSpeed_textBox.Size = new System.Drawing.Size(80, 20);
             this.cleaningSpeed_textBox.TabIndex = 19;
             // 
             // cleaningSpeed_label
@@ -108,10 +110,10 @@
             // 
             // sPerHTE_textBox
             // 
-            this.sPerHTE_textBox.Location = new System.Drawing.Point(133, 33);
+            this.sPerHTE_textBox.Location = new System.Drawing.Point(138, 33);
             this.sPerHTE_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.sPerHTE_textBox.Name = "sPerHTE_textBox";
-            this.sPerHTE_textBox.Size = new System.Drawing.Size(76, 20);
+            this.sPerHTE_textBox.Size = new System.Drawing.Size(80, 20);
             this.sPerHTE_textBox.TabIndex = 17;
             // 
             // sPerHTE_label
@@ -136,17 +138,37 @@
             // 
             // cleanerAmount_textBox
             // 
-            this.cleanerAmount_textBox.Location = new System.Drawing.Point(133, 9);
+            this.cleanerAmount_textBox.Location = new System.Drawing.Point(138, 9);
             this.cleanerAmount_textBox.Margin = new System.Windows.Forms.Padding(2);
             this.cleanerAmount_textBox.Name = "cleanerAmount_textBox";
-            this.cleanerAmount_textBox.Size = new System.Drawing.Size(76, 20);
+            this.cleanerAmount_textBox.Size = new System.Drawing.Size(80, 20);
             this.cleanerAmount_textBox.TabIndex = 13;
+            // 
+            // elevatorDur_label
+            // 
+            this.elevatorDur_label.AutoSize = true;
+            this.elevatorDur_label.Location = new System.Drawing.Point(11, 129);
+            this.elevatorDur_label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.elevatorDur_label.Name = "elevatorDur_label";
+            this.elevatorDur_label.Size = new System.Drawing.Size(123, 13);
+            this.elevatorDur_label.TabIndex = 26;
+            this.elevatorDur_label.Text = "Elevator Duration (HTE):";
+            // 
+            // elevatorDur_textBox
+            // 
+            this.elevatorDur_textBox.Location = new System.Drawing.Point(138, 129);
+            this.elevatorDur_textBox.Margin = new System.Windows.Forms.Padding(2);
+            this.elevatorDur_textBox.Name = "elevatorDur_textBox";
+            this.elevatorDur_textBox.Size = new System.Drawing.Size(80, 20);
+            this.elevatorDur_textBox.TabIndex = 25;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(220, 222);
+            this.ClientSize = new System.Drawing.Size(229, 222);
+            this.Controls.Add(this.elevatorDur_label);
+            this.Controls.Add(this.elevatorDur_textBox);
             this.Controls.Add(this.eatDuration_label);
             this.Controls.Add(this.eatDuration_textBox);
             this.Controls.Add(this.movieDuration_textBox);
@@ -158,7 +180,7 @@
             this.Controls.Add(this.cleanerAmount_label);
             this.Controls.Add(this.cleanerAmount_textBox);
             this.Controls.Add(this.start_button);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SettingsForm";
             this.Text = "SettingsForm";
             this.ResumeLayout(false);
@@ -178,5 +200,7 @@
         private System.Windows.Forms.Label sPerHTE_label;
         private System.Windows.Forms.Label cleanerAmount_label;
         private System.Windows.Forms.TextBox cleanerAmount_textBox;
+        private System.Windows.Forms.Label elevatorDur_label;
+        private System.Windows.Forms.TextBox elevatorDur_textBox;
     }
 }

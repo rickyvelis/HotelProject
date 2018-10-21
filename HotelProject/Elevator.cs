@@ -20,8 +20,11 @@ namespace HotelProject
         public bool Useable { get; set; }
         public bool DoorsOpen { get; set; }
         private Hotel _Hotel { get; }
+
+        public int ElevatorDelay { get; set; }
+        private int ElevatorDelayTimer { get; set; }
        
-        public Elevator()
+        public Elevator(int elevatorDelay)
         {
             _Hotel = Hotel.GetInstance();
             UpperTargetFloor = null;
@@ -31,6 +34,7 @@ namespace HotelProject
             Useable = true;
             DoorsOpen = false;
             Direction = null;
+            ElevatorDelay = elevatorDelay;
         }
 
         public void DoEvents()
@@ -120,66 +124,74 @@ namespace HotelProject
         /// </summary>
         private void Move()
         {
-            switch (Direction)
+            if (ElevatorDelayTimer == 0)
             {
-                case "UP":
-                    if (!DoorsOpen)
-                    {
-                        CurrentFloor++;
-                        foreach (Human human in _Hotel.Humans)
+                switch (Direction)
+                {
+                    case "UP":
+                        if (!DoorsOpen)
                         {
-
-                            if (human.InElevator)
+                            CurrentFloor++;
+                            foreach (Human human in _Hotel.Humans)
                             {
-                                //human.Position = _Hotel.iRoom.Single(r => r.Position == new Point(human.Position.Position.X, CurrentFloor));
-                                human.SetPosition(human.Position.Position.X, CurrentFloor);
 
-                                if (CurrentFloor == human.TargetFloor)
-                                    DoorsOpen = true;
+                                if (human.InElevator)
+                                {
+                                    //human.Position = _Hotel.iRoom.Single(r => r.Position == new Point(human.Position.Position.X, CurrentFloor));
+                                    human.SetPosition(human.Position.Position.X, CurrentFloor);
+
+                                    if (CurrentFloor == human.TargetFloor)
+                                        DoorsOpen = true;
+                                }
+                            }
+                            //TODO Check toevoegen of er iemand uitwilt
+                            if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
+                                    .UpPressed || _Hotel.iRoom.OfType<ElevatorShaft>()
+                                    .First(r => r.Position == new Point(0, CurrentFloor)).DownPressed)
+                            {
+                                _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
+                                    .UpPressed = false;
+                                _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
+                                    .DownPressed = false;
+                                DoorsOpen = true;
                             }
                         }
-                        //TODO Check toevoegen of er iemand uitwilt
-                        if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
-                                .UpPressed || _Hotel.iRoom.OfType<ElevatorShaft>()
-                                .First(r => r.Position == new Point(0, CurrentFloor)).DownPressed)
-                        {
-                            _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
-                                .UpPressed = false;
-                            _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
-                                .DownPressed = false;
-                            DoorsOpen = true;
-                        }
-                    }
-                    break;
+                        break;
 
-                case "DOWN":
-                    if (!DoorsOpen)
-                    {
-                        CurrentFloor--;
-
-                        foreach (Human human in _Hotel.Humans)
+                    case "DOWN":
+                        if (!DoorsOpen)
                         {
-                            if (human.InElevator)
+                            CurrentFloor--;
+
+                            foreach (Human human in _Hotel.Humans)
                             {
-                                //human.Position = _Hotel.iRoom.Single(r => r.Position == new Point(human.Position.Position.X, CurrentFloor));
-                                human.SetPosition(human.Position.Position.X, CurrentFloor);
+                                if (human.InElevator)
+                                {
+                                    //human.Position = _Hotel.iRoom.Single(r => r.Position == new Point(human.Position.Position.X, CurrentFloor));
+                                    human.SetPosition(human.Position.Position.X, CurrentFloor);
 
-                                if (CurrentFloor == human.TargetFloor)
-                                    DoorsOpen = true;
+                                    if (CurrentFloor == human.TargetFloor)
+                                        DoorsOpen = true;
+                                }
+                            }
+
+                            //TODO Check toevoegen of er iemand uitwilt
+                            if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).UpPressed || _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).DownPressed)
+                            {
+                                _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
+                                    .UpPressed = false;
+                                _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
+                                    .DownPressed = false;
+                                DoorsOpen = true;
                             }
                         }
-
-                        //TODO Check toevoegen of er iemand uitwilt
-                        if (_Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).UpPressed || _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor)).DownPressed)
-                        {
-                            _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
-                                .UpPressed = false;
-                            _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, CurrentFloor))
-                                .DownPressed = false;
-                            DoorsOpen = true;
-                        }
-                    }
-                    break;
+                        break;
+                }
+                ElevatorDelayTimer = ElevatorDelay;
+            }
+            else
+            {
+                ElevatorDelayTimer--;
             }
         }
 

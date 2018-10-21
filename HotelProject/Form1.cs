@@ -28,13 +28,16 @@ namespace HotelProject
         delegate void Form1Callback();
         delegate void SetTextCallback();
 
-        public Form1(float hte, int cleaners, int cleaningTime, int movieDuration, int eatDuration)
+        public Form1(float hte, int cleaners, int cleaningTime, int movieDuration, int eatDuration, int elevatorDelay)
         {
             InitializeComponent();
             hotelStatus_label.Text = "Running";
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
             _Hotel = Hotel.GetInstance();
-            _Hotel.CreateElevator();
+            _Hotel.CreateElevator(elevatorDelay);
+            _Hotel.SetCleaners(cleaners, cleaningTime);
+            _Hotel.SetScreeningTime(movieDuration);
+            _Hotel.EatDuration = eatDuration;
             hel = new HEListener();
             Paint += DrawHotel;
 
@@ -42,9 +45,7 @@ namespace HotelProject
             HTE_Factor = hte;
             HotelEventManager.HTE_Factor = HTE_Factor;
 
-            _Hotel.SetCleaners(cleaners, cleaningTime);
-            _Hotel.SetScreeningTime(movieDuration);
-            _Hotel.EatDuration = eatDuration;
+
 
             timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor) {Enabled = true};
             timer.Start();
@@ -107,7 +108,7 @@ namespace HotelProject
                 cinema.Update();
 
             _Hotel.EvacuatingDone();
-            _Hotel.elevator.DoEvents();
+            
             SetTextLabel();
             SetTextStatsBox();
             SetTextDirtyRoomsBox();
