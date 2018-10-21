@@ -19,6 +19,9 @@ namespace HotelProject.Humans
         public bool Evacuating { get; set; }
         public bool InElevator { get; set; }
 
+        public int StairsDelay { get; set; }
+        private int StairsDelayTimer { get; set; }
+
         private Hotel _Hotel { get; }
 
         protected Human()
@@ -28,6 +31,7 @@ namespace HotelProject.Humans
             InElevator = false;
             Wait = 0;
             TargetFloor = 0;
+            StairsDelay = _Hotel.Elevator.ElevatorDelay * 2;
         }
 
         public abstract void Update();
@@ -163,12 +167,10 @@ namespace HotelProject.Humans
         {
             if (Path != null && Path.Count > 0)
             {
-                if (Wait != 0)
-                    Wait--;
-                else if (Path[Path.Count - 1].AreaType == "Stairs")
-                    Wait++;
-
-                if (Wait == 0)
+                //TODO if statement mogelijk schijden/opruimen
+                if (Path[Path.Count - 1].AreaType == "Stairs" && StairsDelayTimer != StairsDelay)
+                    StairsDelayTimer++;
+                else
                 {
                     if ((Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType != "Elevator") ||
                         (Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType == "Elevator" &&
@@ -197,7 +199,9 @@ namespace HotelProject.Humans
                         if (TargetFloor < Position.Position.Y)
                             _Hotel.iRoom.OfType<ElevatorShaft>().First(r => r.Position == new Point(0, Position.Position.Y)).DownPressed = true;
                     }
-                }  
+
+                    StairsDelayTimer = 0;
+                }
             }
         }
     }

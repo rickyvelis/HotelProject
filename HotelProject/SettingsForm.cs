@@ -73,6 +73,16 @@ namespace HotelProject
         }
 
         /// <summary>
+        /// Converts the text in elevatorDur_textBox to an integer
+        /// </summary>
+        /// <returns></returns>
+        private int ConvertElevatorDur()
+        {
+            int i = int.Parse(elevatorDur_textBox.Text);
+            return i;
+        }
+
+        /// <summary>
         /// Occurs when start_button is clicked. Checks whether all textBoxes have been filled; if so, open next Form
         /// </summary>
         /// <param name="sender"></param>
@@ -97,7 +107,8 @@ namespace HotelProject
                     ConvertCleanerAmount(),
                     ConvertCleaningSpeed(),
                     ConvertMovieDuration(),
-                    ConvertEatDuration());
+                    ConvertEatDuration(),
+                    ConvertElevatorDur());
                 MainForm.Show();
                 MainForm.Closed += (s, args) => Close();
             }

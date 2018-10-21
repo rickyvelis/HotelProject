@@ -23,13 +23,16 @@ namespace HotelProject
         delegate void Form1Callback();
         delegate void SetTextCallback();
 
-        public Form1(float hte, int cleaners, int cleaningTime, int movieDuration, int eatDuration)
+        public Form1(float hte, int cleaners, int cleaningTime, int movieDuration, int eatDuration, int elevatorDelay)
         {
             InitializeComponent();
             hotelStatus_label.Text = "Running";
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
             _Hotel = Hotel.GetInstance();
-            _Hotel.CreateElevator();
+            _Hotel.CreateElevator(elevatorDelay);
+            _Hotel.SetCleaners(cleaners, cleaningTime);
+            _Hotel.SetScreeningTime(movieDuration);
+            _Hotel.EatDuration = eatDuration;
             var hel = new HEListener();
             Paint += DrawHotel;
 
@@ -37,9 +40,6 @@ namespace HotelProject
             HTE_Factor = hte;
             HotelEventManager.HTE_Factor = HTE_Factor;
 
-            _Hotel.SetCleaners(cleaners, cleaningTime);
-            _Hotel.SetScreeningTime(movieDuration);
-            _Hotel.EatDuration = eatDuration;
 
             Timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor) {Enabled = true};
             Timer.Start();
@@ -74,13 +74,13 @@ namespace HotelProject
             foreach (IRoom room in _Hotel.iRoom)
             {
                 bitmap = new Bitmap(room.Img);               
-                e.Graphics.DrawImage(bitmap, room.Position.X * bitmap.Width + 100, (height - room.Position.Y) * bitmap.Height);
+                e.Graphics.DrawImage(bitmap, room.Position.X * bitmap.Width, (height - room.Position.Y) * bitmap.Height);
             }
 
             foreach (Human human in HumanList)
             {
                 bitmap = new Bitmap(human.Img);
-                e.Graphics.DrawImage(bitmap, human.SpritePosition.X * Resources.Error.Width + 150,
+                e.Graphics.DrawImage(bitmap, human.SpritePosition.X * Resources.Error.Width + 50,
                     (_Hotel.GetMaxHeight() - human.SpritePosition.Y + 1) * Resources.Error.Height - 25);
             }
         }
@@ -102,7 +102,7 @@ namespace HotelProject
                 cinema.Update();
 
             _Hotel.EvacuatingDone();
-            _Hotel.Elevator.DoEvents();
+            
             SetTextLabel();
             SetTextStatsBox();
             SetTextDirtyRoomsBox();
@@ -195,7 +195,7 @@ namespace HotelProject
                 string info = "";
                 foreach (Human human in _Hotel.Humans)
                 {
-                    info += (human.Name + " is at position " + human.Position.Position.X + " " + human.Position.Position.Y + "\n\n");
+                    info += (">" + human.Name + " is at position " + human.Position.Position.X + "," + human.Position.Position.Y + "\n");
                 }
 
                 statsBox.Text = info;

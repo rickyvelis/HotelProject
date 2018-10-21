@@ -48,9 +48,9 @@ namespace HotelProject
         /// <summary>
         /// Creates an elevator for the hotel. This is not done in the constructor as this would cause erros bc Hotel is a singleton and elevator also creates hotel.
         /// </summary>
-        public void CreateElevator()
+        public void CreateElevator(int elevatorDelay)
         {
-            Elevator = new Elevator();
+            Elevator = new Elevator(elevatorDelay);
         }
 
         /// <summary>
@@ -262,6 +262,7 @@ namespace HotelProject
         public void Update()
         {
             CheckDirtyRooms();
+            Elevator.DoEvents();
         }
 
         /// <summary>
