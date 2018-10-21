@@ -28,7 +28,7 @@ namespace HotelProject
 
         delegate void Form1Callback();
 
-        public Form1(float hte, int cleaners, int cleaningTime, int elevatorCapacity, int movieDuration)
+        public Form1(float hte, int cleaners, int cleaningTime, int elevatorCapacity, int movieDuration, int eatDuration)
         {
             InitializeComponent();
             hotelStatus_label.Text = "Running";
@@ -45,7 +45,7 @@ namespace HotelProject
             _Hotel.SetCleaners(cleaners, cleaningTime);
             //_Hotel.SetElevatorCapacity(elevatorCapacity);
             _Hotel.SetScreeningTime(movieDuration);
-            _Hotel.EatDuration = 5;
+            _Hotel.EatDuration = eatDuration;
 
             timer = new System.Timers.Timer(1000 / HotelEventManager.HTE_Factor) {Enabled = true};
             timer.Start();

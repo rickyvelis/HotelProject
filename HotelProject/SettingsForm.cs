@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace HotelProject
 {
@@ -52,17 +53,34 @@ namespace HotelProject
             return i;
         }
 
+        private int ConvertEatDuration()
+        {
+            int i = int.Parse(eatDuration_textBox.Text);
+            return i;
+        }
+
         private void start_button_Click(object sender, EventArgs e)
         {
-            if (cleanerAmount_textBox.Text != "" 
-                && cleanerAmount_textBox.Text != ""
-                //&& maxLiftPassengers_textBox.Text != ""
-                && sPerHTE_textBox.Text != ""
-                && movieDuration_textBox.Text != ""
-                )
+            bool sallgood = true;
+
+            foreach (TextBox txtBox in Controls.OfType<TextBox>())
+            {
+                if (txtBox.Text == "" || txtBox.Text == null)
+                {
+                    txtBox.BackColor = Color.AntiqueWhite;
+                    sallgood = false;
+                }
+            }
+
+            if (sallgood)
             {
                 Hide();
-                MainForm = new Form1(ConvertHTEFactor(), ConvertCleanerAmount(), ConvertCleaningSpeed(), ConvertElevatorCapacity(), ConvertMovieDuration());
+                MainForm = new Form1(ConvertHTEFactor(), 
+                    ConvertCleanerAmount(),
+                    ConvertCleaningSpeed(), 
+                    ConvertElevatorCapacity(), 
+                    ConvertMovieDuration(),
+                    ConvertEatDuration());
                 MainForm.Show();
                 MainForm.Closed += (s, args) => Close();
             }
