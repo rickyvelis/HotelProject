@@ -122,12 +122,14 @@
     <Content Include="Resources\Cinema2.png" />
     <Content Include="Resources\Cinema_Start.png" />
     <Content Include="Resources\Cleaner.png" />
+    <Content Include="Resources\Cleaner_Inside.png" />
     <Content Include="Resources\Elevator_Atfloor.png" />
     <Content Include="Resources\Elevator_Open.png" />
     <Content Include="Resources\Entrance.png" />
     <None Include="Resources\Error.png" />
     <None Include="Resources\Fitness.png" />
     <Content Include="Resources\Guest1.png" />
+    <Content Include="Resources\Guest1_Inside.png" />
     <Content Include="Resources\Hallway.png" />
     <Content Include="Resources\Hallway2.png" />
     <None Include="Resources\Restaurant.png" />

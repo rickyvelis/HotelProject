@@ -103,6 +103,16 @@ namespace HotelProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cleaner_Inside {
+            get {
+                object obj = ResourceManager.GetObject("Cleaner_Inside", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Elevator {
             get {
                 object obj = ResourceManager.GetObject("Elevator", resourceCulture);
@@ -166,6 +176,16 @@ namespace HotelProject.Properties {
         internal static System.Drawing.Bitmap Guest1 {
             get {
                 object obj = ResourceManager.GetObject("Guest1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Guest1_Inside {
+            get {
+                object obj = ResourceManager.GetObject("Guest1_Inside", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

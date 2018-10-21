@@ -63,6 +63,7 @@ namespace HotelProject
             if (Position.AreaType == "Cinema" && NeedMovie && !_Hotel.iRoom.OfType<Cinema>().First(r => r.Position == Position.Position).IsScreening)
             {
                 _Hotel.iRoom.OfType<Cinema>().First(r => r.Position == Position.Position).Visitors.Add(this);
+                Img = Resources.Guest1_Inside;
             }
 
             if (CheckingOut)
@@ -77,12 +78,15 @@ namespace HotelProject
                 NeedWorkout = false;
                 Timer = 0;
             }
-
             else if (NeedFood && Position.AreaType == "Restaurant")
                 Eat();
-
             else if (NeedWorkout && Position.AreaType == "Fitness")
                 Workout();
+
+            if (!Visible || InElevator || Position == Room)
+                Img = Resources.Guest1_Inside;
+            else
+                Img = Resources.Guest1;
         }
 
         /// <summary>
@@ -112,7 +116,7 @@ namespace HotelProject
         {
             if (Timer < EatDuration)
             {
-                //Visible = false;
+                Visible = false;
                 Timer++;
             }
             else
@@ -131,7 +135,7 @@ namespace HotelProject
         {
             if (Timer < FitnessDuration)
             {
-                //Visible = false;
+                Visible = false;
                 Timer++;
             }
             else
