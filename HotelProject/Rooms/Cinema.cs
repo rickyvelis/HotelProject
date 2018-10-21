@@ -9,7 +9,7 @@ using HotelProject.Rooms;
 
 namespace HotelProject.Rooms
 {    
-    class Cinema : IRoom
+    public class Cinema : IRoom
     {
 
         public override string AreaType { get; set; }

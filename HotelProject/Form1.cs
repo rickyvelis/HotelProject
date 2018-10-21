@@ -132,7 +132,7 @@ namespace HotelProject
 
             foreach (Cinema cinema in _Hotel.iRoom.OfType<Cinema>())
                 cinema.Update();
-            
+
             //foreach (Human human in _Hotel.Humans)
             //{
             //    if (human.Visible)
