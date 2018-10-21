@@ -77,13 +77,13 @@ namespace HotelProject
             foreach (IRoom room in _Hotel.iRoom)
             {
                 bitmap = new Bitmap(room.Img);               
-                e.Graphics.DrawImage(bitmap, room.Position.X * bitmap.Width + 100, (height - room.Position.Y) * bitmap.Height);
+                e.Graphics.DrawImage(bitmap, room.Position.X * bitmap.Width, (height - room.Position.Y) * bitmap.Height);
             }
 
             foreach (Human human in HumanList)
             {
                 bitmap = new Bitmap(human.Img);
-                e.Graphics.DrawImage(bitmap, human.SpritePosition.X * Resources.Error.Width + 150,
+                e.Graphics.DrawImage(bitmap, human.SpritePosition.X * Resources.Error.Width + 50,
                     (_Hotel.GetMaxHeight() - human.SpritePosition.Y + 1) * Resources.Error.Height - 25);
             }
         }
@@ -212,7 +212,7 @@ namespace HotelProject
                 string info = "";
                 foreach (Human human in _Hotel.Humans)
                 {
-                    info += (human.Name + " is at position " + human.Position.Position.X + " " + human.Position.Position.Y + "\n\n");
+                    info += (">" + human.Name + " is at position " + human.Position.Position.X + "," + human.Position.Position.Y + "\n");
                 }
 
                 statsBox.Text = info;
