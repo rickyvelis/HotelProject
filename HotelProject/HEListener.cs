@@ -144,7 +144,6 @@ namespace HotelProject
                     //TODO Reset CleaningTime to standard value after CLEANING_EMERGENCY is over
                     if (Event.Data != null && !_Hotel.Evacuating)
                     {
-                        //TODO cleaning time later pas setten/laten aflopen als ze bij de goede kamer zijn
                         foreach (KeyValuePair<string, string> data in Event.Data)
                         {
                             if (data.Key == "kamer")
@@ -190,7 +189,7 @@ namespace HotelProject
                                 //Sends the specified Guest to the nearest Cinema
                                 Cinema nearestCinema = cinemaDistances.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
 
-                                nearestCinema.Visitors.Add(_Hotel.Humans.OfType<Guest>().Single(g => g.Name == guestName));
+                                //nearestCinema.Visitors.Add(_Hotel.Humans.OfType<Guest>().Single(g => g.Name == guestName));
 
                                 _Hotel.Humans.Single(g => g.Name == guestName).FindRoom(nearestCinema);
                                 _Hotel.Humans.OfType<Guest>().Single(g => g.Name == guestName).NeedMovie = true;

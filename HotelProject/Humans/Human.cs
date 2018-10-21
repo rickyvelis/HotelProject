@@ -133,7 +133,7 @@ namespace HotelProject
 
                 previous = previous.Previous;
             }
-            //Console.WriteLine("\n" + path + "\nDistance: " + end.Distance);
+
             int First = 0;
             int CountShafts = 0;
 
@@ -147,8 +147,10 @@ namespace HotelProject
                 }
             }
 
-            if(CountShafts > 0)
+            if (CountShafts > 0)
+            {
                 Path.RemoveRange(First, CountShafts - 1);
+            }
 
             return Path;
         }
@@ -209,13 +211,11 @@ namespace HotelProject
                             _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y &&
                             _Hotel.elevator.DoorsOpen)
                         {
-                            //_Hotel.elevator.humans.Add(this);
                             InElevator = true;
                         }
 
                         if (Position.AreaType == "Elevator" &&
-                            _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y &&
-                            _Hotel.elevator.DoorsOpen)
+                            _Hotel.elevator.CurrentFloor == Path[Path.Count - 1].Position.Y && _Hotel.elevator.DoorsOpen)
                         {
                             InElevator = false;
                         }
@@ -224,7 +224,7 @@ namespace HotelProject
                         Path.Remove(Path[Path.Count - 1]);
                         Wait = 0;
                     }
-                    else if (Position.AreaType != "Elevator" && Path[Path.Count - 1].AreaType == "Elevator")
+                    else if (Position.AreaType != "Elevator" && Path.Count > 0 && Path[Path.Count - 1].AreaType == "Elevator")
                     {
                         if (TargetFloor > Position.Position.Y)
                         {
@@ -239,8 +239,7 @@ namespace HotelProject
                         }
 
                     }
-                }
-                
+                }  
             }
         }
     }

@@ -32,7 +32,7 @@
             this.speedUp_checkBox = new System.Windows.Forms.CheckBox();
             this.hotelStatus_label = new System.Windows.Forms.Label();
             this.guestAmount_Label = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.stats = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // playPause_checkBox
@@ -83,20 +83,20 @@
             this.guestAmount_Label.TabIndex = 6;
             this.guestAmount_Label.Text = "Guests: 0";
             // 
-            // richTextBox1
+            // stats
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(3, 128);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(100, 96);
-            this.richTextBox1.TabIndex = 7;
-            this.richTextBox1.Text = "";
+            this.stats.Location = new System.Drawing.Point(3, 128);
+            this.stats.Name = "stats";
+            this.stats.Size = new System.Drawing.Size(100, 96);
+            this.stats.TabIndex = 7;
+            this.stats.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1382, 766);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.stats);
             this.Controls.Add(this.guestAmount_Label);
             this.Controls.Add(this.hotelStatus_label);
             this.Controls.Add(this.speedUp_checkBox);
@@ -116,7 +116,7 @@
         private System.Windows.Forms.CheckBox speedUp_checkBox;
         private System.Windows.Forms.Label hotelStatus_label;
         private System.Windows.Forms.Label guestAmount_Label;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox stats;
     }
 }
 

@@ -19,9 +19,7 @@ namespace HotelProject
         public bool Useable { get; set; }
         public bool DoorsOpen { get; set; }
         private Hotel _Hotel { get; }
-        //public List<Human> humans { get; set; }
-        
-
+       
         public Elevator()
         {
             _Hotel = Hotel.GetInstance();
@@ -32,10 +30,6 @@ namespace HotelProject
             Useable = true;
             DoorsOpen = false;
             Direction = null;
-
-            //humans = new List<Human>();
-
-            //TODO ZORGEN DAT MENSEN BEWEGEN MET DE LIFT EN NIET ZELF
         }
 
         public void DoEvents()
@@ -115,7 +109,6 @@ namespace HotelProject
         /// </summary>
         private void Move()
         {
-
             switch (Direction)
             {
                 case "UP":

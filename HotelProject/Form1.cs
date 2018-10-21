@@ -27,6 +27,7 @@ namespace HotelProject
         private float HTE_Factor { get; set; }
 
         delegate void Form1Callback();
+        delegate void SetTextCallback();
 
         public Form1(float hte, int cleaners, int cleaningTime, int elevatorCapacity, int movieDuration, int eatDuration)
         {
@@ -43,7 +44,6 @@ namespace HotelProject
             HotelEventManager.HTE_Factor = HTE_Factor;
 
             _Hotel.SetCleaners(cleaners, cleaningTime);
-            //_Hotel.SetElevatorCapacity(elevatorCapacity);
             _Hotel.SetScreeningTime(movieDuration);
             _Hotel.EatDuration = eatDuration;
 
@@ -58,18 +58,6 @@ namespace HotelProject
             Console.WriteLine(timer.Interval);
             
             KeyUp += KeyListener;
-
-            #region TestCode
-            //HotelEvent hotelEvent = new HotelEvent()
-            //{
-            //    Data = new Dictionary<string, string> { { "Gast1", "Checkin 1stars" } },
-            //    EventType = HotelEventType.CHECK_IN,
-            //    Message = "Checkin 1stars",
-            //    Time = 2000
-            //};
-            //hel.Notify(hotelEvent);
-            #endregion
-
         }
 
         private void DrawHotel(object sender, PaintEventArgs e)
@@ -108,37 +96,15 @@ namespace HotelProject
         {
             timer.Interval = 1000 / HotelEventManager.HTE_Factor;
             stopwatch.Restart();
-
-            #region TestCode
-            //Test++;
-            //if (Test == 6)
-            //{
-            //    HotelEvent hotelEvent = new HotelEvent()
-            //    {
-            //        Data = new Dictionary<string, string> { { "Gast", "1" } },
-            //        EventType = HotelEventType.CHECK_OUT,
-            //        Message = "Check out",
-            //        Time = 2000
-            //    };
-
-            //    hel.Notify(hotelEvent);
-            //}
-            #endregion
             
             _Hotel.Update();
 
-            foreach (Human human in _Hotel.Humans)
+            foreach (Human human in _Hotel.Humans.Reverse<Human>())
                 human.Update();
 
             foreach (Cinema cinema in _Hotel.iRoom.OfType<Cinema>())
                 cinema.Update();
 
-            //foreach (Human human in _Hotel.Humans)
-            //{
-            //    if (human.Visible)
-            //        Console.WriteLine(human.Name + "CURRENT LOCATION: " + human.Position.AreaType);
-            //}
-            //Console.WriteLine("_________________________________________________________");
 
             _Hotel.EvacuatingDone();
 
@@ -207,8 +173,43 @@ namespace HotelProject
 
         private void UpdateStats()
         {
-            
-            //listBox1.Items.AddRange(_Hotel.Humans.OfType<Guest>().ToArray());
+            SetTextLabel();
+            SetTextTBox();
+        }
+
+        private void SetTextLabel()
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (guestAmount_Label.InvokeRequired)
+            {
+                SetTextCallback d = SetTextLabel;
+                Invoke(d);
+            }
+            else
+            {
+                guestAmount_Label.Text = "Guests: " + _Hotel.Humans.OfType<Guest>().Count();
+            }
+        }
+
+        private void SetTextTBox()
+        {
+            if (stats.InvokeRequired)
+            {
+                SetTextCallback d = SetTextTBox;
+                Invoke(d);
+            }
+            else
+            {
+                string info = "";
+                foreach (Human human in _Hotel.Humans)
+                {
+                    info += (human.Name + " is at position " + human.Position.Position.X + " " + human.Position.Position.Y + "\n");
+                }
+
+                stats.Text = info;
+            }
         }
 
         private void PlayPause_checkBox_CheckedChanged(object sender, EventArgs e)

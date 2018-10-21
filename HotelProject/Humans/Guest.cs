@@ -60,12 +60,14 @@ namespace HotelProject
         {
             Step();
 
-            //if (Position == Room)
-            //Visible = false;
+            if (Position.AreaType == "Cinema" && NeedMovie && !_Hotel.iRoom.OfType<Cinema>().First(r => r.Position == Position.Position).IsScreening)
+            {
+                _Hotel.iRoom.OfType<Cinema>().First(r => r.Position == Position.Position).Visitors.Add(this);
+            }
 
             if (CheckingOut)
             {
-                if (Position == _Hotel.iRoom.OfType<Lobby>())
+                if (Position == _Hotel.iRoom.OfType<Lobby>().First())
                     Die();
             }
             else if (Evacuating)
@@ -146,8 +148,7 @@ namespace HotelProject
         /// </summary>
         public void Die()
         {
-            Visible = false;
-            //_Hotel.Guests.Remove(this);
+            _Hotel.Humans.Remove(this);
         }
 
         /// <summary>
