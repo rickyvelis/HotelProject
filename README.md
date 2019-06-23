@@ -1,2 +1,2 @@
 # HotelProject
-Project voor hotel
+Hotel Simulatie
